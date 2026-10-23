@@ -1260,7 +1260,7 @@ section.sec.dark{background:var(--ink)}
         <ul class="plist">
           <li><span class="ok-ic" data-ic="check"></span><div><b>Resuelve un problema real</b><span>Movildata ya sabe quién conduce, pero el conductor no tiene dónde ver sus datos y el repostaje no se controla. La app le da a cada uno lo suyo.</span></div></li>
           <li><span class="ok-ic" data-ic="check"></span><div><b>La tarjeta del tacógrafo da la trazabilidad</b><span>El conductor no teclea matrículas: la app detecta en qué camión está su tarjeta y él solo confirma. Cada tramo queda registrado con hora de inicio y fin.</span></div></li>
-          <li><span class="ok-ic" data-ic="check"></span><div><b>Alcance acotado</b><span>Dos perfiles, un flujo principal y una fuente de datos. Permite un MVP en pocas semanas.</span></div></li>
+          <li><span class="ok-ic" data-ic="check"></span><div><b>Alcance acotado</b><span>Pocos perfiles, un flujo principal y una fuente de datos. Permite un MVP en pocas semanas.</span></div></li>
           <li><span class="ok-ic" data-ic="check"></span><div><b>Ahorro medible en gasóleo</b><span>Solred ya mide lo que se pierde: 5.451 € en septiembre, con solo el 64 % de repostajes en la óptima. La app lo convierte en avisos concretos y en la ruta a la gasolinera correcta.</span></div></li>
           <li><span class="ok-ic" data-ic="check"></span><div><b>Adiós al parte en papel</b><span>El Anexo II mensual se rellena solo con la tarjeta del tacógrafo y Movildata. El chófer suma servicios y hace foto a los tickets.</span></div></li>
           <li><span class="ok-ic" data-ic="check"></span><div><b>Una pieza ya funciona</b><span>La corrección de la orden de transporte (DECA) ya está hecha contra Odoo, con 91 tests. Se integra en la app, no se rehace.</span></div></li>
@@ -1308,8 +1308,8 @@ section.sec.dark{background:var(--ink)}
 <!-- 03 PERFILES -->
 <section class="sec" id="perfiles">
   <div class="wrap">
-    <div class="sec-h"><h2>Dos perfiles</h2></div>
-    <p class="sub">Los permisos se controlan en el servidor: un conductor nunca puede pedir datos de otro, aunque manipule la app.</p>
+    <div class="sec-h"><h2>Dos perfiles <span class="tg" style="font-size:13px;letter-spacing:.02em;font-weight:700;background:#FFF1DC;color:#9A5A00;padding:5px 11px;vertical-align:middle;margin-left:8px">Pendiente de definir</span></h2></div>
+    <p class="sub">De momento se plantean dos, administración y conductor. Falta definir qué perfiles usarán la app (por ejemplo tráfico, oficina, taller o dirección) y qué ve y qué puede hacer cada uno. Los permisos se controlan en el servidor: un conductor nunca puede pedir datos de otro, aunque manipule la app.</p>
     <div class="grid2">
       <div class="role admin">
         <span class="big-ic" data-ic="grid"></span>
@@ -1326,6 +1326,7 @@ section.sec.dark{background:var(--ink)}
           <li><span data-ic="check"></span>Estaciones ADR: un agente revisa las estaciones Solred con descuento, tráfico confirma las dudosas y los conductores reportan incidencias.</li>
           <li><span data-ic="check"></span>Documentación: caducidades de chóferes, cabezas tractoras y remolques, con avisos que se programan rellenando una frase.</li>
           <li><span data-ic="check"></span>Recompensas: monedas de cada semana, canjes por aprobar, tramos y catálogo.</li>
+          <li><span data-ic="check"></span>Mensajes: conversaciones con cada chófer, con varios o con toda la flota, con fotos y confirmación de lectura.</li>
           <li><span data-ic="check"></span>Partes mensuales: el Anexo II de cada camión sale solo, con los tickets cruzados con Solred, y se exporta en PDF o Excel.</li>
         </ul>
       </div>
@@ -1347,6 +1348,8 @@ section.sec.dark{background:var(--ink)}
           <li><span data-ic="check"></span>Mis documentos: ve cuándo caducan su carné ADR, su revisión médica y la ITV de su camión, y sube el renovado con una foto.</li>
           <li><span data-ic="check"></span>«Necesito repostar»: indica los km de depósito y la app le lleva a la más barata con 10 min de desvío como máximo, y le dice con qué tarjeta pagar.</li>
           <li><span data-ic="check"></span>Si lleva mercancía peligrosa, marca «Carga ADR» y solo se le proponen estaciones compatibles.</li>
+          <li><span data-ic="check"></span>Mensajes con tráfico y la oficina: escribe, manda fotos y ve cuándo le han leído. Con el camión en marcha solo recibe el aviso.</li>
+          <li><span data-ic="check"></span>Mis notas: sus propias notas, con texto o foto. Solo las ve él.</li>
         </ul>
       </div>
     </div>
@@ -1742,7 +1745,7 @@ section.sec.dark{background:var(--ink)}
       <div class="aarrow" data-ic="arrow"></div>
       <div class="anode"><div class="ic" data-ic="sync"></div><h4>Sincronizador</h4><p>Cada 5 min, con reintentos y caché. También procesa los Excel, lee los tickets y calcula rutas.</p></div>
       <div class="aarrow" data-ic="arrow"></div>
-      <div class="anode hl"><div class="ic" data-ic="db"></div><h4>PostgreSQL</h4><p>Conductores, vehículos, asignaciones, telemetría, repostajes, tickets y partes.</p></div>
+      <div class="anode hl"><div class="ic" data-ic="db"></div><h4>PostgreSQL</h4><p>Conductores, vehículos, asignaciones, telemetría, repostajes, tickets, partes, mensajes y notas.</p></div>
       <div class="aarrow" data-ic="arrow"></div>
       <div class="anode"><div class="ic" data-ic="lock"></div><h4>API propia</h4><p>Autenticación, roles y reglas de atribución. Auditoría de accesos.</p></div>
       <div class="aarrow" data-ic="arrow"></div>
@@ -1762,7 +1765,7 @@ section.sec.dark{background:var(--ink)}
     <div class="infra-tot"><div class="sum"><b>≈ 16–20 €/mes</b><span>~190–240 €/año, sin IVA</span></div><div class="okb"><span data-ic="check"></span><span><b>Sin bloqueos:</b> el acceso a la API de Movildata está confirmado. En el descubrimiento se revisan sus endpoints de tarjeta del tacógrafo, actividad y límites de peticiones.</span></div></div>
 
     <div class="model">
-      <div class="tbl"><h5><i></i>conductores</h5><ul><li class="pk">id</li><li>codigo <span>· único</span></li><li>nombre</li><li>tarjeta_tacografo</li><li>pin_hash</li><li>rol <span>· admin | conductor</span></li><li>activo</li></ul></div>
+      <div class="tbl"><h5><i></i>conductores</h5><ul><li class="pk">id</li><li>codigo <span>· único</span></li><li>nombre</li><li>tarjeta_tacografo</li><li>pin_hash</li><li>rol <span>· admin | conductor | por definir</span></li><li>activo</li></ul></div>
       <div class="tbl"><h5><i></i>vehiculos</h5><ul><li class="pk">id</li><li>matricula</li><li>modelo</li><li>id_movildata</li><li>base</li><li>qr_token</li></ul></div>
       <div class="tbl"><h5><i></i>asignaciones</h5><ul><li class="pk">id</li><li>conductor_id</li><li>vehiculo_id</li><li>inicio · fin</li><li>origen <span>· tacógrafo | app | qr | admin</span></li><li>carga_adr · clase_onu</li></ul></div>
       <div class="tbl"><h5><i></i>telemetria</h5><ul><li class="pk">vehiculo_id · ts</li><li>lat · lon</li><li>km_odometro</li><li>velocidad</li><li>consumo</li><li>estado_motor · tarjeta</li></ul></div>
@@ -1777,6 +1780,9 @@ section.sec.dark{background:var(--ink)}
       <div class="tbl"><h5><i></i>documentos</h5><ul><li class="pk">id</li><li>titular <span>· chófer | cabeza | remolque</span></li><li>tipo <span>· ADR | médica | ITV</span></li><li>caduca_el · foto</li><li>apto <span>· solo médica</span></li><li>validado_por</li></ul></div>
       <div class="tbl"><h5><i></i>avisos_programados</h5><ul><li class="pk">id</li><li>tipo_documento · titular_id?</li><li>dias_antes</li><li>destinatarios · canales</li><li>repetir · activo</li></ul></div>
       <div class="tbl"><h5><i></i>importaciones</h5><ul><li class="pk">id</li><li>archivo · origen Solred</li><li>mapeo_columnas</li><li>filas_ok · error</li><li>importado_por</li><li>fecha</li></ul></div>
+      <div class="tbl"><h5><i></i>conversaciones</h5><ul><li class="pk">id</li><li>tipo <span>· chófer | grupo | flota</span></li><li>participantes</li><li>creada_por</li><li>ultimo_mensaje</li></ul></div>
+      <div class="tbl"><h5><i></i>mensajes</h5><ul><li class="pk">id</li><li>conversacion_id</li><li>autor_id <span>· chófer | oficina</span></li><li>texto · foto</li><li>enviado · leído</li></ul></div>
+      <div class="tbl"><h5><i></i>notas</h5><ul><li class="pk">id</li><li>conductor_id</li><li>texto · foto</li><li>creada · editada</li><li>privada <span>· solo el conductor</span></li></ul></div>
     </div>
 
     <div class="code-h"><h3>Regla de atribución</h3></div>
@@ -1821,7 +1827,7 @@ section.sec.dark{background:var(--ink)}
       <tbody>
         <tr><td>Tarjeta sin insertar o camiones sin tacógrafo digital</td><td><span class="lvl m">Medio</span></td><td>Alerta automática «vehículo en marcha sin tarjeta»; en esos casos la app pide la matrícula a mano o por QR; corrección manual desde admin, con registro del origen de cada tramo.</td></tr>
         <tr><td>Protección de datos de los trabajadores</td><td><span class="lvl h">Alto</span></td><td>Informar a los conductores antes del despliegue (la LOPDGDD regula el uso de geolocalización en el ámbito laboral, art. 90), cada uno solo ve lo suyo, registro de accesos y revisión con la asesoría o el DPO.</td></tr>
-        <tr><td>Uso del móvil conduciendo</td><td><span class="lvl h">Alto</span></td><td>Interfaz pensada para usarse parado; si Movildata indica que el camión asignado está en marcha, la app bloquea acciones y solo muestra datos.</td></tr>
+        <tr><td>Uso del móvil conduciendo</td><td><span class="lvl h">Alto</span></td><td>Interfaz pensada para usarse parado; si Movildata indica que el camión asignado está en marcha, la app bloquea acciones y solo muestra datos. Los mensajes solo avisan: se leen y se contestan con el camión parado.</td></tr>
         <tr><td>Seguridad del login sencillo</td><td><span class="lvl m">Medio</span></td><td>PIN cifrado, bloqueo tras 5 intentos, dispositivo recordado, sesión que caduca al cerrar jornada y reseteo de PIN solo desde admin.</td></tr>
         <tr><td>Límites o caídas de la API de Movildata</td><td><span class="lvl m">Medio</span></td><td>Sincronización a base de datos propia con reintentos; la app muestra «actualizado hace X min» en lugar de fallar.</td></tr>
         <tr><td>Cambios en el Excel de Solred o datos incompletos</td><td><span class="lvl l">Bajo</span></td><td>Un único formato con columnas configuradas, validación fila a fila y lista de filas a revisar antes de confirmar la importación.</td></tr>
@@ -1886,6 +1892,7 @@ section.sec.dark{background:var(--ink)}
     </div>
     <h3 class="dec-h mt">Pendientes <small>· para la fase de descubrimiento</small></h3>
     <div class="qs">
+      <div class="q"><b>¿Qué perfiles usarán la app?</b><span>De momento se plantean dos, administración y conductor. Falta decidir si habrá perfiles para tráfico, oficina, taller o dirección, qué ve y qué puede hacer cada uno, y quién recibe los mensajes de los chóferes.</span></div>
       <div class="q"><b>¿Quién envía los avisos de corrección?</b><span>Automáticos o revisados por tráfico, y por qué canal: app, WhatsApp o email.</span></div>
       <div class="q"><b>¿Qué es un 10 en cada parte de la nota?</b><span>Tráfico fija los objetivos (acelerones cada 100 km, % de ralentí, consumo por camión) y se confirma qué eventos da la API de Movildata.</span></div>
       <div class="q"><b>¿Quién aprueba los canjes?</b><span>Depende de los perfiles, todavía por definir. De momento, el perfil de administración.</span></div>

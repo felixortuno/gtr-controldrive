@@ -1139,6 +1139,43 @@ section.sec.dark{background:var(--ink)}
 .bfoot .lg img.sub{height:22px}
 .bfoot p{margin:0 0 0 auto;color:var(--muted);font-size:14px}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+/* ============ FUNCIONES EXPLICADAS (sin capturas) ============ */
+.dia{border-top:2px solid var(--ink)}
+.paso{display:grid;grid-template-columns:132px minmax(0,1.05fr) minmax(0,1fr);gap:20px 48px;padding:40px 0;border-bottom:1px solid var(--line)}
+.paso-when{display:flex;flex-direction:column;align-items:flex-start;gap:14px}
+.paso-when .when{display:inline-block;font-weight:800;font-size:14px;background:var(--y);padding:3px 9px;border-radius:6px;font-variant-numeric:tabular-nums}
+.paso-when .when.done{background:var(--stinsa);color:#fff}
+.paso-ic{width:48px;height:48px;border-radius:12px;background:var(--card);border:1px solid var(--line);display:grid;place-items:center}
+.paso-ic svg{width:24px;height:24px}
+.paso h3{margin:0 0 10px;font-size:26px;font-weight:800;line-height:1.15;letter-spacing:-.01em}
+.paso .paso-lead{margin:0 0 20px;font-size:17px;color:var(--ink2);text-wrap:pretty}
+.porque{margin:0;padding:16px 18px;background:var(--card);border-left:4px solid var(--y);border-radius:0 8px 8px 0;font-size:15.5px;color:var(--ink2);text-wrap:pretty}
+.porque b,.uso h4,.apartado h4{display:block;font-size:12px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.porque b{margin-bottom:4px}
+.uso h4{margin:6px 0 16px}
+.uso ol,.uso ul,.apartado ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column}
+.uso ol{counter-reset:paso;gap:14px}
+.uso ol li{counter-increment:paso;display:grid;grid-template-columns:30px 1fr;gap:12px;align-items:start;font-size:16px;color:var(--ink2);text-wrap:pretty}
+.uso ol li:before{content:counter(paso);width:28px;height:28px;display:grid;place-items:center;background:var(--y);border:1.5px solid var(--ink);font-weight:800;font-size:14px;color:var(--ink);margin-top:-2px}
+.uso ul{gap:12px}
+.uso ul li,.apartado li{position:relative;padding-left:22px;font-size:16px;color:var(--ink2);text-wrap:pretty}
+.uso ul li:before,.apartado li:before{content:"";position:absolute;left:0;top:.5em;width:9px;height:9px;background:var(--y);border:1.5px solid var(--ink)}
+.apartados{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}
+.apartado{display:flex;flex-direction:column;padding:26px 24px 20px;border:1px solid var(--line);border-radius:14px;background:var(--bg)}
+.apartado-ic{width:44px;height:44px;border-radius:11px;background:var(--y);display:grid;place-items:center;margin-bottom:18px}
+.apartado-ic svg{width:22px;height:22px}
+.apartado h3{margin:0 0 8px;font-size:21px;font-weight:800;line-height:1.2}
+.apartado>p{margin:0 0 20px;font-size:15.5px;color:var(--ink2);text-wrap:pretty}
+.apartado h4{margin:0 0 12px}
+.apartado ul{gap:9px;margin-bottom:20px}
+.apartado li{font-size:15px}
+.apartado .datos{margin:auto 0 0;padding-top:14px;border-top:1px solid var(--line);display:flex;gap:8px;align-items:flex-start;font-size:13.5px;color:var(--muted)}
+.apartado .datos [data-ic]{flex:none;margin-top:1px}
+.apartado .datos svg{width:16px;height:16px}
+.apartado .datos b{color:var(--ink2)}
+@media(max-width:1100px){.paso{grid-template-columns:112px minmax(0,1fr)}.paso .uso{grid-column:2}.apartados{grid-template-columns:1fr 1fr}}
+@media(max-width:700px){.paso{grid-template-columns:1fr;gap:18px;padding:32px 0}.paso .uso{grid-column:auto}.paso-when{flex-direction:row;align-items:center}.paso-ic{width:40px;height:40px}.paso h3{font-size:23px}.apartados{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
@@ -1181,34 +1218,34 @@ section.sec.dark{background:var(--ink)}
 <section class="bsec grey" id="chofer">
   <div class="wrap">
     <h2>La app del chófer</h2>
-    <p class="intro">Nueve funciones: siete en el orden en que las usa durante el día, y dos que consulta cuando le hace falta.</p>
-    <div class="day">
-      <article class="fn"><div class="mini"><div class="phone" data-shot="detect"></div></div><div><span class="when">06:45</span><h3>Empezar el día</h3><p>La app reconoce el camión por la tarjeta del tacógrafo. El chófer solo confirma.</p><ul><li>Sin teclear matrículas</li><li>Si cambia de camión, se registra solo</li><li>Sin tarjeta, lo elige o escanea un QR</li></ul></div></article>
-      <article class="fn"><div class="mini"><div class="phone" data-shot="dash"></div></div><div><span class="when">07:00</span><h3>Su jornada</h3><p>Todo su día en una pantalla, siempre al día.</p><ul><li>Horas de conducción y próxima pausa</li><li>Km y consumo</li><li>Camiones que ha llevado hoy</li></ul></div></article>
-      <article class="fn"><div class="mini"><div class="phone" data-shot="fuelres"></div></div><div><span class="when">10:12</span><h3>Repostar al mejor precio</h3><p>Dice cuántos km le quedan y la app le lleva a la gasolinera que más nos conviene.</p><ul><li>Con el precio del día de nuestra tarjeta</li><li>Como mucho 10 minutos de desvío</li><li>Con mercancía peligrosa, solo las que la admiten</li></ul></div></article>
-      <article class="fn"><div class="mini"><div class="phone" data-shot="ticket"></div></div><div><span class="when">10:30</span><h3>Viajes y tickets</h3><p>Apunta cada viaje con un toque y hace una foto a cada ticket de repostaje.</p><ul><li>La app lee litros, precio e importe</li><li>Taller o avería con un botón</li><li>Nada de tickets sueltos</li></ul></div></article>
-      <article class="fn"><div class="mini"><div class="phone" data-shot="deca"></div></div><div><span class="when done">12:00</span><h3>Orden de transporte</h3><p>Si al cargar cambian los bultos, los palets o el peso, lo corrige desde el móvil. Esta parte ya está funcionando.</p><ul><li>Ve el antes y el después</li><li>Se guarda en el sistema al momento</li><li>Descarga la orden nueva en PDF</li></ul></div></article>
-      <article class="fn"><div class="mini"><div class="phone" data-shot="close"></div></div><div><span class="when">14:00</span><h3>Cerrar la jornada</h3><p>Horas, km y tickets ya están puestos. Confirma sus viajes con un toque.</p><ul><li>Su fila del parte mensual queda hecha</li><li>A fin de mes firma la hoja en el móvil</li><li>Sin papel</li></ul></div></article>
-      <article class="fn"><div class="mini"><div class="phone" data-shot="nota"></div></div><div><span class="when">Cada semana</span><h3>Su nota de conducción</h3><p>Una nota del 0 al 10 con cómo conduce, y qué hacer para mejorarla.</p><ul><li>Acelerones, frenazos, ralentí y velocidad</li><li>Consumo, repostaje y pausas</li><li>Solo se compara consigo mismo</li></ul></div></article>
-      <article class="fn"><div class="mini"><div class="phone" data-shot="coins"></div></div><div><span class="when">Cada lunes</span><h3>Sus monedas</h3><p>Según su nota media de la semana gana Monedas Trimodos, que cambia por premios de la empresa.</p><ul><li>30, 20 o 10 monedas según la nota</li><li>Más monedas por semanas seguidas con buena nota</li><li>Sin monedas la semana que se salta una pausa</li></ul></div></article>
-      <article class="fn"><div class="mini"><div class="phone" data-shot="docs"></div></div><div><span class="when">Cuando toca</span><h3>Sus documentos</h3><p>Ve cuándo caducan su carné ADR, su revisión médica y la ITV de su camión, y sube el renovado con una foto.</p><ul><li>Aviso antes de que caduque</li><li>De la revisión médica, solo si es apto</li><li>Tráfico valida el documento nuevo</li></ul></div></article>
+    <p class="intro">Nueve funciones: seis en el orden en que las usa durante el día y tres que consulta cuando le hace falta. Para cada una, qué hace, cómo se usa y por qué ayuda.</p>
+    <div class="dia">
+      <article class="paso"><div class="paso-when"><span class="when">06:45</span><span class="paso-ic" data-ic="truck"></span></div><div class="paso-main"><h3>Empezar el día</h3><p class="paso-lead">La app sabe en qué camión está el chófer por la tarjeta del tacógrafo, que Movildata ya lee. No hay que teclear ninguna matrícula.</p><p class="porque"><b>Por qué ayuda</b>Cada hora y cada kilómetro quedan unidos a quien conducía. Si a mitad del día pasa la tarjeta a otro camión, el tramo anterior se cierra solo.</p></div><div class="uso"><h4>Cómo se usa</h4><ol><li>Entra con su código de conductor y un PIN de 4 cifras. El móvil queda recordado.</li><li>La app le enseña el camión en el que ha metido la tarjeta.</li><li>Lo confirma con un toque. Sin tarjeta, elige la matrícula o escanea el QR de la cabina.</li></ol></div></article>
+      <article class="paso"><div class="paso-when"><span class="when">07:00</span><span class="paso-ic" data-ic="clock"></span></div><div class="paso-main"><h3>Su jornada</h3><p class="paso-lead">Una pantalla con todo su día, que se actualiza sola con los datos del camión y de la tarjeta.</p><p class="porque"><b>Por qué ayuda</b>Hoy el chófer no tiene dónde ver sus propios datos. Con esto planifica las pausas y los descansos sin hacer cuentas.</p></div><div class="uso"><h4>Qué ve</h4><ul><li>Horas de conducción y cuánto le falta para la próxima pausa.</li><li>Kilómetros y consumo de hoy.</li><li>Los camiones que ha llevado y el resumen de horas de la semana.</li></ul></div></article>
+      <article class="paso"><div class="paso-when"><span class="when">10:12</span><span class="paso-ic" data-ic="fuel"></span></div><div class="paso-main"><h3>Repostar al mejor precio</h3><p class="paso-lead">Cuando tiene que repostar, la app le dice a qué gasolinera ir para que la empresa pague menos, sin apartarle de su ruta.</p><p class="porque"><b>Por qué ayuda</b>Ya no depende de que el chófer conozca el precio de cada gasolinera: la cuenta la hace la app. Más adelante, si lleva mercancía peligrosa, solo le saldrán las que la admiten.</p></div><div class="uso"><h4>Cómo se usa</h4><ol><li>Pulsa «Repostar» y pone los kilómetros que le quedan en el depósito.</li><li>La app busca las gasolineras de nuestra tarjeta a 10 minutos de desvío como máximo y elige la más barata con el precio del día.</li><li>Le dice con qué tarjeta pagar y le abre la navegación en Google Maps o Waze.</li></ol></div></article>
+      <article class="paso"><div class="paso-when"><span class="when">10:30</span><span class="paso-ic" data-ic="cam"></span></div><div class="paso-main"><h3>Viajes y tickets</h3><p class="paso-lead">Lo que hoy se apunta de memoria se apunta en el momento, con un toque.</p><p class="porque"><b>Por qué ayuda</b>Se acaban los tickets sueltos por la cabina. Cada ticket se comprueba con lo que factura Solred.</p></div><div class="uso"><h4>Cómo se usa</h4><ol><li>Al terminar cada viaje, suma un servicio.</li><li>Al repostar, hace una foto al ticket: la app lee los litros, el precio y el importe, y él solo lo revisa.</li><li>Si va al taller o tiene una avería, lo marca con un botón, con el motivo y una foto.</li></ol></div></article>
+      <article class="paso"><div class="paso-when"><span class="when done">12:00</span><span class="paso-ic" data-ic="qr"></span></div><div class="paso-main"><h3>Orden de transporte</h3><p class="paso-lead">Si al cargar cambian los bultos, los palets o el peso, lo corrige desde el móvil. Esta parte ya está funcionando.</p><p class="porque"><b>Por qué ayuda</b>La orden queda corregida en el sistema al momento, con el nombre de quien la cambió.</p></div><div class="uso"><h4>Cómo se usa</h4><ol><li>Escanea el QR de la orden o escribe su número.</li><li>Cambia solo lo que haya cambiado: mercancía, bultos, palets o peso.</li><li>Revisa el antes y el después, confirma y descarga la orden nueva en PDF.</li></ol></div></article>
+      <article class="paso"><div class="paso-when"><span class="when">14:00</span><span class="paso-ic" data-ic="check"></span></div><div class="paso-main"><h3>Cerrar la jornada</h3><p class="paso-lead">Al acabar, el día está casi hecho: solo confirma lo que la app no puede saber.</p><p class="porque"><b>Por qué ayuda</b>Se acaba el parte mensual en papel. La hoja sale con el formato de siempre, así que en la oficina no cambia nada.</p></div><div class="uso"><h4>Cómo se usa</h4><ol><li>Horas, kilómetros y tickets ya vienen puestos.</li><li>Confirma los servicios, el lugar, el remolque y si ha pasado por el taller.</li><li>A fin de mes firma la hoja en el móvil y tráfico la valida.</li></ol></div></article>
+      <article class="paso"><div class="paso-when"><span class="when">Cada semana</span><span class="paso-ic" data-ic="chart"></span></div><div class="paso-main"><h3>Su nota de conducción</h3><p class="paso-lead">Una nota del 0 al 10 que le dice cómo conduce y qué puede mejorar.</p><p class="porque"><b>Por qué ayuda</b>Ve qué le baja la nota y un consejo concreto para mejorarla. No ve la nota de nadie más: solo se compara consigo mismo.</p></div><div class="uso"><h4>De dónde sale</h4><ul><li>Acelerones y frenazos, ralentí y velocidad.</li><li>Consumo de su camión y repostajes en la gasolinera buena.</li><li>Pausas respetadas. Las seis partes cuentan igual.</li></ul></div></article>
+      <article class="paso"><div class="paso-when"><span class="when">Cada lunes</span><span class="paso-ic" data-ic="coin"></span></div><div class="paso-main"><h3>Sus monedas</h3><p class="paso-lead">Según su nota media de la semana gana Monedas Trimodos, que cambia por premios de la empresa.</p><p class="porque"><b>Por qué ayuda</b>Premia conducir bien y con seguridad: la semana que se salta una pausa obligatoria no hay monedas.</p></div><div class="uso"><h4>Cómo funciona</h4><ol><li>Con un 9 o más gana 30 monedas; con un 8, 20; con un 7, 10.</li><li>Las semanas seguidas con buena nota dan monedas extra.</li><li>Pide el premio desde la app y la oficina lo aprueba.</li></ol></div></article>
+      <article class="paso"><div class="paso-when"><span class="when">Cuando toca</span><span class="paso-ic" data-ic="idcard"></span></div><div class="paso-main"><h3>Sus documentos</h3><p class="paso-lead">Ve cuándo caducan su carné ADR, su revisión médica y la ITV de su camión, con tiempo para renovarlos.</p><p class="porque"><b>Por qué ayuda</b>Nadie se entera tarde de un carné o una ITV caducados. De la revisión médica solo se guarda si es apto.</p></div><div class="uso"><h4>Cómo se usa</h4><ol><li>La app le avisa antes de que caduque cada documento.</li><li>Cuando lo renueva, le hace una foto y lo sube.</li><li>Tráfico lo valida y los avisos dejan de salir.</li></ol></div></article>
     </div>
   </div>
 </section>
 <section class="bsec" id="panel">
   <div class="wrap">
     <h2>El panel de tráfico</h2>
-    <p class="intro">Lo importante sale solo, sin tener que buscarlo.</p>
-    <div class="pnl">
-      <article class="pn"><div class="shotd"><div data-ashot="resumen"></div></div><h3>La flota, ahora</h3><p>Quién conduce, qué camión lleva y cuánto lleva conducido hoy.</p><ul><li>Estado de cada chófer</li><li>Horas y km del día</li><li>Nota de cada chófer</li></ul></article>
-      <article class="pn"><div class="shotd"><div data-ashot="asign"></div></div><h3>Quién llevó cada camión</h3><p>Un cronograma del día con cada camión y su chófer, hora a hora.</p><ul><li>Cambios de camión incluidos</li><li>Correcciones a mano</li><li>Exportar a Excel</li></ul></article>
-      <article class="pn"><div class="shotd"><div data-ashot="anexo"></div></div><h3>Partes mensuales</h3><p>El parte de cada camión se rellena solo, con el formato de siempre.</p><ul><li>Horas, km y viajes de cada día</li><li>Tickets comprobados con Solred</li><li>PDF o Excel para la oficina</li></ul></article>
-      <article class="pn"><div class="shotd"><div data-ashot="alertas"></div></div><h3>Alertas</h3><p>Avisos automáticos cuando algo no cuadra.</p><ul><li>Camión en marcha sin tarjeta</li><li>Pausa a punto de vencer</li><li>Chófer sin camión</li></ul></article>
-      <article class="pn"><div class="shotd"><div data-ashot="docum"></div></div><h3>Caducidades</h3><p>Carné ADR, revisión médica e ITV de cabezas tractoras y remolques, con semáforo.</p><ul><li>Verde, ámbar o rojo</li><li>Lo caducado sale primero</li><li>Con carné ADR caducado no puede llevar carga ADR</li></ul></article>
-      <article class="pn"><div class="shotd"><div data-ashot="progav"></div></div><h3>Avisos a medida</h3><p>Cada aviso se programa rellenando una frase: cuándo, qué documento, a quién y por dónde.</p><ul><li>App, email o WhatsApp</li><li>Se repite hasta que se renueva</li><li>Resumen a tráfico cada lunes</li></ul></article>
-      <article class="pn"><div class="shotd"><div data-ashot="repost"></div></div><h3>Repostaje</h3><p>Cuánto se puede ahorrar en cada camión y en qué gasolineras.</p><ul><li>Precios del día de nuestra tarjeta</li><li>Mejor alternativa en cada caso</li><li>Aviso al chófer con un clic</li></ul></article>
-      <article class="pn"><div class="shotd"><div data-ashot="recomp"></div></div><h3>Recompensas</h3><p>Las monedas de cada semana y los premios que piden los chóferes.</p><ul><li>Canjes para aprobar</li><li>Tramos y premios editables</li><li>Las monedas caducan a los 12 meses</li></ul></article>
-      <article class="pn"><div class="shotd"><div data-ashot="adr"></div></div><h3>Gasolineras para mercancía peligrosa</h3><p>Qué gasolineras admiten camiones con carga ADR.</p><ul><li>Verde, ámbar o rojo</li><li>Tráfico confirma las dudosas</li><li>La app del chófer lo usa al momento</li></ul></article>
+    <p class="intro">Nueve apartados en el ordenador de tráfico. Cada uno junta lo que hoy está repartido entre Movildata, los informes de Solred y los papeles de cada camión, y lo importante sale solo.</p>
+    <div class="apartados">
+      <article class="apartado"><span class="apartado-ic" data-ic="grid"></span><h3>La flota, ahora</h3><p>La pantalla de inicio: cada chófer, el camión que lleva y cómo va su día, con datos de hace unos minutos.</p><h4>Qué puede hacer tráfico</h4><ul><li>Ver quién conduce, quién está en pausa y quién no tiene tarjeta.</li><li>Ver las horas y los kilómetros de hoy de cada chófer.</li><li>Abrir la ficha de un chófer con su histórico y su nota.</li></ul><p class="datos"><span data-ic="db"></span><span><b>Datos:</b> Movildata y tarjeta del tacógrafo.</span></p></article>
+      <article class="apartado"><span class="apartado-ic" data-ic="cal"></span><h3>Quién llevó cada camión</h3><p>Un cronograma del día, hora a hora, con cada camión y el chófer que lo llevaba. Se monta solo con las tarjetas del tacógrafo.</p><h4>Qué puede hacer tráfico</h4><ul><li>Ver los cambios de camión del día.</li><li>Corregir una asignación a mano; queda registrado quién lo hizo.</li><li>Exportarlo a Excel.</li></ul><p class="datos"><span data-ic="db"></span><span><b>Datos:</b> Tarjeta del tacógrafo.</span></p></article>
+      <article class="apartado"><span class="apartado-ic" data-ic="file"></span><h3>Partes mensuales</h3><p>El Anexo II de cada camión se rellena solo cada día, y el día 1 sale la hoja del mes con el formato de siempre.</p><h4>Qué puede hacer tráfico</h4><ul><li>Ver las horas, los kilómetros y los servicios de cada día.</li><li>Revisar los tickets, ya comprobados con Solred.</li><li>Validar la hoja que firma el chófer y sacarla en PDF o Excel.</li></ul><p class="datos"><span data-ic="db"></span><span><b>Datos:</b> Tacógrafo, Movildata, lo que confirma el chófer y Solred.</span></p></article>
+      <article class="apartado"><span class="apartado-ic" data-ic="alert"></span><h3>Alertas</h3><p>Avisos que salen solos cuando algo no cuadra, para actuar en el momento y no a fin de mes.</p><h4>Qué puede hacer tráfico</h4><ul><li>Saber si un camión está en marcha sin tarjeta.</li><li>Ver qué pausas obligatorias están a punto de vencer.</li><li>Detectar chóferes sin camión o dos chóferes en el mismo camión.</li></ul><p class="datos"><span data-ic="db"></span><span><b>Datos:</b> Movildata y tarjeta del tacógrafo.</span></p></article>
+      <article class="apartado"><span class="apartado-ic" data-ic="idcard"></span><h3>Caducidades</h3><p>Todas las fechas de carnés ADR, revisiones médicas e ITV de cabezas tractoras y remolques, en una lista con semáforo.</p><h4>Qué puede hacer tráfico</h4><ul><li>Ver de un vistazo qué está al día, qué caduca pronto y qué ha caducado.</li><li>Validar el documento renovado que sube el chófer.</li><li>Impedir que un chófer con el carné ADR caducado marque carga ADR.</li></ul><p class="datos"><span data-ic="db"></span><span><b>Datos:</b> Los documentos que sube cada chófer.</span></p></article>
+      <article class="apartado"><span class="apartado-ic" data-ic="bell"></span><h3>Avisos a medida</h3><p>Cada aviso se programa rellenando una frase: «Avisar 30 días antes de que caduque la ITV del remolque a tráfico y al taller, por app y email».</p><h4>Qué puede hacer tráfico</h4><ul><li>Elegir cuándo, qué documento, a quién y por dónde: app, email o WhatsApp.</li><li>Repetir el aviso hasta que se renueve.</li><li>Recibir cada lunes un resumen de lo que caduca en los próximos 30 días.</li></ul><p class="datos"><span data-ic="db"></span><span><b>Datos:</b> Las fechas de Caducidades.</span></p></article>
+      <article class="apartado"><span class="apartado-ic" data-ic="fuel"></span><h3>Repostaje</h3><p>Cuánto se podría ahorrar en cada camión y dónde, con el informe mensual de Solred y los precios del día que mandan las redes por correo.</p><h4>Qué puede hacer tráfico</h4><ul><li>Ver qué camiones repostan fuera de la gasolinera más barata.</li><li>Ver la mejor alternativa en cada caso.</li><li>Mandar un aviso al chófer con un clic, después de revisarlo.</li></ul><p class="datos"><span data-ic="db"></span><span><b>Datos:</b> Informe de Solred y correos de precios.</span></p></article>
+      <article class="apartado"><span class="apartado-ic" data-ic="gift"></span><h3>Recompensas</h3><p>Las monedas que ha ganado cada chófer cada semana y los premios que piden.</p><h4>Qué puede hacer tráfico</h4><ul><li>Aprobar o rechazar los canjes.</li><li>Cambiar los tramos y el catálogo de premios.</li><li>Controlar la caducidad de las monedas, que duran 12 meses.</li></ul><p class="datos"><span data-ic="db"></span><span><b>Datos:</b> La nota semanal de cada chófer.</span></p></article>
+      <article class="apartado"><span class="apartado-ic" data-ic="shield"></span><h3>Gasolineras para mercancía peligrosa</h3><p>Qué gasolineras pueden recibir un camión con carga ADR. Un agente las revisa y las marca en verde, ámbar o rojo, con el motivo.</p><h4>Qué puede hacer tráfico</h4><ul><li>Ver por qué cada gasolinera tiene su color.</li><li>Confirmar por teléfono las dudosas.</li><li>Lo que confirma tráfico lo usa la app del chófer al momento.</li></ul><p class="datos"><span data-ic="db"></span><span><b>Datos:</b> OpenStreetMap, Ministerio, DGT y lo que confirma tráfico.</span></p></article>
     </div>
   </div>
 </section>
@@ -2151,27 +2188,6 @@ document.querySelectorAll('.tab').forEach(t=>t.addEventListener('click',()=>{
 
 const AV=o=>Object.assign({tab:'resumen',i:0,alr:ALR},o);
 
-</script>
-<script>
-/* ============ PANTALLAS ESTÁTICAS ============ */
-(function(){
-  const sc={
-    detect:V({screen:'detect',clock:'06:42'}),
-    dash:V({screen:'dash',segs:S2,clock:'13:20',svc:3,tickets:[TK]}),
-    nota:V({screen:'nota',segs:S1,clock:'13:20'}),
-    fuelres:V({screen:'fuelres',segs:S1,clock:'10:12',fkm:20,adr:true}),
-    ticket:V({screen:'ticket',segs:S1,clock:'10:30',full:true}),
-    deca:V({screen:'deca',segs:S1,clock:'12:04'}),
-    close:V({screen:'close',segs:S1,clock:'13:55',svc:4,tickets:[TK],trl:'R-4410'}),
-    coins:V({screen:'coins',segs:S1,clock:'13:20'}),
-    docs:V({screen:'docs',segs:S1,clock:'07:02'})
-  };
-  document.querySelectorAll('[data-shot]').forEach(e=>{e.innerHTML=rDriver(sc[e.dataset.shot])});
-  const ad={resumen:AV({}),asign:AV({tab:'asign'}),alertas:AV({tab:'alertas'}),anexo:AV({tab:'partes',anx:1}),repost:AV({tab:'repost'}),adr:AV({tab:'adr'}),docum:AV({tab:'docum'}),progav:AV({tab:'docum',prog:1}),recomp:AV({tab:'recomp'})};
-  document.querySelectorAll('[data-ashot]').forEach(e=>{e.innerHTML=rAdmin(ad[e.dataset.ashot])});
-  const fit=()=>document.querySelectorAll('.shotd').forEach(w=>{w.firstElementChild.style.transform='scale('+(w.clientWidth/1000)+')'});
-  const ro=new ResizeObserver(es=>es.forEach(en=>{en.target.firstElementChild.style.transform='scale('+(en.target.clientWidth/1000)+')'}));document.querySelectorAll('.shotd').forEach(w=>ro.observe(w));fit();
-})();
 </script>
 </body>
 </html>

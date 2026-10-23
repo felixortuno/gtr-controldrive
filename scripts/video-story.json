@@ -1,0 +1,216 @@
+[
+  {
+    "chapter": "Una jornada con la app",
+    "title": "Tu jornada, paso a paso",
+    "detail": "Así funcionaría la app durante un día de trabajo.",
+    "note": "Prototipo con datos de ejemplo",
+    "screen": "dash",
+    "scroll": 0,
+    "target": "aviso",
+    "seconds": 6.0
+  },
+  {
+    "title": "Antes de empezar",
+    "detail": "Todo se hace con el camión parado. Si está en marcha, la app solo muestra datos.",
+    "screen": "login",
+    "target": "key-1",
+    "seconds": 7.5
+  },
+  {
+    "chapter": "Entrar y confirmar el camión",
+    "title": "Entra con tu código y tu PIN",
+    "detail": "Cuatro cifras. El móvil queda recordado: al día siguiente, solo el PIN.",
+    "screen": "login",
+    "pin": true,
+    "target": "key-4",
+    "seconds": 7.5
+  },
+  {
+    "title": "Confirma tu camión",
+    "detail": "La app lo reconoce por tu tarjeta del tacógrafo. Si no es el tuyo, lo eliges o escaneas el QR de la cabina.",
+    "screen": "detect",
+    "target": "dconfirm",
+    "next": "plate",
+    "nextAt": 0.58,
+    "nextTarget": "qr",
+    "seconds": 8.5
+  },
+  {
+    "chapter": "Tu jornada y los cambios de camión",
+    "title": "Tu día, de un vistazo",
+    "detail": "Horas de conducción, próxima pausa, kilómetros y los camiones que has llevado hoy.",
+    "screen": "dash",
+    "scroll": 0,
+    "scrollTo": 280,
+    "target": "break",
+    "seconds": 7.0
+  },
+  {
+    "title": "Si cambias de camión",
+    "detail": "Pasas la tarjeta al otro camión y la app cierra sola el tramo anterior.",
+    "screen": "detect",
+    "mode": "change",
+    "target": "dconfirm",
+    "next": "dash",
+    "nextAt": 0.55,
+    "nextScroll": 345,
+    "nextTarget": "tl",
+    "twoTrucks": true,
+    "seconds": 7.0
+  },
+  {
+    "chapter": "Repostar",
+    "title": "Dile cuántos km te quedan",
+    "detail": "Busca la gasolinera más barata de la tarjeta, con 10 minutos de desvío como máximo.",
+    "screen": "fuel",
+    "target": "fkm-20",
+    "seconds": 7.5
+  },
+  {
+    "title": "Con carga ADR",
+    "detail": "Marca «Carga ADR» y solo te propone gasolineras que admiten mercancía peligrosa.",
+    "note": "Previsto para una segunda fase",
+    "screen": "fuel",
+    "adr": true,
+    "target": "fadr",
+    "seconds": 6.5
+  },
+  {
+    "title": "La gasolinera recomendada",
+    "detail": "Ves dónde está, el precio y con qué tarjeta pagar, y abres la navegación con un toque.",
+    "note": "Precios y gasolineras de ejemplo",
+    "screen": "fuelres",
+    "adr": true,
+    "scroll": 90,
+    "scrollTo": 280,
+    "target": "fnav",
+    "seconds": 7.5
+  },
+  {
+    "chapter": "Servicios, tickets y taller",
+    "title": "Suma cada servicio",
+    "detail": "Un toque al terminar cada viaje. Si te equivocas, lo corriges.",
+    "screen": "dash",
+    "scroll": 470,
+    "target": "svc-plus",
+    "serviceIncrement": true,
+    "seconds": 6.0
+  },
+  {
+    "title": "Foto al ticket",
+    "detail": "La app lee los litros, el precio y el importe. Tú lo revisas y lo guardas.",
+    "screen": "ticket",
+    "scanTicket": true,
+    "target": "tfull-1",
+    "seconds": 7.5
+  },
+  {
+    "title": "¿Has llenado el depósito?",
+    "detail": "Márcalo: con los llenados completos se calcula el consumo real del camión.",
+    "screen": "ticket",
+    "full": true,
+    "target": "tsave",
+    "seconds": 6.5
+  },
+  {
+    "title": "Taller o avería",
+    "detail": "Eliges el motivo, añades una foto si quieres y tráfico recibe el aviso.",
+    "screen": "taller",
+    "target": "tmot-Avería",
+    "nextTarget": "tlsave",
+    "taller": true,
+    "seconds": 6.5
+  },
+  {
+    "chapter": "Orden de transporte",
+    "title": "Si cambia la carga, corrige la orden",
+    "detail": "Busca la orden y cambia la mercancía, los bultos, los palets o el peso.",
+    "note": "Ya funciona aparte; falta unirlo a esta app",
+    "screen": "deca",
+    "target": "dksum",
+    "seconds": 8.0
+  },
+  {
+    "title": "Guarda la orden nueva",
+    "detail": "Ves el antes y el después, confirmas y descargas la orden nueva en PDF.",
+    "note": "En esta demo no se envía nada",
+    "screen": "deca",
+    "target": "dksave",
+    "seconds": 7.0
+  },
+  {
+    "chapter": "Cerrar el día",
+    "title": "Revisa antes de cerrar",
+    "detail": "Horas, kilómetros y tickets ya vienen puestos. Tú confirmas servicios, lugar y remolque.",
+    "screen": "close",
+    "twoTrucks": true,
+    "scroll": 0,
+    "scrollTo": 150,
+    "target": "trl-R-4410",
+    "seconds": 7.0
+  },
+  {
+    "title": "Tu fila del parte, hecha",
+    "detail": "El parte mensual se rellena solo cada día. A fin de mes lo firmas en el móvil.",
+    "screen": "close",
+    "twoTrucks": true,
+    "target": "closeok",
+    "next": "end",
+    "nextAt": 0.35,
+    "seconds": 8.0
+  },
+  {
+    "chapter": "Tu nota y tus monedas",
+    "title": "Tu nota de conducción",
+    "detail": "Del 0 al 10, con lo que la sube y lo que la baja. Solo te comparas contigo mismo.",
+    "screen": "nota",
+    "scroll": 0,
+    "scrollTo": 100,
+    "target": "ncomp",
+    "seconds": 8.5
+  },
+  {
+    "title": "Tus monedas",
+    "detail": "Según tu nota de la semana ganas Monedas Trimodos. Aquí ves tu saldo y tu racha.",
+    "note": "Reglas por definir",
+    "screen": "coins",
+    "scroll": 0,
+    "scrollTo": 340,
+    "target": "canjear-0",
+    "seconds": 7.0
+  },
+  {
+    "title": "Cámbialas por premios",
+    "detail": "Eliges un premio del catálogo y la oficina aprueba el canje.",
+    "note": "Catálogo de ejemplo",
+    "screen": "coins",
+    "scroll": 420,
+    "target": "canjear-0",
+    "seconds": 6.0
+  },
+  {
+    "chapter": "Documentos",
+    "title": "Lo que está por caducar",
+    "detail": "Carné ADR, revisión médica e ITV del camión y del remolque, con aviso antes de que caduquen.",
+    "screen": "docs",
+    "target": "docup",
+    "seconds": 8.0
+  },
+  {
+    "title": "Sube el documento renovado",
+    "detail": "Le haces una foto y tráfico lo valida. De la revisión médica solo se guarda si eres apto.",
+    "screen": "docs",
+    "target": "docup",
+    "seconds": 8.0
+  },
+  {
+    "chapter": "El siguiente paso",
+    "title": "Probarla juntos",
+    "detail": "Empezaríamos con cinco conductores durante un mes, con el parte en papel en paralelo.",
+    "note": "Propuesta de piloto",
+    "screen": "dash",
+    "scroll": 470,
+    "target": "parte",
+    "seconds": 6.5
+  }
+]

@@ -1308,6 +1308,70 @@ section.sec.dark{background:var(--ink)}
   .dk-next small{white-space:normal}
 }
 @media(max-width:600px){.ws-wrap{padding:0 12px}.ws{border-radius:16px}.ws-area{padding:10px}}
+
+/* ============ MENSAJES Y NOTAS ============ */
+.a-qb em.new{background:var(--y);color:var(--ink)}
+.m-body{display:flex;flex-direction:column;gap:8px;background:#eef0f2}
+.m-day{align-self:center;font:700 9.5px Mulish,sans-serif;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);background:#fff;padding:3px 9px;border-radius:10px;margin:2px 0 4px}
+.m-msg{display:flex;flex-direction:column;align-items:flex-start;max-width:84%}
+.m-msg.me{align-self:flex-end;align-items:flex-end}
+.m-bub{background:#fff;border-radius:14px 14px 14px 4px;padding:8px 11px;font-size:12.5px;line-height:1.4;color:var(--ink);box-shadow:0 1px 1px rgba(18,20,23,.06)}
+.m-msg.me .m-bub{background:var(--y);border-radius:14px 14px 4px 14px}
+.m-msg small{font-size:9.5px;color:var(--muted);margin:3px 4px 0}
+.m-quick{flex:none;display:flex;gap:6px;overflow-x:auto;padding:9px 12px 0;background:#fff;border-top:1px solid var(--line);scrollbar-width:none}
+.m-quick::-webkit-scrollbar{display:none}
+.m-quick button{flex:none;border:1px solid var(--line);background:#f6f7f8;border-radius:14px;padding:6px 10px;font:600 11px Mulish,sans-serif;color:var(--ink);cursor:pointer;white-space:nowrap}
+.m-foot{border-top:0;padding-top:8px}
+.m-comp{display:flex;gap:6px;align-items:center}
+.m-comp input{flex:1;min-width:0;height:40px;border-radius:20px;border:1px solid var(--line);background:#f6f7f8;padding:0 14px;font:500 13px Mulish,sans-serif;color:var(--ink)}
+.m-comp input:focus,.n-new textarea:focus,.am-comp input:focus{outline:2px solid var(--y);outline-offset:0;background:#fff}
+.m-send{width:40px;height:40px;border-radius:50%;border:0;background:var(--ink);color:var(--y);display:grid;place-items:center;cursor:pointer;flex:none}
+.m-send svg{width:17px;height:17px}
+.n-new{background:#fff;border-radius:16px;padding:10px;display:flex;flex-direction:column;gap:8px}
+.n-new textarea{width:100%;box-sizing:border-box;resize:none;border:1px solid var(--line);border-radius:12px;padding:9px 10px;font:500 12.5px/1.4 Mulish,sans-serif;color:var(--ink);background:#f6f7f8}
+.n-act{display:flex;gap:6px}
+.n-act button{height:32px;border-radius:10px;border:1px solid var(--line);background:#fff;font:700 11px Mulish,sans-serif;color:var(--ink);display:flex;align-items:center;gap:5px;padding:0 9px;cursor:pointer}
+.n-act button svg{width:13px;height:13px}
+.n-act .n-save{margin-left:auto;background:var(--ink);color:#fff;border-color:var(--ink);padding:0 14px}
+.n-ph{display:inline-flex;align-items:center;gap:4px;font:700 10px Mulish,sans-serif;color:#17766C;background:#e5f6ee;border-radius:8px;padding:2px 7px;align-self:flex-start}
+.n-ph svg{width:11px;height:11px}
+.n-item{display:flex;gap:8px;align-items:flex-start;background:#fff;border-radius:14px;padding:10px 10px 10px 12px;margin-top:8px}
+.n-item>div{flex:1;min-width:0}
+.n-item small{font:700 9.5px Mulish,sans-serif;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.n-item p{margin:3px 0 0;font-size:12.5px;line-height:1.4;color:var(--ink)}
+.n-item .n-ph{margin-top:6px}
+.n-del{width:26px;height:26px;border-radius:8px;border:0;background:#f1f2f4;color:var(--muted);display:grid;place-items:center;cursor:pointer;flex:none}
+.n-del svg{width:12px;height:12px}
+.am{display:grid;grid-template-columns:minmax(220px,300px) 1fr;gap:14px;height:calc(100% - 62px);min-height:430px}
+.am-list{background:#fff;border-radius:14px;padding:8px;display:flex;flex-direction:column;gap:3px;overflow:auto}
+.am-all{display:flex;align-items:center;justify-content:center;gap:8px;min-height:38px;border-radius:10px;border:1px dashed #c3c8ce;background:#fafbfc;font:700 12px Mulish,sans-serif;color:var(--ink);cursor:pointer;margin-bottom:4px}
+.am-all svg{width:15px;height:15px}
+.am-c{display:flex;align-items:center;gap:10px;padding:9px 8px;border-radius:10px;border:0;background:transparent;text-align:left;cursor:pointer;font:inherit;color:inherit;width:100%}
+.am-c:hover{background:#f3f4f6}
+.am-c.on{background:#fff8d1;box-shadow:inset 0 0 0 1px rgba(224,186,0,.55)}
+.am-t{flex:1;min-width:0;display:flex;flex-direction:column}
+.am-t b{font-size:13px}
+.am-t small{font-size:11.5px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.am-m{display:flex;flex-direction:column;align-items:flex-end;gap:4px;flex:none}
+.am-m small{font-size:10.5px;color:var(--muted)}
+.am-m em{font-style:normal;background:var(--bad);color:#fff;font:700 10px Mulish,sans-serif;border-radius:10px;padding:1px 7px}
+.am-th{background:#fff;border-radius:14px;display:flex;flex-direction:column;min-height:0;overflow:hidden}
+.am-h{display:flex;align-items:center;gap:10px;padding:12px 16px;border-bottom:1px solid var(--line)}
+.am-h b{font-size:14px;display:block}
+.am-h small{font-size:11.5px;color:var(--muted)}
+.am-msgs{flex:1;min-height:120px;overflow:auto;padding:16px;display:flex;flex-direction:column;gap:10px;background:#f7f8f9}
+.am-msg{display:flex;flex-direction:column;align-items:flex-start;max-width:72%}
+.am-msg.me{align-self:flex-end;align-items:flex-end}
+.am-bub{background:#fff;border:1px solid var(--line);border-radius:14px 14px 14px 4px;padding:9px 12px;font-size:13px;line-height:1.45}
+.am-msg.me .am-bub{background:var(--ink);color:#fff;border-color:var(--ink);border-radius:14px 14px 4px 14px}
+.am-msg small{font-size:10.5px;color:var(--muted);margin:3px 4px 0}
+.am-q{display:flex;gap:6px;flex-wrap:wrap;padding:10px 16px 0;border-top:1px solid var(--line)}
+.am-q button{border:1px solid var(--line);background:#f6f7f8;border-radius:14px;padding:5px 11px;font:600 11.5px Mulish,sans-serif;cursor:pointer;color:var(--ink)}
+.am-comp{display:flex;gap:8px;padding:10px 16px 14px}
+.am-comp input{flex:1;min-width:0;height:40px;border-radius:10px;border:1px solid var(--line);padding:0 12px;font:500 13px Mulish,sans-serif;background:#f6f7f8;color:var(--ink)}
+.am-send{display:flex;align-items:center;gap:7px;height:40px;padding:0 16px;border-radius:10px;border:0;background:var(--y);color:var(--ink);font:700 13px Mulish,sans-serif;cursor:pointer}
+.am-send svg{width:15px;height:15px}
+@container adm (max-width:760px){.am{grid-template-columns:1fr;height:auto}.am-list{max-height:210px}.am-msgs{max-height:300px}}
 </style>
 </head>
 <body>
@@ -1781,9 +1845,11 @@ section.sec.dark{background:var(--ink)}
             <div class="ck-i" id="ck-deca"><span class="bx" data-ic="check"></span><div><b>Corrige una orden de transporte</b><small>El flujo DECA, que ya funciona contra Odoo.</small></div></div>
             <div class="ck-i" id="ck-coins"><span class="bx" data-ic="check"></span><div><b>Canjea un premio</b><small>En «Mis monedas», mira tu racha y canjea algo del catálogo.</small></div></div>
             <div class="ck-i" id="ck-docs"><span class="bx" data-ic="check"></span><div><b>Revisa tus documentos</b><small>Cuándo caducan tu carné ADR, tu revisión médica y la ITV de tu camión.</small></div></div>
+            <div class="ck-i" id="ck-msg"><span class="bx" data-ic="check"></span><div><b>Escribe a la oficina</b><small>En «Mensajes», manda un mensaje a tráfico o usa una respuesta rápida.</small></div></div>
+            <div class="ck-i" id="ck-nota"><span class="bx" data-ic="check"></span><div><b>Apunta una nota</b><small>En «Mis notas», escribe algo o pulsa «Ejemplo» y guárdala.</small></div></div>
             <div class="ck-i" id="ck-finish"><span class="bx" data-ic="check"></span><div><b>Cierra la jornada</b><small>Confirma servicios, lugar y remolque: tu fila del parte mensual queda hecha.</small></div></div>
           </div></div>
-          <div data-g="en el panel"><h5>En el panel</h5><div class="ck"><div class="ck-i" id="ck-a-anexo"><span class="bx" data-ic="check"></span><div><b>Mira el Anexo II del mes</b><small>En «Partes mensuales», pulsa «Ver Anexo II»: la hoja sale sola.</small></div></div><div class="ck-i" id="ck-a-prog"><span class="bx" data-ic="check"></span><div><b>Programa un aviso</b><small>En «Documentación», pulsa «Programar aviso», rellena la frase y guárdalo.</small></div></div><div class="ck-i" id="ck-a-cj"><span class="bx" data-ic="check"></span><div><b>Aprueba un canje</b><small>En «Recompensas», aprueba uno de los premios que piden los chóferes.</small></div></div><div class="ck-i" id="ck-a-msg"><span class="bx" data-ic="check"></span><div><b>Avisa a un chófer</b><small>En «Repostaje», pulsa «Avisar» en una matrícula y envía el aviso.</small></div></div><div class="ck-i" id="ck-a-adr"><span class="bx" data-ic="check"></span><div><b>Valida una gasolinera ADR</b><small>En «Estaciones ADR», pulsa «Llamar y validar» en una dudosa y confírmala.</small></div></div></div></div>
+          <div data-g="en el panel"><h5>En el panel</h5><div class="ck"><div class="ck-i" id="ck-a-mreply"><span class="bx" data-ic="check"></span><div><b>Contesta a un chófer</b><small>En «Mensajes», abre la conversación de Javier y contéstale: lo verá en su móvil.</small></div></div><div class="ck-i" id="ck-a-anexo"><span class="bx" data-ic="check"></span><div><b>Mira el Anexo II del mes</b><small>En «Partes mensuales», pulsa «Ver Anexo II»: la hoja sale sola.</small></div></div><div class="ck-i" id="ck-a-prog"><span class="bx" data-ic="check"></span><div><b>Programa un aviso</b><small>En «Documentación», pulsa «Programar aviso», rellena la frase y guárdalo.</small></div></div><div class="ck-i" id="ck-a-cj"><span class="bx" data-ic="check"></span><div><b>Aprueba un canje</b><small>En «Recompensas», aprueba uno de los premios que piden los chóferes.</small></div></div><div class="ck-i" id="ck-a-msg"><span class="bx" data-ic="check"></span><div><b>Avisa a un chófer</b><small>En «Repostaje», pulsa «Avisar» en una matrícula y envía el aviso.</small></div></div><div class="ck-i" id="ck-a-adr"><span class="bx" data-ic="check"></span><div><b>Valida una gasolinera ADR</b><small>En «Estaciones ADR», pulsa «Llamar y validar» en una dudosa y confírmala.</small></div></div></div></div>
         </div></section>
         <section class="win win-modal" id="winMod" aria-label="Ventana" hidden><div class="win-bar"><span class="win-dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="win-ttl"><span data-ic="file" aria-hidden="true"></span><b>Ventana</b></span><span class="win-ctl"><button type="button" data-wc="close" aria-label="Cerrar"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 4l8 8M12 4l-8 8"/></svg></button></span></div><div class="win-body mod-body" id="admModal"></div></section>
       </div>
@@ -2151,6 +2217,53 @@ const hd=x=>{let h=Math.floor(x),m=Math.round((x-h)*60);if(m===60){h++;m=0}retur
 const nowH=()=>{const d=new Date();return d.getHours()+d.getMinutes()/60};
 const EU=`<svg viewBox="0 0 10 10" aria-hidden="true"><g fill="#FFD200"><polygon points="8.60,4.05 8.83,4.68 9.50,4.71 8.98,5.12 9.16,5.77 8.60,5.40 8.04,5.77 8.22,5.12 7.70,4.71 8.37,4.68"/><polygon points="8.12,5.85 8.35,6.48 9.02,6.51 8.50,6.92 8.68,7.57 8.12,7.20 7.56,7.57 7.74,6.92 7.21,6.51 7.88,6.48"/><polygon points="6.80,7.17 7.03,7.79 7.70,7.82 7.18,8.24 7.36,8.89 6.80,8.52 6.24,8.89 6.42,8.24 5.90,7.82 6.57,7.79"/><polygon points="5.00,7.65 5.23,8.28 5.90,8.31 5.38,8.72 5.56,9.37 5.00,9.00 4.44,9.37 4.62,8.72 4.10,8.31 4.77,8.28"/><polygon points="3.20,7.17 3.43,7.79 4.10,7.82 3.58,8.24 3.76,8.89 3.20,8.52 2.64,8.89 2.82,8.24 2.30,7.82 2.97,7.79"/><polygon points="1.88,5.85 2.12,6.48 2.79,6.51 2.26,6.92 2.44,7.57 1.88,7.20 1.32,7.57 1.50,6.92 0.98,6.51 1.65,6.48"/><polygon points="1.40,4.05 1.63,4.68 2.30,4.71 1.78,5.12 1.96,5.77 1.40,5.40 0.84,5.77 1.02,5.12 0.50,4.71 1.17,4.68"/><polygon points="1.88,2.25 2.12,2.88 2.79,2.91 2.26,3.32 2.44,3.97 1.88,3.60 1.32,3.97 1.50,3.32 0.98,2.91 1.65,2.88"/><polygon points="3.20,0.93 3.43,1.56 4.10,1.59 3.58,2.01 3.76,2.65 3.20,2.28 2.64,2.65 2.82,2.01 2.30,1.59 2.97,1.56"/><polygon points="5.00,0.45 5.23,1.08 5.90,1.11 5.38,1.52 5.56,2.17 5.00,1.80 4.44,2.17 4.62,1.52 4.10,1.11 4.77,1.08"/><polygon points="6.80,0.93 7.03,1.56 7.70,1.59 7.18,2.01 7.36,2.65 6.80,2.28 6.24,2.65 6.42,2.01 5.90,1.59 6.57,1.56"/><polygon points="8.12,2.25 8.35,2.88 9.02,2.91 8.50,3.32 8.68,3.97 8.12,3.60 7.56,3.97 7.74,3.32 7.21,2.91 7.88,2.88"/></g></svg>`;
 const lp=p=>`<span class="lp" role="img" aria-label="Matrícula ${p}"><i>${EU}<span>E</span></i><b>${p}</b></span>`;
+/* ============ MENSAJES Y NOTAS ============ */
+const JI=0;
+const MS0=()=>({th:{
+  0:[{f:'o',t:'07:42',x:'Buenos días, Javier. Hoy cargas en Cerámica Saloni, muelle 4.'},{f:'d',t:'07:45',x:'Recibido. Salgo ahora de la base.',r:1},{f:'o',t:'11:20',x:'Cuando descargues en Valencia, pásate por el taller: toca revisar los neumáticos.'}],
+  1:[{f:'d',t:'09:10',x:'Llego a Valencia en 40 minutos.',r:1},{f:'o',t:'09:12',x:'Perfecto, avisamos al cliente.'}],
+  2:[{f:'d',t:'11:58',x:'Hay retraso en la descarga, unos 30 minutos.'}],
+  4:[{f:'o',t:'08:05',x:'Laura, hoy te toca el remolque R-3182.'},{f:'d',t:'08:07',x:'Vale, lo engancho en la base.',r:1}]
+},seenD:2,draftD:'',draftA:'',open:0});
+let MS=MS0();
+const NT0=()=>[{t:'Lun 5',x:'Saloni (Alcora): entrar por la puerta de atrás, muelle 4. Preguntar por Paco.'},{t:'Mié 7',x:'Porcelanosa carga de 7 a 15 h. Llevar chaleco y botas.'}];
+let NT=NT0(),NTd='',NTf=false;
+const mEsc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const mUnD=()=>MS.th[JI].filter((m,i)=>m.f==='o'&&i>=MS.seenD).length;
+const mUnA=i=>MS.th[i].filter(m=>m.f==='d'&&!m.r).length;
+const mUnAll=()=>Object.keys(MS.th).reduce((n,i)=>n+mUnA(i),0);
+const mIni=n=>n.split(' ').map(w=>w[0]).join('').slice(0,2);
+const QD=['Llego en 20 minutos','Ya he descargado','Hay retraso en la carga'];
+const QA=['Recibido, gracias','Avisamos al cliente','Llámame cuando pares'];
+const SEND='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 2 11 13"/><path d="m22 2-7 20-4-9-9-4z"/></svg>';
+const XS='<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M4 4l8 8M12 4l-8 8"/></svg>';
+function markRead(i){let ch=0;MS.th[i].forEach(m=>{if(m.f==='d'&&!m.r){m.r=1;ch=1}});return ch}
+function mPing(){aRender();if(A.tab==='msgs'&&MS.open===JI)setTimeout(()=>{if(markRead(JI)){aRender();dRender()}},1400)}
+function mPingD(){if(D.screen==='msgs')MS.seenD=MS.th[JI].length;else if(!['login','detect','plate'].includes(D.screen))dToast('Nuevo mensaje de tráfico');dRender()}
+function rMsgs(s){
+  const th=MS.th[JI];
+  return `<div class="a-top"><button class="a-icon" data-act="mback" data-v="mback" aria-label="Volver">${I.back}</button><div class="a-top-t"><b>Mensajes</b><small>Con tráfico y la oficina</small></div></div>
+  <div class="a-body m-body"><div class="m-day">Hoy</div>${th.map(m=>`<div class="m-msg ${m.f==='d'?'me':''}"><div class="m-bub">${mEsc(m.x)}</div><small>${m.f==='o'?'Tráfico · ':''}${m.t}${m.f==='d'?(m.r?' · Leído':' · Enviado'):''}</small></div>`).join('')}</div>
+  <div class="m-quick">${QD.map(q=>`<button data-act="mq" data-x="${q}">${q}</button>`).join('')}</div>
+  <div class="a-foot m-foot"><div class="m-comp"><input data-ddraft type="text" placeholder="Escribe a tráfico…" value="${mEsc(MS.draftD)}" aria-label="Mensaje para tráfico"><button class="m-send" data-act="dmsend" data-v="dmsend" aria-label="Enviar">${SEND}</button></div></div>`;
+}
+function rNotas(s){
+  return `<div class="a-top"><button class="a-icon" data-act="nback" data-v="nback" aria-label="Volver">${I.back}</button><div class="a-top-t"><b>Mis notas</b><small>Solo las ves tú</small></div></div>
+  <div class="a-body"><div class="n-new"><textarea data-ndraft rows="3" placeholder="Apunta lo que quieras: un muelle, un horario, un contacto…" aria-label="Nueva nota">${mEsc(NTd)}</textarea>${NTf?`<span class="n-ph">${I.cam}Foto añadida</span>`:''}<div class="n-act"><button data-act="nfoto">${I.cam}${NTf?'Quitar':'Foto'}</button><button data-act="nex">Ejemplo</button><button class="n-save" data-act="nsave" data-v="nsave">Guardar</button></div></div>
+  <div class="a-sec">${NT.length} ${NT.length===1?'nota':'notas'}</div>
+  ${NT.map((n,i)=>`<div class="n-item"><div><small>${n.t}</small><p>${mEsc(n.x)}</p>${n.f?`<span class="n-ph">${I.cam}Foto</span>`:''}</div><button class="n-del" data-act="ndel" data-i="${i}" aria-label="Borrar nota">${XS}</button></div>`).join('')}
+  <div class="a-info">${I.lock}<span>Tus notas no las ve nadie más, tampoco la oficina.</span></div></div>`;
+}
+function aMsgs(s){
+  const o=MS.open,d=DRV[o],th=MS.th[o];
+  const list=Object.keys(MS.th).map(Number).map(i=>{const t=MS.th[i],l=t[t.length-1],u=mUnA(i);return `<button class="am-c ${i===o?'on':''}" data-act="mconv" data-i="${i}" data-v="mconv-${i}"><span class="av">${mIni(DRV[i].n)}</span><span class="am-t"><b>${DRV[i].n}</b><small>${l.f==='o'?'Tú: ':''}${mEsc(l.x)}</small></span><span class="am-m"><small>${l.t}</small>${u?`<em>${u}</em>`:''}</span></button>`}).join('');
+  return `${adHead('Mensajes','Conversaciones con los chóferes · lo que escriben desde la app llega aquí')}
+  <div class="am"><div class="am-list"><button class="am-all" data-act="mall" data-v="mall">${I.users}Escribir a toda la flota</button>${list}</div>
+  <div class="am-th"><div class="am-h"><span class="av">${mIni(d.n)}</span><div><b>${d.n}</b><small>${d.st}${d.p?' · '+d.p:''}</small></div></div>
+  <div class="am-msgs">${th.map(m=>`<div class="am-msg ${m.f==='o'?'me':''}"><div class="am-bub">${mEsc(m.x)}</div><small>${m.f==='o'?'Tráfico':d.n.split(' ')[0]} · ${m.t}</small></div>`).join('')}</div>
+  <div class="am-q">${QA.map(q=>`<button data-act="mq2" data-x="${q}">${q}</button>`).join('')}</div>
+  <div class="am-comp"><input data-mdraft type="text" placeholder="Escribe a ${d.n.split(' ')[0]}…" value="${mEsc(MS.draftA)}" aria-label="Mensaje para ${d.n}"><button class="am-send" data-act="msend" data-v="msend">${SEND}Enviar</button></div></div></div>`;
+}
 const fleet=p=>FLEET.find(f=>f.p===p)||{p,m:'—',b:''};
 const ini=n=>n.split(' ').map(w=>w[0]).slice(0,2).join('');
 const wm=(sm,sub)=>`<span class="wm ${sm?'sm':''}"><span class="wm-mark">${MARK}</span><span class="wm-txt"><small>Grupo</small>Trimodos</span>${sub?`<span class="wm-sub">${sub}</span>`:''}</span>`;
@@ -2171,7 +2284,7 @@ function rDriver(s){
   else if(s.screen==='deca')h+=rDeca(s);
   else if(s.screen==='nota')h+=rNota(s);
   else if(s.screen==='coins')h+=rCoins(s);
-  else if(s.screen==='docs')h+=rDocs(s);
+  else if(s.screen==='docs')h+=rDocs(s); else if(s.screen==='msgs')h+=rMsgs(s); else if(s.screen==='notas')h+=rNotas(s);
   if(s.toast)h+=`<div class="a-toast">${I.check}<span>${s.toast}</span></div>`;
   return h+'</div>';
 }
@@ -2327,7 +2440,7 @@ function rParte(s){const nt=(s.tickets||[]).length;
   return `<div class="a-card" data-v="parte"><div class="hd"><span>Parte del día</span><span>${nt?nt+' ticket'+(nt>1?'s':''):'sin tickets'}</span></div>${svcCtl(s)}
     <div class="a-pbtns"><button class="a-pbtn" data-act="ticket" data-v="ticket">${I.cam}Foto del ticket</button><button class="a-pbtn" data-act="taller" data-v="taller">${I.wrench}${s.taller?'Taller: '+s.taller.m:'Taller / avería'}</button></div></div>
     <button class="a-deca" data-act="deca" data-v="deca">${I.file}<span><b>Corregir orden de transporte</b><small>DECA · mercancía, bultos, palets y peso</small></span>${I.chev}</button>
-    <div class="a-quick"><button class="a-qb" data-act="coins" data-v="coins">${I.coin}<small>Mis monedas</small><b>${CO.saldo-(s.spent||0)}<i>+${CO.sem} esta sem.</i></b></button><button class="a-qb" data-act="docs" data-v="docs">${I.idcard}<small>Mis documentos</small><b>${MYDOCS.length+TRUCKDOCS.length}<i>documentos</i></b>${(()=>{const n=[...MYDOCS,...TRUCKDOCS].filter(x=>dleft(x.f)<=60).length;return n?`<em>${n} caduca${n>1?'n':''} pronto</em>`:''})()}</button></div>`}
+    <div class="a-quick"><button class="a-qb" data-act="coins" data-v="coins">${I.coin}<small>Mis monedas</small><b>${CO.saldo-(s.spent||0)}<i>+${CO.sem} esta sem.</i></b></button><button class="a-qb" data-act="docs" data-v="docs">${I.idcard}<small>Mis documentos</small><b>${MYDOCS.length+TRUCKDOCS.length}<i>documentos</i></b>${(()=>{const n=[...MYDOCS,...TRUCKDOCS].filter(x=>dleft(x.f)<=60).length;return n?`<em>${n} caduca${n>1?'n':''} pronto</em>`:''})()}</button><button class="a-qb" data-act="msgs" data-v="msgs">${I.msg}<small>Mensajes</small><b>${mUnD()||MS.th[JI].length}<i>${mUnD()?'sin leer':'mensajes'}</i></b>${mUnD()?`<em class="new">${mUnD()} nuevo${mUnD()>1?'s':''}</em>`:''}</button><button class="a-qb" data-act="notas" data-v="notas">${I.file}<small>Mis notas</small><b>${NT.length}<i>${NT.length===1?'nota':'notas'}</i></b></button></div>`}
 function tktPaper(){return `<div class="tkt"><b>E.S. LA VILAVELLA</b><span>NULES · CASTELLÓN</span><hr><span>08/10/26 07:52</span><span>SURTIDOR 4</span><span>GASÓLEO A</span><span class="r">312,40 L × 1,925</span><b class="r">TOTAL 601,37 €</b><hr><span>TARJETA ****4417</span></div>`}
 function rTicket(s){
   if(s.tk===1)return `<div class="a-cam"><div class="a-cam-fr">${tktPaper()}<div class="ln"></div></div><span>Leyendo el ticket…</span><small>Litros, precio, importe, fecha y estación</small></div>`;
@@ -2454,9 +2567,9 @@ const gw=(a,b)=>((b-a)/(G1-G0)*100).toFixed(2)+'%';
 const stc=st=>({'Conduciendo':'ok','Pausa':'pause','Descanso':'rest','Sin tarjeta':'bad'}[st]);
 function rAdmin(s){
   const alr=s.alr||ALR,open=alr.filter(a=>!a.ack).length;
-  const nav=[['resumen','Resumen',I.grid],['asign','Asignaciones',I.cal],['partes','Partes mensuales',I.file],['docum','Documentación',I.idcard],['alertas','Alertas',I.alert],['repost','Repostaje',I.fuel],['recomp','Recompensas',I.coin],['adr','Estaciones ADR',I.shield],['perfiles','Perfiles',I.users]];
+  const nav=[['resumen','Resumen',I.grid],['asign','Asignaciones',I.cal],['partes','Partes mensuales',I.file],['docum','Documentación',I.idcard],['alertas','Alertas',I.alert],['msgs','Mensajes',I.msg],['repost','Repostaje',I.fuel],['recomp','Recompensas',I.coin],['adr','Estaciones ADR',I.shield],['perfiles','Perfiles',I.users]];
   const act=s.tab==='conductor'?'resumen':s.tab;
-  const side=`<div class="ad-side">${wm(true)}<div class="ad-sec">Panel</div>${nav.map(n=>`<button class="ad-nav ${act===n[0]?'on':''}" data-act="tab" data-t="${n[0]}" data-v="nav-${n[0]}">${n[2]}${n[1]}${n[0]==='alertas'&&open?`<em>${open}</em>`:''}${n[0]==='docum'?`<em>${DOCS.filter(d=>dleft(d.f)<=60).length}</em>`:''}</button>`).join('')}
+  const side=`<div class="ad-side">${wm(true)}<div class="ad-sec">Panel</div>${nav.map(n=>`<button class="ad-nav ${act===n[0]?'on':''}" data-act="tab" data-t="${n[0]}" data-v="nav-${n[0]}">${n[2]}${n[1]}${n[0]==='alertas'&&open?`<em>${open}</em>`:''}${n[0]==='msgs'&&mUnAll()?`<em>${mUnAll()}</em>`:''}${n[0]==='docum'?`<em>${DOCS.filter(d=>dleft(d.f)<=60).length}</em>`:''}</button>`).join('')}
     <div class="ad-user"><span class="av">TC</span><div>Tráfico Castellón<small>Administrador</small></div></div></div>`;
   let main='';
   if(s.tab==='resumen')main=aResumen(s,alr);
@@ -2467,7 +2580,7 @@ function rAdmin(s){
   else if(s.tab==='alertas')main=aAlertas(alr);
   else if(s.tab==='perfiles')main=aPerfiles();
   else if(s.tab==='repost')main=aRepost(s);
-  else if(s.tab==='adr')main=aADR(s);
+  else if(s.tab==='adr')main=aADR(s); else if(s.tab==='msgs')main=aMsgs(s);
   else if(s.tab==='conductor')main=aConductor(DRV[s.i]);
   return `<div class="browser"><div class="br-top"><i></i><i></i><i></i><div class="br-url">${I.lock}conductores.grupotrimodos.com/admin</div></div><div class="ad">${side}<div class="ad-main">${main}</div></div>${aModal(s)}${s.toast?`<div class="ad-toast">${I.check}${s.toast}</div>`:''}</div>`;
 }
@@ -2845,7 +2958,7 @@ dHost.addEventListener('click',e=>{
   else if(a==='fback'){D.screen='dash'}
   else if(a==='fedit'){D.screen='fuel'}
   else if(a==='fnav'){const r=pickStation(D.fkm,D.adr);D.plan=r.best||r.near;D.screen='dash';dToast('Ruta enviada a Google Maps')}
-  else if(a==='logout'||a==='reset'){D=D0()}
+  else if(a==='msgs'){D.screen='msgs';MS.seenD=MS.th[JI].length} else if(a==='mback'||a==='nback'){D.screen='dash'} else if(a==='mq'||a==='dmsend'){const x=(a==='mq'?b.dataset.x:MS.draftD).trim();if(x){MS.th[JI].push({f:'d',t:hm(nowH()),x});MS.draftD='';MS.seenD=MS.th[JI].length;done.msg=1;dToast('Mensaje enviado a tráfico');mPing()}else dToast('Escribe un mensaje o elige una respuesta rápida')} else if(a==='notas'){D.screen='notas'} else if(a==='nex'){NTd='Les Alqueries: la entrada de camiones es por la calle de atrás. Lavadero abierto hasta las 22 h.'} else if(a==='nfoto'){NTf=!NTf} else if(a==='nsave'){const x=NTd.trim();if(x){NT.unshift({t:'Hoy',x,f:NTf});NTd='';NTf=false;done.nota=1;dToast('Nota guardada · solo la ves tú')}else dToast('Escribe algo o pulsa «Ejemplo»')} else if(a==='ndel'){NT.splice(+b.dataset.i,1);dToast('Nota borrada')} else if(a==='logout'||a==='reset'){D=D0()}
   dRender();
 });
 dHost.addEventListener('input',e=>{if(e.target.matches('[data-act="search"]')){D.q=e.target.value;$('.a-plist',dHost).innerHTML=plateInner(D)}});
@@ -2859,7 +2972,7 @@ function aRender(){aHost.innerHTML=rAdmin(A)}
 function aToast(m){A.toast=m;clearTimeout(aT);aT=setTimeout(()=>{A.toast='';aRender()},2200)}
 const aClick=e=>{
   const b=e.target.closest('[data-act]');if(!b)return;const a=b.dataset.act;
-  if(a==='tab'){A.tab=b.dataset.t;A.imp=0;A.msg=null;A.agent=0;A.call=null;A.pm=null;A.anx=0;A.prog=0}
+  if(a==='tab'){A.tab=b.dataset.t;A.imp=0;A.msg=null;A.agent=0;A.call=null;A.pm=null;A.anx=0;A.prog=0} else if(a==='mconv'){MS.open=+b.dataset.i;MS.draftA=''} else if(a==='mq2'||a==='msend'){const x=(a==='mq2'?b.dataset.x:MS.draftA).trim();if(x){MS.th[MS.open].push({f:'o',t:hm(nowH()),x});MS.draftA='';markRead(MS.open);aToast('Mensaje enviado a '+DRV[MS.open].n.split(' ')[0]);if(MS.open===JI)mPingD()}else aToast('Escribe un mensaje o elige una respuesta rápida')} else if(a==='mall'){Object.keys(MS.th).forEach(i=>MS.th[i].push({f:'o',t:hm(nowH()),x:'A toda la flota: mañana el lavadero de la base cierra por mantenimiento.'}));aToast('Mensaje enviado a toda la flota');mPingD()}
   else if(a==='progav'){const i=b.dataset.i;A.pf=JSON.parse(JSON.stringify(PF0));if(i!=null){const d=DOCS[+i];A.pf.doc=d.doc;A.pf.who=d.who;A.pf.to=d.t==='c'?['Tráfico','Chófer']:['Tráfico','Taller']}A.prog=1}
   else if(a==='pf'){const k=b.dataset.k,x=b.dataset.x;if(Array.isArray(A.pf[k])){A.pf[k]=A.pf[k].includes(x)?A.pf[k].filter(y=>y!==x):[...A.pf[k],x]}else A.pf[k]=x;if(k==='doc')A.pf.who=''}
   else if(a==='progclose')A.prog=0;
@@ -2947,7 +3060,11 @@ aRender();
   }
   /* Ventanas emergentes del panel: salen en su propia ventana */
   const _aRender=aRender;
-  aRender=function(){_aRender();aHost.querySelectorAll('.ad-nav').forEach(b=>b.title=b.textContent.trim());syncMod()};
+  const keepF=(host,sel)=>{const f=document.activeElement;return f&&host.contains(f)&&f.matches(sel)?{sel:'['+[...f.attributes].find(x=>x.name.startsWith('data-')&&x.name.endsWith('draft')).name+']',pos:f.selectionStart}:null};
+  const putF=(host,k)=>{if(!k)return;const n=$(k.sel,host);if(n){n.focus({preventScroll:true});try{n.setSelectionRange(k.pos,k.pos)}catch(e){}}};
+  const toEnd=el=>{if(el)el.scrollTop=el.scrollHeight};
+  let mrT;
+  aRender=function(){const k=keepF(aHost,'[data-mdraft]');_aRender();aHost.querySelectorAll('.ad-nav').forEach(b=>b.title=b.textContent.trim());syncMod();putF(aHost,k);toEnd($('.am-msgs',aHost));if(A.tab==='msgs'){clearTimeout(mrT);mrT=setTimeout(()=>{if(markRead(MS.open)){aRender();if(MS.open===JI)dRender()}},900)}};
   function syncMod(){
     const m=$('.ad-modal',aHost);
     if(!m){if(!W.mod.hidden){W.mod.hidden=true;modBody.replaceChildren();hide(W.mod);focus(W.adm)}return}
@@ -2961,11 +3078,11 @@ aRender();
   function closeMod(){Object.assign(A,{prog:0,anx:0,agent:0,call:null,imp:0,msg:null,pm:null});aRender()}
   modBody.addEventListener('click',aClick);
   /* Guía: pasos del móvil y del panel */
-  const AST={anexo:'a-anexo',progsave:'a-prog',cj:'a-cj',pmsend:'a-msg',msgsend:'a-msg',setadr:'a-adr'},adone={};
+  const AST={anexo:'a-anexo',progsave:'a-prog',cj:'a-cj',pmsend:'a-msg',msgsend:'a-msg',setadr:'a-adr',msend:'a-mreply',mq2:'a-mreply'},adone={};
   const track=e=>{const b=e.target.closest('[data-act]');if(!b)return;const k=AST[b.dataset.act];if(k&&!(b.dataset.act==='cj'&&b.dataset.s!=='ok')){adone[k]=1;queueMicrotask(updGuide)}};
   aHost.addEventListener('click',track,true);modBody.addEventListener('click',track,true);
   function updGuide(){
-    Object.values(AST).forEach(k=>$('#ck-'+k).classList.toggle('done',!!adone[k]));
+    Object.values(AST).forEach(k=>$('#ck-'+k).classList.toggle('done',!!adone[k]));['msg','nota'].forEach(k=>$('#ck-'+k).classList.toggle('done',!!done[k]));
     const items=[...W.guia.querySelectorAll('.ck-i')],n=items.filter(i=>i.classList.contains('done')).length,t=items.length;
     $('#gCount').textContent=n+' de '+t;$('#dkCount').textContent=n+'/'+t;$('#gBar').style.width=n/t*100+'%';
     items.forEach(i=>i.classList.remove('next'));
@@ -2973,9 +3090,13 @@ aRender();
     if(nx){nx.classList.add('next');dn.innerHTML=`<span class="dk-lbl">Siguiente, ${nx.closest('[data-g]').dataset.g}</span><b>${$('b',nx).textContent}</b><small>${$('small',nx).textContent}</small>`}
     else dn.innerHTML='<span class="dk-lbl">Completado</span><b>Has probado todo</b><small>Puedes reiniciar la demo cuando quieras.</small>';
   }
-  const _dRender=dRender;dRender=function(){_dRender();updGuide()};
+  const _dRender=dRender;dRender=function(){const k=keepF(dHost,'[data-ddraft],[data-ndraft]');_dRender();putF(dHost,k);toEnd($('.m-body',dHost));updGuide()};
+  dHost.addEventListener('input',e=>{if(e.target.matches('[data-ddraft]'))MS.draftD=e.target.value;else if(e.target.matches('[data-ndraft]'))NTd=e.target.value});
+  dHost.addEventListener('keydown',e=>{if(e.key==='Enter'&&e.target.matches('[data-ddraft]')){e.preventDefault();$('[data-act="dmsend"]',dHost).click()}});
+  aHost.addEventListener('input',e=>{if(e.target.matches('[data-mdraft]'))MS.draftA=e.target.value});
+  aHost.addEventListener('keydown',e=>{if(e.key==='Enter'&&e.target.matches('[data-mdraft]')){e.preventDefault();$('[data-act="msend"]',aHost).click()}});
   const A0=JSON.stringify(A);
-  $('#drvReset').addEventListener('click',()=>{Object.keys(adone).forEach(k=>delete adone[k]);A=JSON.parse(A0);aRender();updGuide()});
+  $('#drvReset').addEventListener('click',()=>{Object.keys(adone).forEach(k=>delete adone[k]);MS=MS0();NT=NT0();NTd='';NTf=false;A=JSON.parse(A0);aRender();dRender()});
   /* Controles: barra de título, doble clic, arrastrar y barra de abajo */
   ws.addEventListener('click',e=>{
     const c=e.target.closest('[data-wc]');

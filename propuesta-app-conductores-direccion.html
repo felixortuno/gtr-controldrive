@@ -1376,6 +1376,12 @@ section.sec.dark{background:var(--ink)}
 .am-send{display:flex;align-items:center;gap:7px;height:40px;padding:0 16px;border-radius:10px;border:0;background:var(--y);color:var(--ink);font:700 13px Mulish,sans-serif;cursor:pointer}
 .am-send svg{width:15px;height:15px}
 @container adm (max-width:760px){.am{grid-template-columns:1fr;height:auto}.am-list{max-height:210px}.am-msgs{max-height:300px}}
+
+/* ============ GOOGLE PLAY ============ */
+.gp-line{display:flex;gap:12px;align-items:flex-start;margin:28px 0 0;font-size:15.5px;color:var(--ink2);max-width:75ch}
+.gp-ic{width:28px;height:28px;border-radius:8px;background:var(--y);display:grid;place-items:center;flex:none;margin-top:-3px}
+.gp-ic svg{width:16px;height:16px}
+.gp-line+.pf-pend{margin-top:16px}
 </style>
 </head>
 <body>
@@ -1410,9 +1416,10 @@ section.sec.dark{background:var(--ink)}
     <h2>Dos partes, una para cada uno</h2>
     <p class="intro">Cada persona entra con su acceso y solo ve lo que le toca.</p>
     <div class="parts">
-      <div><span class="pi" data-ic="phone"></span><div><h3>La app del chófer</h3><p>En su móvil, sin descargar nada de ninguna tienda. Entra con un PIN de 4 cifras y solo ve sus datos.</p></div></div>
+      <div><span class="pi" data-ic="phone"></span><div><h3>La app del chófer</h3><p>En su móvil Android, instalada desde Google Play. Entra con un PIN de 4 cifras y solo ve sus datos.</p></div></div>
       <div><span class="pi" data-ic="monitor"></span><div><h3>El panel de tráfico</h3><p>En el ordenador. Toda la flota en una pantalla: quién lleva cada camión, partes, repostajes y avisos.</p></div></div>
     </div>
+    <p class="gp-line"><span class="gp-ic" data-ic="phone"></span><span><b>Se instala desde Google Play.</b> Es la mejor opción porque se instala como cualquier app, se actualiza sola y es oficial: la publica Grupo Trimodos, sin archivos sueltos ni avisos de seguridad.</span></p>
     <p class="pf-pend"><span class="pf-tag">Pendiente de definir</span><span>Qué perfiles usarán la app (por ejemplo tráfico, oficina, taller o dirección) y qué ve y qué puede hacer cada uno.</span></p>
   </div>
 </section>

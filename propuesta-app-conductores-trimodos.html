@@ -1372,6 +1372,18 @@ section.sec.dark{background:var(--ink)}
 .am-send{display:flex;align-items:center;gap:7px;height:40px;padding:0 16px;border-radius:10px;border:0;background:var(--y);color:var(--ink);font:700 13px Mulish,sans-serif;cursor:pointer}
 .am-send svg{width:15px;height:15px}
 @container adm (max-width:760px){.am{grid-template-columns:1fr;height:auto}.am-list{max-height:210px}.am-msgs{max-height:300px}}
+
+/* ============ GOOGLE PLAY ============ */
+@media(min-width:961px){.infra{grid-template-columns:repeat(3,1fr)}}
+.gplay{margin-top:14px;background:#fff;border:1px solid var(--line);border-radius:14px;padding:16px 18px}
+.gplay>b{display:flex;align-items:center;gap:10px;font-size:15px;margin-bottom:12px}
+.gplay>b [data-ic]{width:28px;height:28px;border-radius:8px;background:var(--y);display:grid;place-items:center;flex:none}
+.gplay>b svg{width:16px;height:16px}
+.gplay ul{margin:0;padding:0;list-style:none;display:grid;grid-template-columns:1fr 1fr;gap:8px 28px}
+.gplay li{position:relative;padding-left:18px;font-size:13.5px;color:var(--ink2)}
+.gplay li:before{content:"";position:absolute;left:0;top:.5em;width:8px;height:8px;background:var(--y);border:1.5px solid var(--ink)}
+@media(max-width:760px){.gplay ul{grid-template-columns:1fr}}
+.dn.wide{grid-column:1/-1}
 </style>
 </head>
 <body>
@@ -1503,7 +1515,7 @@ section.sec.dark{background:var(--ink)}
         <div class="rtag">Perfil 2</div>
         <h3>Conductor</h3>
         <ul>
-          <li><span data-ic="check"></span>Acceso con código + PIN desde su móvil (app instalable, sin tienda).</li>
+          <li><span data-ic="check"></span>Acceso con código + PIN desde su móvil Android: la app se instala desde Google Play.</li>
           <li><span data-ic="check"></span>Al iniciar la jornada, confirma el camión que detecta su tarjeta (o lo elige si no la lleva).</li>
           <li><span data-ic="check"></span>Los cambios de camión se registran solos al pasar la tarjeta; también puede indicarlos a mano.</li>
           <li><span data-ic="check"></span>Ve solo sus datos: conducción, pausas, km, consumo y eficiencia.</li>
@@ -1928,7 +1940,7 @@ section.sec.dark{background:var(--ink)}
       <div class="anode"><div class="ic" data-ic="lock"></div><h4>API propia</h4><p>Autenticación, roles y reglas de atribución. Auditoría de accesos.</p></div>
       <div class="aarrow" data-ic="arrow"></div>
       <div class="ends">
-        <div class="anode"><div class="ic" data-ic="phone"></div><h4>PWA conductor</h4><p>Instalable en el móvil.</p></div>
+        <div class="anode"><div class="ic" data-ic="phone"></div><h4>App del conductor</h4><p>En Google Play, para Android.</p></div>
         <div class="anode"><div class="ic" data-ic="monitor"></div><h4>Panel admin</h4><p>Escritorio y tablet.</p></div>
       </div>
     </div>
@@ -1939,8 +1951,10 @@ section.sec.dark{background:var(--ink)}
       <div class="inf"><div class="ic" data-ic="sync"></div><small>Software</small><b>Ubuntu + Coolify + PostgreSQL</b><p>Despliegue desde GitHub, SSL automático, avisos de caída con Uptime Kuma y cálculo de rutas con un servicio de rutas con perfil de camión y ADR (p. ej. OpenRouteService o HERE).</p><em>0 €</em></div>
       <div class="inf"><div class="ic" data-ic="db"></div><small>Copias</small><b>Copia diaria fuera del servidor</b><p>La del proveedor más un volcado diario de la base de datos y de las fotos de tickets a almacenamiento externo.</p><em>~2–4 €/mes</em></div>
       <div class="inf"><div class="ic" data-ic="cam"></div><small>Tickets</small><b>Lectura de tickets</b><p>Un modelo de visión por API lee cada foto: en torno a 1 céntimo por ticket con unos 550 repostajes al mes.</p><em>~5 €/mes</em></div>
+      <div class="inf"><div class="ic" data-ic="phone"></div><small>App Android</small><b>Google Play · cuenta de la empresa</b><p>La misma web, empaquetada como app Android. Cuenta a nombre de Grupo Trimodos: las personales nuevas exigen antes 14 días de pruebas con 12 testers.</p><em>25 $ una vez</em></div>
     </div>
-    <div class="infra-tot"><div class="sum"><b>≈ 16–20 €/mes</b><span>~190–240 €/año, sin IVA</span></div><div class="okb"><span data-ic="check"></span><span><b>Sin bloqueos:</b> el acceso a la API de Movildata está confirmado. En el descubrimiento se revisan sus endpoints de tarjeta del tacógrafo, actividad y límites de peticiones.</span></div></div>
+    <div class="gplay"><b><span data-ic="phone"></span>Por qué Google Play</b><ul><li>Se instala como cualquier app, sin enlaces ni permisos de «orígenes desconocidos».</li><li>Se actualiza sola: el contenido cambia desde el servidor al momento.</li><li>Es oficial: la publica Grupo Trimodos, sin archivos .apk sueltos ni avisos de seguridad.</li><li>No hay que programarla dos veces: es la misma web, sin desarrollo nativo aparte.</li></ul></div>
+    <div class="infra-tot"><div class="sum"><b>≈ 16–20 €/mes</b><span>~190–240 €/año, sin IVA · más 25 $ de Google Play, una vez</span></div><div class="okb"><span data-ic="check"></span><span><b>Sin bloqueos:</b> el acceso a la API de Movildata está confirmado. En el descubrimiento se revisan sus endpoints de tarjeta del tacógrafo, actividad y límites de peticiones.</span></div></div>
 
     <div class="model">
       <div class="tbl"><h5><i></i>conductores</h5><ul><li class="pk">id</li><li>codigo <span>· único</span></li><li>nombre</li><li>tarjeta_tacografo</li><li>pin_hash</li><li>rol <span>· admin | conductor | por definir</span></li><li>activo</li></ul></div>
@@ -2022,7 +2036,7 @@ section.sec.dark{background:var(--ink)}
         <tr><td>Tributación de los premios</td><td><span class="lvl m">Medio</span></td><td>Confirmar con la asesoría laboral cómo tributan los premios con valor económico antes de abrir el catálogo.</td></tr>
         <tr><td>Avisos de caducidad que se ignoran</td><td><span class="lvl l">Bajo</span></td><td>Avisos que se repiten hasta que se renueva, resumen semanal a tráfico y alerta al confirmar un camión con la ITV caducada.</td></tr>
         <tr><td>Que la nota se viva como un castigo</td><td><span class="lvl m">Medio</span></td><td>Se compara solo con él mismo y con objetivos fijos, se explica qué la baja y cómo mejorarla, y se informa a los conductores antes de empezar. Recomendable no usarla para sancionar sin revisión de tráfico.</td></tr>
-        <tr><td>Baja adopción por parte de los conductores</td><td><span class="lvl l">Bajo</span></td><td>Piloto con 5 conductores, onboarding de 2 minutos, QR en cada cabina y datos que les resulten útiles a ellos (horas y pausas). Dejar de rellenar el parte en papel es el mejor incentivo; durante el piloto, papel y app en paralelo un mes para comparar.</td></tr>
+        <tr><td>Revisión de Google Play</td><td><span class="lvl l">Bajo</span></td><td>La primera versión se sube en prueba interna con los chóferes del piloto. Después, el contenido se actualiza desde el servidor sin pasar revisión.</td></tr> <tr><td>Baja adopción por parte de los conductores</td><td><span class="lvl l">Bajo</span></td><td>Piloto con 5 conductores, onboarding de 2 minutos, QR en cada cabina y datos que les resulten útiles a ellos (horas y pausas). Dejar de rellenar el parte en papel es el mejor incentivo; durante el piloto, papel y app en paralelo un mes para comparar.</td></tr>
       </tbody>
     </table>
 
@@ -2066,7 +2080,7 @@ section.sec.dark{background:var(--ink)}
       <div class="dn"><span data-ic="check"></span><div><b>Gas-oil en litros</b><span>Del ticket se guardan litros, €/L e importe por separado; en el Anexo II van los litros.</span></div></div>
       <div class="dn"><span data-ic="check"></span><div><b>Monedas Trimodos</b><span>30, 20 o 10 monedas con nota media de 9, 8 o 7; rachas de 4, 8 y 12 semanas: +20, +50, +100; sin monedas con pausa saltada; caducan a los 12 meses.</span></div></div>
       <div class="dn"><span data-ic="check"></span><div><b>Caducidades</b><span>Carné ADR, revisión médica, ITV de cabezas tractoras e ITV de remolques, con avisos programables.</span></div></div>
-      <div class="dn"><span data-ic="check"></span><div><b>DECA se integra, no se rehace</b><span>Ya funciona contra Odoo. Al empezar en VS Code, se parte de ese flujo.</span></div></div>
+      <div class="dn"><span data-ic="check"></span><div><b>DECA se integra, no se rehace</b><span>Ya funciona contra Odoo. Al empezar en VS Code, se parte de ese flujo.</span></div></div> <div class="dn wide"><span data-ic="check"></span><div><b>Instalación desde Google Play</b><span>App de Android publicada con la cuenta de la empresa. Mejor que un enlace o un .apk suelto: se instala y se actualiza como cualquier app y es oficial.</span></div></div>
     </div>
     <h3 class="dec-h mt">Pendientes <small>· para la fase de descubrimiento</small></h3>
     <div class="qs">

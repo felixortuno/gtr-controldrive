@@ -1176,6 +1176,32 @@ section.sec.dark{background:var(--ink)}
 .apartado .datos b{color:var(--ink2)}
 @media(max-width:1100px){.paso{grid-template-columns:112px minmax(0,1fr)}.paso .uso{grid-column:2}.apartados{grid-template-columns:1fr 1fr}}
 @media(max-width:700px){.paso{grid-template-columns:1fr;gap:18px;padding:32px 0}.paso .uso{grid-column:auto}.paso-when{flex-direction:row;align-items:center}.paso-ic{width:40px;height:40px}.paso h3{font-size:23px}.apartados{grid-template-columns:1fr}}
+
+/* ============ PORTADA: MÓVIL SENCILLO Y CAMIÓN ============ */
+.camion{display:block;width:100%;height:auto;color:#23262C}
+.bh-art .ph{left:6%;top:0;width:186px;height:385px;z-index:2}
+.bh-art .ph .phone{transform:scale(.62)}
+.bh-truck{position:absolute;left:3%;bottom:8px;width:92%;z-index:1;filter:drop-shadow(0 16px 16px rgba(18,18,18,.14))}
+.bh-road{position:absolute;left:-30%;right:-30%;bottom:6px;height:2px;background:linear-gradient(90deg,transparent,rgba(18,18,18,.16) 25%,rgba(18,18,18,.16) 75%,transparent)}
+.hp{height:100%;border-radius:36px;overflow:hidden;background:#F2F3F5;display:flex;flex-direction:column;color:var(--ink)}
+.hp-top{background:#121212;color:#fff;padding:14px 24px 22px;display:flex;flex-direction:column}
+.hp-sb{display:flex;justify-content:space-between;font-size:12px;font-weight:700;margin-bottom:34px;padding:0 6px}
+.hp-top small{font-size:12px;color:#9EA3AA}
+.hp-top b{font-size:25px;font-weight:800;margin-top:2px}
+.hp-body{flex:1;padding:16px;display:flex;flex-direction:column;gap:12px}
+.hp-lbl{font-size:10.5px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:rgba(18,18,18,.6)}
+.hp-card{background:var(--y);border-radius:20px;padding:16px;display:flex;flex-direction:column;align-items:flex-start;gap:12px}
+.hp-card .camion{color:#121212}
+.hp-plate{display:inline-flex;align-items:stretch;border:2px solid #121212;border-radius:6px;background:#fff;overflow:hidden;font:600 24px/1 "Barlow Condensed","Arial Narrow",sans-serif;letter-spacing:.06em}
+.hp-plate i{font:700 10px/1 Mulish,sans-serif;font-style:normal;background:#0F47AF;color:#FDDA00;display:flex;align-items:flex-end;padding:0 5px 5px}
+.hp-plate span{padding:6px 10px 5px}
+.hp-card small{font-size:12.5px;font-weight:700;color:rgba(18,18,18,.72)}
+.hp-stat{background:#fff;border-radius:20px;padding:16px}
+.hp-stat b{display:block;font-size:32px;font-weight:900;letter-spacing:-.02em;margin:6px 0 12px}
+.hp-bar{height:8px;border-radius:4px;background:#E6E8EB;overflow:hidden}
+.hp-bar i{display:block;width:51%;height:100%;background:var(--y)}
+.hp-stat small{display:block;margin-top:9px;font-size:12.5px;color:var(--muted)}
+@media(max-width:900px){.bh-art{display:block;position:relative;height:auto;margin:20px 0 0;padding-bottom:8px}.bh-art .sym,.bh-art .ph{display:none}.bh-truck{position:relative;left:0;bottom:auto;width:86%;max-width:440px}.bh-road{left:-20px;right:-20px;bottom:7px}}
 </style>
 </head>
 <body>
@@ -1201,7 +1227,7 @@ section.sec.dark{background:var(--ink)}
       <p class="lead">Una app para los chóferes y un panel para tráfico. El chófer ve su jornada, reposta donde mejor nos viene, apunta sus viajes y tickets sin papel y corrige la orden de transporte al cargar. Tráfico lo ve todo en un solo sitio.</p>
       <div class="cta"><a class="bbtn pri" href="#chofer">Ver cómo funciona</a><a class="bbtn sec" href="#demo"><span data-ic="play"></span>Probar la demo</a></div>
     </div>
-    <div class="bh-art" aria-hidden="true"><div class="sym"><svg viewBox="-4 -4 108 108" aria-hidden="true"><g fill="none" stroke="#FDDA00" stroke-width="5.2" stroke-linejoin="miter"><rect x="3.5" y="3.5" width="93" height="93"/><path d="M3.5 37H96.5M50 3.5V96.5M50 4.5 5 96.5M50 4.5 95 96.5M3.5 60A64 64 0 0 0 96.5 60"/></g></svg></div><div class="ph"><div class="phone" id="heroPhone"></div></div></div>
+    <div class="bh-art" aria-hidden="true"><div class="sym"><svg viewBox="-4 -4 108 108" aria-hidden="true"><g fill="none" stroke="#FDDA00" stroke-width="5.2" stroke-linejoin="miter"><rect x="3.5" y="3.5" width="93" height="93"/><path d="M3.5 37H96.5M50 3.5V96.5M50 4.5 5 96.5M50 4.5 95 96.5M3.5 60A64 64 0 0 0 96.5 60"/></g></svg></div><div class="bh-road"></div><div class="bh-truck"><svg class="camion" viewBox="0 0 640 226" aria-hidden="true"><rect x="0" y="0" width="438" height="156" rx="5" fill="currentColor"/><g fill="none" stroke="#FDDA00" stroke-width="7" stroke-linejoin="miter" transform="translate(296 22) scale(.72)"><rect x="3.5" y="3.5" width="93" height="93"/><path d="M3.5 37H96.5M50 3.5V96.5M50 4.5 5 96.5M50 4.5 95 96.5M3.5 60A64 64 0 0 0 96.5 60"/></g><rect x="22" y="122" width="99" height="8" fill="#FDDA00"/><rect x="121" y="122" width="99" height="8" fill="#209C8F"/><rect x="220" y="122" width="99" height="8" fill="#EE7D4A"/><rect x="319" y="122" width="99" height="8" fill="#006DB5"/><rect x="14" y="152" width="424" height="14" fill="currentColor"/><rect x="372" y="164" width="7" height="36" fill="currentColor"/><rect x="365" y="198" width="21" height="5" rx="1" fill="currentColor"/><rect x="420" y="160" width="216" height="24" rx="3" fill="currentColor"/><rect x="446" y="18" width="7" height="118" rx="3" fill="currentColor"/><path d="M462 184V34Q462 10 486 10H578Q602 10 610 32L634 116Q638 128 638 140V184Z" fill="currentColor"/><path d="M488 36H580Q592 36 596 48L608 96H488Z" fill="#E7EAEE"/><rect x="624" y="146" width="12" height="10" rx="2" fill="#FDDA00"/><circle cx="74" cy="198" r="26" fill="currentColor"/><circle cx="74" cy="198" r="11" fill="#C9CED5"/><circle cx="74" cy="198" r="4" fill="currentColor"/><circle cx="130" cy="198" r="26" fill="currentColor"/><circle cx="130" cy="198" r="11" fill="#C9CED5"/><circle cx="130" cy="198" r="4" fill="currentColor"/><circle cx="186" cy="198" r="26" fill="currentColor"/><circle cx="186" cy="198" r="11" fill="#C9CED5"/><circle cx="186" cy="198" r="4" fill="currentColor"/><circle cx="496" cy="198" r="26" fill="currentColor"/><circle cx="496" cy="198" r="11" fill="#C9CED5"/><circle cx="496" cy="198" r="4" fill="currentColor"/><circle cx="598" cy="198" r="26" fill="currentColor"/><circle cx="598" cy="198" r="11" fill="#C9CED5"/><circle cx="598" cy="198" r="4" fill="currentColor"/></svg></div><div class="ph"><div class="phone"><div class="hp"><div class="hp-top"><div class="hp-sb"><span>13:20</span><span>5G</span></div><small>Jueves 8 de octubre</small><b>Hola, Javier</b></div><div class="hp-body"><div class="hp-card"><span class="hp-lbl">Tu camión de hoy</span><svg class="camion" viewBox="0 0 640 226" aria-hidden="true"><rect x="0" y="0" width="438" height="156" rx="5" fill="currentColor"/><g fill="none" stroke="#FDDA00" stroke-width="7" stroke-linejoin="miter" transform="translate(296 22) scale(.72)"><rect x="3.5" y="3.5" width="93" height="93"/><path d="M3.5 37H96.5M50 3.5V96.5M50 4.5 5 96.5M50 4.5 95 96.5M3.5 60A64 64 0 0 0 96.5 60"/></g><rect x="22" y="122" width="99" height="8" fill="#FDDA00"/><rect x="121" y="122" width="99" height="8" fill="#209C8F"/><rect x="220" y="122" width="99" height="8" fill="#EE7D4A"/><rect x="319" y="122" width="99" height="8" fill="#006DB5"/><rect x="14" y="152" width="424" height="14" fill="currentColor"/><rect x="372" y="164" width="7" height="36" fill="currentColor"/><rect x="365" y="198" width="21" height="5" rx="1" fill="currentColor"/><rect x="420" y="160" width="216" height="24" rx="3" fill="currentColor"/><rect x="446" y="18" width="7" height="118" rx="3" fill="currentColor"/><path d="M462 184V34Q462 10 486 10H578Q602 10 610 32L634 116Q638 128 638 140V184Z" fill="currentColor"/><path d="M488 36H580Q592 36 596 48L608 96H488Z" fill="#E7EAEE"/><rect x="624" y="146" width="12" height="10" rx="2" fill="#FDDA00"/><circle cx="74" cy="198" r="26" fill="currentColor"/><circle cx="74" cy="198" r="11" fill="#C9CED5"/><circle cx="74" cy="198" r="4" fill="currentColor"/><circle cx="130" cy="198" r="26" fill="currentColor"/><circle cx="130" cy="198" r="11" fill="#C9CED5"/><circle cx="130" cy="198" r="4" fill="currentColor"/><circle cx="186" cy="198" r="26" fill="currentColor"/><circle cx="186" cy="198" r="11" fill="#C9CED5"/><circle cx="186" cy="198" r="4" fill="currentColor"/><circle cx="496" cy="198" r="26" fill="currentColor"/><circle cx="496" cy="198" r="11" fill="#C9CED5"/><circle cx="496" cy="198" r="4" fill="currentColor"/><circle cx="598" cy="198" r="26" fill="currentColor"/><circle cx="598" cy="198" r="11" fill="#C9CED5"/><circle cx="598" cy="198" r="4" fill="currentColor"/></svg><span class="hp-plate"><i>E</i><span>7832 MHT</span></span><small>Detectado por tu tarjeta</small></div><div class="hp-stat"><span class="hp-lbl">Conducción hoy</span><b>4h 36m</b><div class="hp-bar"><i></i></div><small>De 9 h como máximo</small></div></div></div></div></div></div>
   </div>
   <div class="firmas" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
 </section>
@@ -2036,7 +2062,7 @@ function aConductor(d){
 const V=o=>Object.assign({spent:0,canje:[],screen:'login',code:'1014',pin:'',sel:null,q:'',mode:'start',segs:[],clock:'06:45',video:true,fkm:20,plan:null,adr:false,svc:0,tickets:[],full:null,tk:2,lug:'Castellón',trl:null,taller:null},o);
 const S1=[[6.75,null,'4521 LKM']];
 const S2=[[6.75,11.5,'4521 LKM'],[11.5,null,'7832 MHT']];
-$('#heroPhone').innerHTML=rDriver(V({screen:'dash',segs:S2,clock:'13:20',svc:3,tickets:[1]}));
+
 
 /* ============ ATRIBUCIÓN ============ */
 (function(){if(!$('#attrBody'))return;

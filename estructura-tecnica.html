@@ -1,0 +1,1052 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Estructura técnica · App de conductores</title>
+<meta name="description" content="Bases para construir la app de conductores de Grupo Trimodos: arquitectura, base de datos, fases de desarrollo, backend, frontend y forma de trabajar.">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#121212">
+<meta name="color-scheme" content="light">
+<link rel="icon" href="assets/img/favicon-32.png" type="image/png" sizes="32x32">
+<link rel="preload" href="assets/fonts/mulish.woff2" as="font" type="font/woff2" crossorigin>
+<style>
+@font-face{font-family:Mulish;src:url(assets/fonts/mulish.woff2) format("woff2");font-weight:200 1000;font-style:normal;font-display:swap}
+@font-face{font-family:"Barlow Condensed";src:url(assets/fonts/barlow-condensed-600.woff2) format("woff2");font-weight:600;font-style:normal;font-display:swap}
+
+:root{
+  --y:#FDDA00;--ink:#121212;--ink2:#383E45;--bg:#F6F6F6;--card:#fff;--muted:#5D646C;--line:#E3E5E8;--line2:#D3D7DC;
+  --ok:#209C8F;--warn:#E8930C;--bad:#D9443F;--info:#006DB5;--orange:#EE7D4A;
+  --c-ingesta:#EE7D4A;--c-nucleo:#006DB5;--c-calculo:#209C8F;--c-sistema:#5D646C;
+  --side:#121417;--side2:#1c1f23;
+  --cond:"Barlow Condensed","Arial Narrow",sans-serif;
+  --mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+  color-scheme:light;
+}
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%;scroll-padding-top:16px}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 15px/1.55 Mulish,system-ui,-apple-system,"Segoe UI",sans-serif;-webkit-font-smoothing:antialiased}
+a{color:inherit}
+code,kbd{font-family:var(--mono);font-size:.88em}
+::selection{background:var(--y);color:var(--ink)}
+button{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+
+/* ---------- Estructura ---------- */
+.shell{display:grid;grid-template-columns:232px minmax(0,1fr);min-height:100vh}
+.side{position:sticky;top:0;height:100vh;display:flex;flex-direction:column;background:var(--side);color:#c9cdd3;padding:22px 14px 16px;overflow:auto}
+.brand{display:flex;align-items:center;gap:11px;padding:0 8px 20px;border-bottom:1px solid rgba(255,255,255,.07);margin-bottom:14px}
+.brand i{width:30px;height:30px;flex:none;border-radius:8px;background:var(--y);display:grid;place-items:center}
+.brand i svg{width:17px;height:17px;color:var(--ink)}
+.brand b{display:block;color:#fff;font-weight:800;font-size:14.5px;line-height:1.2}
+.brand small{display:block;color:#878c93;font-size:12px;font-weight:600}
+.nav{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:2px}
+.nav a{display:flex;align-items:center;gap:12px;padding:9px 10px;border-radius:9px;text-decoration:none;font-weight:700;font-size:13.5px;color:#aeb3ba;transition:background-color .15s,color .15s}
+.nav a span{font:600 14px/1 var(--cond);letter-spacing:.06em;color:#6b7078;width:18px}
+.nav a:hover{background:rgba(255,255,255,.06);color:#fff}
+.nav a[aria-current="page"]{background:var(--side2);color:#fff;box-shadow:inset 3px 0 0 var(--y)}
+.nav a[aria-current="page"] span{color:var(--y)}
+.side-foot{margin-top:auto;padding:16px 8px 0;font-size:12px;color:#7d828a;line-height:1.5}
+.side-foot a{color:#c9cdd3}
+.side-foot code{color:#c9cdd3;font-size:11.5px}
+.main{min-width:0}
+.content{max-width:1000px;margin:0 auto;padding:34px 36px 64px}
+section[data-sec][hidden]{display:none}
+
+/* ---------- Tipografía ---------- */
+.eyebrow{display:inline-flex;align-items:center;gap:9px;margin:0 0 12px;font:600 14px/1 var(--cond);letter-spacing:.16em;text-transform:uppercase;color:var(--ink2)}
+.eyebrow::before{content:"";width:8px;height:8px;background:var(--y);box-shadow:0 0 0 1px rgba(18,18,18,.12)}
+h1{margin:0;font-weight:900;font-size:clamp(28px,3.6vw,40px);line-height:1.08;letter-spacing:-.03em;text-wrap:balance}
+h2{margin:40px 0 6px;font-weight:900;font-size:22px;letter-spacing:-.02em}
+h3{margin:0;font-weight:800;font-size:16.5px;letter-spacing:-.01em}
+h4{margin:0 0 6px;font:800 11.5px/1.3 Mulish,sans-serif;letter-spacing:.11em;text-transform:uppercase;color:var(--muted)}
+h4 code{text-transform:none;letter-spacing:0;font-size:11.5px}
+.lead{margin:12px 0 0;max-width:72ch;color:var(--muted);font-size:16.5px;text-wrap:pretty}
+.sub{margin:4px 0 16px;color:var(--muted);max-width:76ch}
+p{margin:0}
+ul.l{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:5px}
+ul.l li{position:relative;padding-left:15px}
+ul.l li::before{content:"";position:absolute;left:0;top:.62em;width:6px;height:6px;border-radius:2px;background:var(--line2)}
+.muted{color:var(--muted)}
+.nowrap{white-space:nowrap}
+
+/* ---------- Piezas ---------- */
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px 20px}
+.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.grid3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.kpis{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px;margin:26px 0 8px}
+.kpi{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:13px 15px}
+.kpi b{display:block;font:600 30px/1 var(--cond);letter-spacing:.01em}
+.kpi small{display:block;margin-top:6px;color:var(--muted);font-size:12.5px;font-weight:600;line-height:1.35}
+.principio{display:flex;gap:14px}
+.principio .n{flex:none;width:30px;height:30px;border-radius:9px;background:var(--ink);color:var(--y);display:grid;place-items:center;font:600 16px/1 var(--cond)}
+.principio h3{margin-bottom:4px}
+.principio p{color:var(--muted);font-size:14.5px}
+.pill{display:inline-flex;align-items:center;gap:6px;border-radius:999px;padding:2px 9px;font-size:11.5px;font-weight:800;letter-spacing:.02em;white-space:nowrap;border:1px solid var(--line2);background:#fff;color:var(--ink2)}
+.pill.ok{border-color:#b9e2dc;background:#eef8f6;color:#13675e}
+.pill.warn{border-color:#f3d3a4;background:#fdf5e8;color:#8a5307}
+.pill.y{border-color:#efd34a;background:#fff8cc;color:#5a4b00}
+.note{margin-top:14px;padding:13px 16px;border-radius:12px;background:#fff8cc;border:1px solid #efd34a;font-size:14.5px}
+.note b{font-weight:800;margin-right:4px}
+.note.gray{background:#fff;border-color:var(--line)}
+.tbl{width:100%;border-collapse:collapse;font-size:14px}
+.tbl th{text-align:left;font:800 11px/1.3 Mulish,sans-serif;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);padding:9px 12px;border-bottom:1px solid var(--line2)}
+.tbl td{padding:10px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+.tbl tr:last-child td{border-bottom:0}
+.tbl td:first-child{font-weight:800}
+.tbl-wrap{background:var(--card);border:1px solid var(--line);border-radius:14px;overflow:auto}
+pre.tree{margin:0;background:var(--side);color:#d6d9de;border-radius:14px;padding:18px 20px;overflow:auto;font:12.5px/1.6 var(--mono)}
+pre.tree .c{color:#7f8790}
+pre.tree .y{color:var(--y)}
+.check{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+.check li{display:flex;gap:11px;align-items:flex-start;background:#fff;border:1px solid var(--line);border-radius:11px;padding:10px 13px;font-size:14.5px}
+.check li::before{content:"";flex:none;width:18px;height:18px;margin-top:2px;border-radius:5px;border:2px solid var(--ink2)}
+.check.ok li::before{border-color:var(--ok);background:var(--ok) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='white' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3.5 8.5l3 3 6-7'/%3E%3C/svg%3E") center/12px no-repeat}
+.steps{display:grid;grid-template-columns:repeat(var(--n,4),minmax(0,1fr));gap:0;counter-reset:p}
+.step{position:relative;padding:14px 16px 14px 18px;background:#fff;border:1px solid var(--line);border-left:0}
+.step:first-child{border-left:1px solid var(--line);border-radius:12px 0 0 12px}
+.step:last-child{border-radius:0 12px 12px 0}
+.step::after{content:"";position:absolute;right:-7px;top:50%;width:12px;height:12px;background:#fff;border-top:1px solid var(--line);border-right:1px solid var(--line);transform:translateY(-50%) rotate(45deg);z-index:1}
+.step:last-child::after{display:none}
+.step b{display:block;font-size:13.5px;margin-bottom:3px}
+.step code{display:inline-block;margin-bottom:5px;font-size:11.5px;font-weight:700;padding:1px 6px;border-radius:5px;background:var(--bg)}
+.step p{font-size:13px;color:var(--muted);line-height:1.45}
+.flow-t{margin:22px 0 8px;font-weight:800;font-size:14.5px}
+
+/* ---------- Arquitectura ---------- */
+.arq{display:grid;grid-template-columns:1.05fr auto 1fr auto 1.1fr auto 1fr auto 1fr;align-items:stretch;gap:0;margin-top:8px}
+.arq .col{display:flex;flex-direction:column;gap:8px}
+.arq .col > h4{margin:0 0 2px}
+.nodo{background:#fff;border:1px solid var(--line);border-radius:11px;padding:10px 12px;font-size:13px;line-height:1.4}
+.nodo b{display:block;font-size:13.5px}
+.nodo small{color:var(--muted);display:block}
+.nodo.dark{background:var(--ink);border-color:var(--ink);color:#d5d8dd}
+.nodo.dark b{color:#fff}
+.nodo.dark small{color:#9aa0a7}
+.nodo.hl{box-shadow:inset 0 0 0 2px var(--y);border-color:transparent}
+.capa-mini{display:grid;gap:5px;margin-top:8px}
+.capa-mini span{display:block;border-radius:7px;padding:5px 9px;font-size:12px;font-weight:800;color:#fff}
+.flecha{display:grid;place-items:center;width:28px;color:#9aa0a7}
+.flecha svg{width:18px;height:18px}
+
+/* ---------- Base de datos ---------- */
+.capas{display:grid;grid-template-columns:1fr auto 1fr auto 1fr;gap:0;align-items:stretch}
+.capa-c{background:#fff;border:1px solid var(--line);border-radius:14px;padding:16px 18px;border-top:4px solid var(--cc)}
+.capa-c h3{display:flex;align-items:baseline;justify-content:space-between;gap:10px}
+.capa-c h3 small{font:600 14px/1 var(--cond);letter-spacing:.06em;color:var(--muted)}
+.capa-c p{margin-top:6px;font-size:13.5px;color:var(--muted)}
+.capa-c .ej{margin-top:10px;display:flex;flex-wrap:wrap;gap:5px}
+.capa-c .ej code{font-size:11px;padding:2px 6px;border-radius:5px;background:var(--bg)}
+.capa-sis{margin-top:10px;display:flex;gap:16px;align-items:center;background:#fff;border:1px solid var(--line);border-radius:14px;padding:12px 18px;border-left:4px solid var(--c-sistema)}
+.capa-sis p{font-size:13.5px;color:var(--muted)}
+.capa-sis h3{white-space:nowrap}
+.capa{display:inline-block;border-radius:6px;padding:2px 7px;font-size:11px;font-weight:800;color:#fff;letter-spacing:.02em;white-space:nowrap}
+.capa.ingesta{background:var(--c-ingesta)}.capa.nucleo{background:var(--c-nucleo)}.capa.calculo{background:var(--c-calculo)}.capa.sistema{background:var(--c-sistema)}
+.tools{position:sticky;top:0;z-index:5;display:flex;flex-wrap:wrap;gap:8px 14px;align-items:center;padding:12px 0;margin:4px 0 6px;background:var(--bg)}
+.tools input{flex:1 1 220px;min-width:0;height:38px;border-radius:10px;border:1px solid var(--line2);padding:0 12px;font:inherit;font-size:14px;background:#fff}
+.tools input:focus{outline:2px solid var(--ink);outline-offset:0;border-color:var(--ink)}
+.chips{display:flex;flex-wrap:wrap;gap:5px}
+.chip{height:32px;padding:0 11px;border-radius:999px;border:1px solid var(--line2);background:#fff;font-size:12.5px;font-weight:800;cursor:pointer;color:var(--ink2)}
+.chip:hover{border-color:var(--ink2)}
+.chip[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:#fff}
+.grupo{margin:18px 0 8px;display:flex;align-items:baseline;gap:10px}
+.grupo b{font:600 15px/1 var(--cond);letter-spacing:.1em;text-transform:uppercase}
+.grupo small{color:var(--muted);font-size:12.5px;font-weight:600}
+.tb{background:#fff;border:1px solid var(--line);border-radius:12px;margin-bottom:6px}
+.tb[open]{border-color:var(--line2);box-shadow:0 6px 18px -12px rgba(18,18,18,.25)}
+.tb summary{list-style:none;cursor:pointer;display:grid;grid-template-columns:auto auto 1fr auto;gap:4px 10px;align-items:center;padding:10px 14px}
+.tb summary::-webkit-details-marker{display:none}
+.tb summary:hover{background:#fafafb;border-radius:12px}
+.tb-n{font-size:13px;color:var(--muted)}
+.tb-n b{color:var(--ink);font-weight:800}
+.tb-k{font-size:12px;color:var(--muted);font-weight:700;white-space:nowrap;justify-self:end}
+.tb-d{grid-column:1/-1;font-size:13.5px;color:var(--ink2)}
+.tb-body{padding:2px 14px 14px;overflow:auto}
+.cols{width:100%;border-collapse:collapse;font-size:13px}
+.cols td{padding:6px 8px;border-top:1px solid var(--line);vertical-align:top}
+.cols td:first-child{font-family:var(--mono);font-size:12.5px;font-weight:700;white-space:nowrap}
+.cols td:nth-child(2){font-family:var(--mono);font-size:12px;color:var(--muted);white-space:nowrap}
+.cols td:nth-child(3){white-space:nowrap}
+.flag{display:inline-block;margin:0 3px 2px 0;padding:0 6px;border-radius:5px;font-size:10.5px;font-weight:800;line-height:18px;background:var(--bg);color:var(--ink2)}
+.flag.pk{background:var(--ink);color:var(--y)}
+.flag.calc{background:#eef8f6;color:#13675e}
+a.flag.fk{background:#e8f1f9;color:#0b4f84;text-decoration:none}
+a.flag.fk:hover{text-decoration:underline}
+.reglas{margin-top:10px;display:grid;gap:5px}
+.reglas p{font-size:13px;padding:7px 10px;border-radius:8px;background:#fff8cc}
+.vacio{padding:24px;text-align:center;color:var(--muted)}
+
+/* ---------- Fases ---------- */
+.tl{background:#fff;border:1px solid var(--line);border-radius:14px;padding:16px 18px 12px;margin-top:8px}
+.tl-row{display:grid;grid-template-columns:190px 1fr;align-items:center;gap:12px;height:30px}
+.tl-row a{font-size:12.5px;font-weight:800;text-decoration:none;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tl-row a:hover{text-decoration:underline}
+.tl-track{position:relative;height:100%;background:repeating-linear-gradient(90deg,transparent 0,transparent calc(5% - 1px),var(--line) calc(5% - 1px),var(--line) 5%)}
+.tl-bar{position:absolute;top:6px;bottom:6px;border-radius:6px;background:var(--ink2);color:#fff;font:600 12px/18px var(--cond);letter-spacing:.06em;padding:0 7px;white-space:nowrap;overflow:hidden}
+.tl-bar.done{background:var(--ok)}
+.tl-axis{display:grid;grid-template-columns:190px 1fr;gap:12px;margin-top:4px}
+.tl-ticks{position:relative;height:16px;font:600 11px/16px var(--cond);color:var(--muted)}
+.tl-ticks span{position:absolute;transform:translateX(-50%)}
+.tl-hitos{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px;margin-top:12px}
+.hito{border-left:3px solid var(--y);padding:2px 0 2px 10px;font-size:12.5px;line-height:1.35}
+.hito b{display:block;font:600 14px/1.2 var(--cond);letter-spacing:.06em;text-transform:uppercase}
+.fase{background:#fff;border:1px solid var(--line);border-radius:16px;padding:20px 22px;margin-top:12px;scroll-margin-top:16px}
+.fase-h{display:flex;gap:14px;align-items:flex-start}
+.fase-h .n{flex:none;width:42px;height:42px;border-radius:12px;background:var(--ink);color:var(--y);display:grid;place-items:center;font:600 24px/1 var(--cond)}
+.fase-h h3{font-size:19px}
+.fase-meta{display:flex;flex-wrap:wrap;gap:6px 14px;margin-top:4px;font-size:13px;color:var(--muted);font-weight:600}
+.dots{letter-spacing:2px;color:var(--ink)}
+.dots i{font-style:normal;color:var(--line2)}
+.fase-h .pill{margin-left:auto}
+.porque{margin-top:12px;font-size:14.5px}
+.fase .grid2{margin-top:14px}
+.fase .grid2 > div{background:var(--bg);border-radius:12px;padding:12px 14px}
+.fase ul.l{font-size:14px}
+.tchips{display:flex;flex-wrap:wrap;gap:5px}
+.tchips a{font-family:var(--mono);font-size:11.5px;font-weight:700;padding:3px 7px;border-radius:6px;background:#fff;border:1px solid var(--line2);text-decoration:none;color:var(--ink2)}
+.tchips a:hover{border-color:var(--ink)}
+.tchips a i{font-style:normal;display:inline-block;width:7px;height:7px;border-radius:2px;margin-right:5px;vertical-align:1px}
+.hecho{margin-top:12px;display:flex;gap:10px;align-items:flex-start;padding:11px 14px;border-radius:11px;border:1px dashed var(--line2);font-size:14px}
+.hecho b{white-space:nowrap}
+
+/* ---------- Adaptación ---------- */
+@media (max-width:1100px){
+  .arq{grid-template-columns:1fr;gap:6px}
+  .arq .flecha{width:auto;height:22px;transform:rotate(90deg)}
+  .arq .col{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr))}
+  .arq .col > h4{grid-column:1/-1}
+}
+@media (max-width:900px){
+  .kpis{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .grid3{grid-template-columns:1fr 1fr}
+  .capas{grid-template-columns:1fr;gap:6px}
+  .capas .flecha{width:auto;height:20px;transform:rotate(90deg)}
+  .steps{grid-template-columns:1fr}
+  .step,.step:first-child,.step:last-child{border:1px solid var(--line);border-radius:0;border-top:0}
+  .step:first-child{border-top:1px solid var(--line);border-radius:12px 12px 0 0}
+  .step:last-child{border-radius:0 0 12px 12px}
+  .step::after{display:none}
+  .tl-hitos{grid-template-columns:1fr 1fr}
+}
+@media (max-width:820px){
+  .shell{grid-template-columns:minmax(0,1fr)}
+  .side{position:sticky;top:0;z-index:20;min-width:0;height:auto;flex-direction:row;align-items:center;gap:10px;padding:10px 12px;overflow:visible}
+  .brand{border:0;margin:0;padding:0}
+  .brand div{display:none}
+  .nav{flex:1;min-width:0;flex-direction:row;overflow-x:auto;scrollbar-width:none;gap:2px;mask-image:linear-gradient(90deg,#000 88%,transparent)}
+  .nav::-webkit-scrollbar{display:none}
+  .nav a{white-space:nowrap;padding:8px 10px}
+  .nav a span{display:none}
+  .nav a[aria-current="page"]{box-shadow:inset 0 -2px 0 var(--y)}
+  .side-foot{display:none}
+  .content{padding:24px 16px 48px}
+  .tools{top:56px}
+  .fase{scroll-margin-top:70px}
+}
+@media (max-width:600px){
+  .kpis{grid-template-columns:1fr 1fr}
+  .grid2,.grid3{grid-template-columns:1fr}
+  .tl-row,.tl-axis{grid-template-columns:96px 1fr}
+  .tl-bar{font-size:0;padding:0}
+  .tb summary{grid-template-columns:auto 1fr}
+  .tb summary > span:empty,.tb-k{display:none}
+  .tools{position:static}
+  .cols tr{display:grid;grid-template-columns:auto 1fr;gap:3px 10px;padding:8px 0;border-top:1px solid var(--line)}
+  .cols td{border:0;padding:0}
+  .cols td:nth-child(3),.cols td:nth-child(4){grid-column:1/-1;white-space:normal}
+  .cols td:nth-child(3):empty,.cols td:nth-child(4):empty{display:none}
+  .fase{padding:16px}
+  .fase-h .pill{display:none}
+  .capa-sis{flex-direction:column;align-items:flex-start;gap:4px}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+<div class="shell">
+
+<aside class="side">
+  <div class="brand">
+    <i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7l9-4 9 4-9 4-9-4z"/><path d="M3 12l9 4 9-4"/><path d="M3 17l9 4 9-4"/></svg></i>
+    <div><b>Estructura técnica</b><small>App de conductores</small></div>
+  </div>
+  <ul class="nav" id="nav">
+    <li><a href="#resumen"><span>01</span>Resumen</a></li>
+    <li><a href="#arquitectura"><span>02</span>Arquitectura</a></li>
+    <li><a href="#bd"><span>03</span>Base de datos</a></li>
+    <li><a href="#fases"><span>04</span>Fases</a></li>
+    <li><a href="#backend"><span>05</span>Backend</a></li>
+    <li><a href="#frontend"><span>06</span>Frontend</a></li>
+    <li><a href="#trabajo"><span>07</span>Forma de trabajar</a></li>
+    <li><a href="#decisiones"><span>08</span>Decisiones</a></li>
+  </ul>
+  <div class="side-foot">
+    La base de datos se genera desde <code>bases/db</code><span id="genFecha"></span>.<br>
+    <a href="propuesta-app-conductores-trimodos.html" target="_top">Volver a la propuesta</a>
+  </div>
+</aside>
+
+<main class="main"><div class="content">
+
+<!-- ============ 01 RESUMEN ============ -->
+<section data-sec id="resumen">
+  <p class="eyebrow">Las bases en una página</p>
+  <h1>Una función cada vez, sobre unas bases que no se mueven.</h1>
+  <p class="lead">Cómo construir la app de conductores con una sola persona: de lo más sencillo y ya hecho a lo más complejo, con una base de datos que guarda todo de forma entendible y una forma de trabajar que nunca deja nada a medias en producción.</p>
+
+  <div class="kpis" id="kpis"></div>
+
+  <h2>Seis principios</h2>
+  <p class="sub">Todo lo demás de esta ventana sale de aquí. Si una decisión futura choca con uno de estos principios, se apunta en «Decisiones» antes de tomarla.</p>
+  <div class="grid2">
+    <div class="card principio"><span class="n">1</span><div><h3>Una función cada vez</h3><p>Primero lo que ya funciona y no depende de nadie. Lo que depende de Movildata, del correo de precios o de decisiones pendientes va después.</p></div></div>
+    <div class="card principio"><span class="n">2</span><div><h3>Cada función es una carpeta</h3><p>Su API, sus pantallas, su migración y sus pruebas viven juntas. Añadir una función es añadir una carpeta; quitarla, apagar su interruptor.</p></div></div>
+    <div class="card principio"><span class="n">3</span><div><h3>Interruptores, no ramas largas</h3><p>El código se sube a main en 1–3 días, apagado. Se enciende para el piloto y después para todos, sin volver a desplegar.</p></div></div>
+    <div class="card principio"><span class="n">4</span><div><h3>La base de datos manda</h3><p>Lo que llega se guarda tal cual, se limpia y se calcula, en capas. Cada número sabe de qué archivo, correo o llamada salió.</p></div></div>
+    <div class="card principio"><span class="n">5</span><div><h3>El móvil solo habla con nuestra API</h3><p>Nunca con Movildata, Solred ni Odoo: más rápido, más barato, sin claves en el teléfono y sin depender de sus límites.</p></div></div>
+    <div class="card principio"><span class="n">6</span><div><h3>La demo es la especificación</h3><p>Cada pantalla del prototipo es una pantalla real. Si algo cambia, cambia primero en la demo y se enseña a tráfico.</p></div></div>
+  </div>
+
+  <h2>Orden de construcción</h2>
+  <p class="sub">Nueve fases en unas 20 semanas, las mismas que estima la propuesta. Cada fase termina en algo que se puede usar. <a href="#fases">Ver las fases en detalle</a>.</p>
+  <div id="tlResumen"></div>
+</section>
+
+<!-- ============ 02 ARQUITECTURA ============ -->
+<section data-sec id="arquitectura" hidden>
+  <p class="eyebrow">Arquitectura</p>
+  <h1>Un servidor, una base de datos, una API y dos pantallas.</h1>
+  <p class="lead">El sincronizador trae los datos de fuera a la base de datos propia; la API aplica permisos y reglas; el móvil del chófer y el panel de tráfico solo hablan con la API.</p>
+
+  <div class="arq" style="margin-top:26px">
+    <div class="col">
+      <h4>Fuentes</h4>
+      <div class="nodo"><b>Movildata</b><small>Posición, odómetro, tarjeta del tacógrafo</small></div>
+      <div class="nodo"><b>Redes de gasóleo</b><small>Excel de Solred y correo de precios</small></div>
+      <div class="nodo"><b>Odoo</b><small>Órdenes de transporte (DECA)</small></div>
+      <div class="nodo"><b>Ministerio y rutas</b><small>Precio de respaldo, rutas de camión</small></div>
+      <div class="nodo"><b>El propio chófer</b><small>Fotos de tickets, servicios, documentos</small></div>
+    </div>
+    <div class="flecha"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div>
+    <div class="col">
+      <h4>Worker</h4>
+      <div class="nodo dark"><b>Tareas programadas</b><small>Mismo código que la API, otro proceso</small></div>
+      <div class="nodo"><b>Sincroniza</b><small>Movildata cada 5 min</small></div>
+      <div class="nodo"><b>Importa</b><small>Excel, correos, precios</small></div>
+      <div class="nodo"><b>Calcula y avisa</b><small>Notas, monedas, caducidades, cola de avisos</small></div>
+    </div>
+    <div class="flecha"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div>
+    <div class="col">
+      <h4>PostgreSQL 16</h4>
+      <div class="nodo hl"><b>Cuatro capas</b>
+        <div class="capa-mini">
+          <span style="background:var(--c-ingesta)">ingesta · tal cual llega</span>
+          <span style="background:var(--c-nucleo)">nucleo · la verdad</span>
+          <span style="background:var(--c-calculo)">calculo · lo que se deduce</span>
+          <span style="background:var(--c-sistema)">sistema · cómo funciona</span>
+        </div>
+      </div>
+      <div class="nodo"><b>Archivos</b><small>Volumen en disco; la BD guarda ruta y huella</small></div>
+    </div>
+    <div class="flecha"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div>
+    <div class="col">
+      <h4>API · FastAPI</h4>
+      <div class="nodo dark"><b>Acceso y permisos</b><small>Código + PIN, roles, auditoría</small></div>
+      <div class="nodo"><b>Interruptores</b><small>Función apagada = no existe</small></div>
+      <div class="nodo"><b>Reglas de cada función</b><small>Atribución, repostaje, partes…</small></div>
+    </div>
+    <div class="flecha"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div>
+    <div class="col">
+      <h4>Pantallas · React</h4>
+      <div class="nodo"><b>App del chófer</b><small>/app · PWA instalada desde Google Play</small></div>
+      <div class="nodo"><b>Panel de tráfico</b><small>/admin · escritorio y tableta</small></div>
+    </div>
+  </div>
+
+  <h2>Qué se usa y por qué</h2>
+  <p class="sub">Lo mismo que ya usan DECA y el panel de Movildata: se reaprovecha código y lo que ya sabes.</p>
+  <div class="tbl-wrap"><table class="tbl">
+    <thead><tr><th>Pieza</th><th>Elección</th><th>Por qué</th></tr></thead>
+    <tbody>
+      <tr><td>Backend</td><td>Python 3.12, FastAPI, SQLAlchemy 2, Pydantic 2, uv, ruff, pytest</td><td>Es el stack de DECA y del panel de Movildata: sus clientes de Odoo y Movildata entran casi tal cual.</td></tr>
+      <tr><td>Base de datos</td><td>PostgreSQL 16 con <code>btree_gist</code></td><td>Restricciones de verdad (franjas que no se pisan), vistas y JSON para lo que llega en bruto. Sin PostGIS ni TimescaleDB al principio: con 75 camiones no hacen falta.</td></tr>
+      <tr><td>Migraciones</td><td>Alembic ejecutando los SQL de <code>db/</code></td><td>El SQL se escribe a mano y se lee tal cual; Alembic solo lleva la cuenta de qué está aplicado.</td></tr>
+      <tr><td>Tareas</td><td>Proceso <code>worker</code> con APScheduler</td><td>Mismo lenguaje y mismo código que la API. Cada ejecución queda en <code>sistema.ejecuciones</code>.</td></tr>
+      <tr><td>Frontend</td><td>React 18, TypeScript, Vite, React Router, TanStack Query, Leaflet</td><td>Como el panel de Movildata. Una sola app con dos zonas, <code>/app</code> y <code>/admin</code>.</td></tr>
+      <tr><td>Móvil</td><td>PWA empaquetada para Google Play (TWA con Bubblewrap o PWABuilder)</td><td>Una sola web para todo. El contenido se actualiza desde el servidor sin pasar revisión.</td></tr>
+      <tr><td>Servidor</td><td>VPS en la UE (Hetzner CX33 u OVHcloud VPS-2) con Coolify</td><td>Despliegue desde GitHub, SSL automático y copias. Unos 16–20 €/mes en total.</td></tr>
+      <tr><td>Rutas</td><td>OpenRouteService, perfil de camión</td><td>Distancia y desvío reales por carretera para «Necesito repostar».</td></tr>
+      <tr><td>Tickets</td><td>Modelo de visión por API</td><td>Lee litros, €/L, importe, fecha y estación. Unos 5 €/mes con 550 repostajes.</td></tr>
+      <tr><td>Avisos</td><td>Web Push al chófer, email a la oficina; WhatsApp más adelante</td><td>Todo pasa por la cola <code>sistema.notificaciones</code>: si un envío falla, se reintenta.</td></tr>
+      <tr><td>Vigilancia</td><td>Uptime Kuma y registro de errores</td><td>Avisa si la app o la sincronización se caen antes de que lo note un chófer.</td></tr>
+    </tbody>
+  </table></div>
+
+  <h2>En el servidor</h2>
+  <div class="grid2" style="margin-top:12px">
+    <div class="card"><h4>Servicios en Coolify</h4><ul class="l">
+      <li><code>web</code>: la API y el frontend ya compilado, en un solo contenedor.</li>
+      <li><code>worker</code>: las tareas programadas, con la misma imagen.</li>
+      <li><code>postgres</code>: PostgreSQL 16 con volumen propio y copia diaria fuera del servidor.</li>
+      <li><code>uptime-kuma</code>: vigila la web y la frescura de Movildata.</li>
+    </ul></div>
+    <div class="card"><h4>Direcciones</h4><ul class="l">
+      <li><b>conductores.grupotrimodos.com</b>: producción.</li>
+      <li><b>pruebas.conductores.grupotrimodos.com</b>: para enseñar a tráfico antes de subir.</li>
+      <li>El móvil entra por <code>/app</code> y la oficina por <code>/admin</code>; la API vive en <code>/api</code>.</li>
+    </ul></div>
+  </div>
+  <div class="note"><b>Regla de oro.</b><span>El móvil nunca manda un id de conductor: la API usa el de la sesión. Así un chófer no puede pedir datos de otro aunque manipule la app.</span></div>
+</section>
+
+<!-- ============ 03 BASE DE DATOS ============ -->
+<section data-sec id="bd" hidden>
+  <p class="eyebrow">Base de datos</p>
+  <h1>Lo que llega se guarda tal cual, se limpia y se calcula.</h1>
+  <p class="lead">Cuatro capas con una regla cada una. Así cualquier número de la app se puede seguir hasta el Excel, el correo o la llamada a Movildata de la que salió, y nada se calcula dos veces de formas distintas.</p>
+
+  <div class="capas" id="capas" style="margin-top:24px"></div>
+  <div class="capa-sis" id="capaSis"></div>
+
+  <h2>Reglas de diseño</h2>
+  <div class="grid2" style="margin-top:12px">
+    <div class="card"><ul class="l">
+      <li>Nombres en español, en minúsculas y con guiones bajos; tablas en plural.</li>
+      <li><b>Cada número lleva la unidad en el nombre</b>: <code>litros</code>, <code>precio_eur_l</code>, <code>importe_eur</code>, <code>desvio_min</code>. Lo contrario del «gas-oil» del papel, que nadie sabía si eran litros o euros.</li>
+      <li>Fecha y hora en <code>timestamptz</code>; los días se cuentan en hora de Madrid. Mes = día 1; semana = lunes.</li>
+      <li>Dinero y litros en <code>numeric</code>, nunca en decimales aproximados.</li>
+    </ul></div>
+    <div class="card"><ul class="l">
+      <li>Listas cerradas con <code>CHECK</code>; listas que crecen (roles, tipos de documento, redes), en su tabla: añadir es un INSERT.</li>
+      <li>Nada se borra: los maestros se desactivan y los hechos se anulan. La auditoría guarda quién cambió qué.</li>
+      <li>Lo que se deduce se calcula en vistas, no se copia: corregir una franja corrige todo lo que depende de ella.</li>
+      <li>Cada tabla y cada columna que no se explica sola lleva su comentario dentro de la propia base de datos.</li>
+    </ul></div>
+  </div>
+
+  <h2>El recorrido de un dato</h2>
+  <p class="flow-t">Un repostaje de Solred</p>
+  <div class="steps" style="--n:5">
+    <div class="step"><code>ingesta.lotes</code><b>Llega el Excel</b><p>Con su huella: el mismo archivo no se importa dos veces.</p></div>
+    <div class="step"><code>ingesta.filas</code><b>Fila a fila</b><p>Cada fila tal cual, con su veredicto. Tráfico revisa las de error antes de confirmar.</p></div>
+    <div class="step"><code>nucleo.repostajes</code><b>Dato limpio</b><p>Matrícula, fecha, litros y €/L, con <code>lote_id</code> y nº de fila.</p></div>
+    <div class="step"><code>calculo.repostajes_atribuidos</code><b>Quién repostó</b><p>Se cruza con la franja del conductor en ese camión.</p></div>
+    <div class="step"><code>calculo.notas_semana</code><b>Nota y aviso</b><p>Entra en su nota de repostaje y, si toca, en un aviso de corrección.</p></div>
+  </div>
+  <p class="flow-t">Una posición de Movildata</p>
+  <div class="steps" style="--n:4">
+    <div class="step"><code>ingesta.respuestas_api</code><b>Respuesta en bruto</b><p>El JSON tal cual, 30 días. Si Movildata cambia un nombre de campo, aquí se ve.</p></div>
+    <div class="step"><code>integraciones/movildata.py</code><b>Un solo traductor</b><p>lat, latitude o Latitud acaban en la misma columna.</p></div>
+    <div class="step"><code>nucleo.telemetria</code><b>Serie por camión</b><p>Posición, velocidad, odómetro y tarjeta insertada.</p></div>
+    <div class="step"><code>calculo.telemetria_conductor</code><b>Datos del chófer</b><p>Lo del camión dentro de SU franja: la regla de atribución.</p></div>
+  </div>
+  <p class="flow-t">Un ticket de gasóleo</p>
+  <div class="steps" style="--n:4">
+    <div class="step"><code>nucleo.archivos</code><b>La foto</b><p>Guardada en disco con su huella.</p></div>
+    <div class="step"><code>nucleo.tickets.lectura_ia</code><b>Lo que leyó la IA</b><p>Tal cual, por si algo se leyó mal.</p></div>
+    <div class="step"><code>nucleo.tickets.cuadra</code><b>Comprobación</b><p>La base de datos calcula si litros × €/L = importe.</p></div>
+    <div class="step"><code>calculo.anexo_ii</code><b>Al parte</b><p>Cruzado con Solred, suma los litros del día en el Anexo II.</p></div>
+  </div>
+
+  <h2>Lo que la base de datos no deja romper</h2>
+  <p class="sub">Comprobado sobre PostgreSQL 16 con las nueve fases aplicadas en orden: cada uno de estos intentos se rechaza, y otros 15 cálculos dan lo esperado con los datos de ejemplo (1,649 €/L de respaldo, 29,7 L/100 km de consumo real, nota 8,1).</p>
+  <ul class="check ok grid2">
+    <li>Un conductor en dos camiones a la vez, o con dos franjas abiertas.</li>
+    <li>Una corrección de tráfico sin quién ni por qué.</li>
+    <li>Una matrícula con espacios o guiones («5963 HFH»).</li>
+    <li>Una gasolinera con latitud y longitud intercambiadas.</li>
+    <li>Importar dos veces el mismo Excel o duplicar un repostaje.</li>
+    <li>Un precio del día absurdo (19,19 €/L en vez de 1,919).</li>
+    <li>Un ticket confirmado sin litros, precio o importe.</li>
+    <li>La ITV de un camión colgada de un conductor.</li>
+    <li>Guardar «apto» en algo que no sea la revisión médica.</li>
+    <li>Dos documentos vigentes del mismo tipo para el mismo titular.</li>
+    <li>Pagar dos veces las monedas de una semana.</li>
+    <li>Una nota de conducción fuera de 0–10.</li>
+  </ul>
+
+  <h2>Todas las tablas</h2>
+  <p class="sub">Generado desde los SQL de <code>bases/db</code>. Pulsa una tabla para ver sus columnas; las flechas llevan a la tabla a la que apuntan.</p>
+  <div class="tools">
+    <input type="search" id="bdBuscar" placeholder="Buscar tabla o columna: matricula, lote_id, nota…" aria-label="Buscar tabla o columna">
+    <div class="chips" id="bdCapas" role="group" aria-label="Capa"></div>
+    <div class="chips" id="bdFases" role="group" aria-label="Fase"></div>
+  </div>
+  <div id="bdLista"></div>
+
+  <h2>Funciones de la base de datos</h2>
+  <div class="tbl-wrap" style="margin-top:12px"><table class="tbl" id="bdFunciones"><thead><tr><th>Función</th><th>Fase</th><th>Qué hace</th></tr></thead><tbody></tbody></table></div>
+
+  <h2>Parámetros</h2>
+  <p class="sub">Los números que decide la empresa viven en <code>sistema.parametros</code> con su fecha de vigencia. Cambiar uno es añadir una fila; los cálculos de un mes usan el valor de ese mes.</p>
+  <div class="tbl-wrap"><table class="tbl" id="bdParametros"><thead><tr><th>Clave</th><th>Valor</th><th>Desde</th><th>Para qué</th></tr></thead><tbody></tbody></table></div>
+</section>
+
+<!-- ============ 04 FASES ============ -->
+<section data-sec id="fases" hidden>
+  <p class="eyebrow">Fases de desarrollo</p>
+  <h1>De lo terminado y sencillo a lo que más cruza.</h1>
+  <p class="lead">Cada fase solo depende de las anteriores que necesita, añade sus tablas en una migración y termina en algo que alguien usa. Las funciones nacen apagadas, pasan al piloto y después a toda la flota.</p>
+  <div id="tlFases"></div>
+  <div class="note"><b>Respecto a la propuesta.</b><span>Mismo total (16–17 semanas más 3 de ADR y segunda tarjeta), distinto orden: DECA pasa de la semana 8 a la 3 y la documentación de la 14 a la 5, y el flujo con Movildata pasa de la semana 5 a la 10. El descubrimiento de Movildata sigue en la semana 1, porque es el riesgo que más puede cambiar el plan. Si dirección necesita ver el camión detectado en la semana 5, basta con hacer la fase 4 justo después de la 1: ninguna de las fases 2 y 3 depende de ella.</span></div>
+  <div id="listaFases"></div>
+</section>
+
+<!-- ============ 05 BACKEND ============ -->
+<section data-sec id="backend" hidden>
+  <p class="eyebrow">Backend</p>
+  <h1>Un repositorio, una carpeta por función.</h1>
+  <p class="lead">La app va en un repositorio nuevo y privado. Este se queda como está: la propuesta en GitHub Pages y estas bases.</p>
+
+  <h2>El repositorio</h2>
+  <pre class="tree" style="margin-top:12px">controldrive/                     <span class="c">repositorio nuevo y privado</span>
+├─ api/                           <span class="c">Python · FastAPI</span>
+│  ├─ app/
+│  │  ├─ main.py                  <span class="c">monta el router de cada función</span>
+│  │  ├─ config.py                <span class="c">variables de entorno (.env)</span>
+│  │  ├─ db.py                    <span class="c">conexión y sesión de PostgreSQL</span>
+│  │  ├─ nucleo/                  <span class="c">lo común a todas las funciones:</span>
+│  │  │  ├─ acceso.py             <span class="c">  código + PIN, dispositivos, sesiones</span>
+│  │  │  ├─ permisos.py           <span class="c">  roles e interruptores</span>
+│  │  │  ├─ auditoria.py · archivos.py · notificaciones.py
+│  │  │  └─ importador.py         <span class="c">  lotes y filas, para cualquier Excel</span>
+│  │  ├─ integraciones/           <span class="c">un cliente por sistema externo</span>
+│  │  │  ├─ movildata.py          <span class="c">  del panel de flota</span>
+│  │  │  ├─ odoo.py               <span class="c">  de DECA</span>
+│  │  │  └─ rutas.py · vision.py · correo.py · ministerio.py
+│  │  ├─ <span class="y">funciones/</span>               <span class="c">una carpeta por función</span>
+│  │  │  ├─ deca/ · notas/ · documentos/ · mensajes/ · repostaje/
+│  │  │  ├─ asignaciones/ · mis_datos/ · partes/ · tickets/ · precios/
+│  │  │  └─ gasolinera_optima/ · nota/ · monedas/ · estaciones_adr/
+│  │  └─ tareas/                  <span class="c">lo que corre solo (worker)</span>
+│  ├─ migraciones/                <span class="c">Alembic: cada versión ejecuta un SQL de db/</span>
+│  └─ tests/                      <span class="c">comunes: permisos, importador, atribución</span>
+├─ web/                           <span class="c">React · TypeScript · Vite</span>
+│  └─ src/
+│     ├─ conductor/               <span class="c">/app · móvil</span>
+│     ├─ admin/                   <span class="c">/admin · escritorio</span>
+│     ├─ <span class="y">funciones/&lt;función&gt;/</span>     <span class="c">pantallas del chófer y del panel</span>
+│     ├─ ui/                      <span class="c">componentes y colores de la demo</span>
+│     └─ api/                     <span class="c">cliente generado desde la API</span>
+├─ db/                            <span class="c">los SQL de bases/db: fase0 … fase8 + datos_ejemplo</span>
+├─ docs/decisiones/               <span class="c">una nota corta por decisión técnica</span>
+├─ docker-compose.yml             <span class="c">PostgreSQL local</span>
+├─ .env.example                   <span class="c">las variables, sin valores</span>
+└─ CLAUDE.md                      <span class="c">las reglas de esta ventana, para el asistente</span></pre>
+
+  <h2>Anatomía de una función</h2>
+  <div class="grid2" style="margin-top:12px">
+    <pre class="tree">funciones/repostaje/
+├─ router.py         <span class="c">rutas HTTP y su interruptor</span>
+├─ esquemas.py       <span class="c">lo que entra y sale (Pydantic)</span>
+├─ servicio.py       <span class="c">las reglas, sin HTTP</span>
+├─ consultas.py      <span class="c">el SQL</span>
+└─ test_repostaje.py <span class="c">reglas y permisos</span>
+
+web/src/funciones/repostaje/
+├─ PanelRepostaje.tsx
+├─ ImportarInforme.tsx
+└─ api.ts            <span class="c">llamadas tipadas</span></pre>
+    <div class="card"><h4>Normas de la API</h4><ul class="l">
+      <li>Dos prefijos: <code>/api/conductor/…</code> trabaja siempre sobre el conductor de la sesión y nunca recibe un id de conductor; <code>/api/admin/…</code> comprueba el permiso del rol.</li>
+      <li>Cada router declara su interruptor: con la función apagada responde 404 y el menú no la enseña.</li>
+      <li>Errores con un mensaje en español listo para la pantalla («La matrícula no existe») y un código para el programa.</li>
+      <li>Importes y litros viajan como texto decimal, nunca como número aproximado.</li>
+      <li>Ver o cambiar datos de un conductor deja huella en <code>sistema.auditoria</code>.</li>
+    </ul></div>
+  </div>
+
+  <h2>Acceso</h2>
+  <div class="grid2" style="margin-top:12px">
+    <div class="card"><h4>Chófer</h4><ul class="l">
+      <li>Código + PIN de 4 cifras, cifrado con argon2. Bloqueo tras 5 intentos.</li>
+      <li>Móvil recordado: al día siguiente, solo el PIN. Tráfico puede revocar un móvil.</li>
+      <li>Sesión en cookie segura que caduca al cerrar la jornada.</li>
+      <li>El PIN solo lo resetea administración.</li>
+    </ul></div>
+    <div class="card"><h4>Oficina</h4><ul class="l">
+      <li>Email y contraseña.</li>
+      <li>Roles en <code>nucleo.roles</code> con su lista de permisos. Hoy, administración y conductor.</li>
+      <li>Tráfico, oficina, taller o dirección se añaden con un INSERT cuando se decidan, sin tocar código.</li>
+    </ul></div>
+  </div>
+
+  <h2>Tareas programadas</h2>
+  <div class="tbl-wrap" style="margin-top:12px"><table class="tbl">
+    <thead><tr><th>Tarea</th><th>Cuándo</th><th>Qué hace</th><th>Fase</th></tr></thead>
+    <tbody>
+      <tr><td><code>copia_seguridad</code></td><td>cada noche</td><td>Volcado de la base de datos y de las fotos fuera del servidor.</td><td>0</td></tr>
+      <tr><td><code>purgar_ingesta</code></td><td>domingos</td><td>Borra las respuestas de API de más de 30 días, salvo las de error.</td><td>0</td></tr>
+      <tr><td><code>enviar_notificaciones</code></td><td>cada minuto</td><td>Vacía la cola: push, email y, más adelante, WhatsApp.</td><td>2</td></tr>
+      <tr><td><code>avisos_caducidad</code></td><td>cada día, 8:00</td><td>Aplica las reglas de aviso; los lunes, resumen de lo que caduca en 30 días.</td><td>2</td></tr>
+      <tr><td><code>sincronizar_movildata</code></td><td>cada 5 min</td><td>Posiciones, odómetro y tarjeta insertada; abre y cierra franjas.</td><td>4</td></tr>
+      <tr><td><code>actividad_tacografo</code></td><td>cada 15 min</td><td>Conducción, descansos y disponibilidad de cada tarjeta.</td><td>4</td></tr>
+      <tr><td><code>cerrar_jornadas</code></td><td>cada hora</td><td>Cierra las franjas sin actividad y las deja marcadas para revisar.</td><td>4</td></tr>
+      <tr><td><code>cruzar_tickets</code></td><td>cada hora</td><td>Empareja tickets con repostajes de Solred.</td><td>5</td></tr>
+      <tr><td><code>generar_partes</code></td><td>día 1, 6:00</td><td>Crea la hoja del mes de cada camión, lista para firmar.</td><td>5</td></tr>
+      <tr><td><code>leer_correo_precios</code></td><td>6:30–9:00, cada 10 min</td><td>Precios del día de cada red; a las 9:00 avisa si falta alguna.</td><td>6</td></tr>
+      <tr><td><code>precios_ministerio</code></td><td>cada día, 7:00</td><td>Precio de surtidor para el respaldo.</td><td>6</td></tr>
+      <tr><td><code>calcular_notas</code></td><td>lunes, 6:00</td><td>Notas de la semana anterior y resumen de jornadas.</td><td>7</td></tr>
+      <tr><td><code>repartir_monedas</code></td><td>lunes, 7:00</td><td>Tramos y rachas; las caducidades, cada día.</td><td>7</td></tr>
+      <tr><td><code>revisar_estaciones_adr</code></td><td>una vez al mes</td><td>El agente revisa estaciones nuevas o dudosas.</td><td>8</td></tr>
+    </tbody>
+  </table></div>
+
+  <h2>Integraciones</h2>
+  <div class="grid2" style="margin-top:12px">
+    <div class="card"><h4>Movildata</h4><ul class="l">
+      <li>La clave va como parámetro <code>apiKey</code> en la URL, no en una cabecera.</li>
+      <li>Confirmados: <code>GetVehiculos</code> y <code>GetLastLocations</code>. Tacógrafo y actividad hay que pedir que los activen: es lo primero de la semana 1.</li>
+      <li>Los nombres de campo cambian (lat, latitude, Latitud): un único traductor en <code>integraciones/movildata.py</code>.</li>
+      <li>Reintentos solo ante errores pasajeros (429, 5xx).</li>
+    </ul></div>
+    <div class="card"><h4>Odoo, Solred, correo, rutas y visión</h4><ul class="l">
+      <li><b>Odoo</b>: JSON-RPC desde el servidor con la lista cerrada de operaciones de DECA.</li>
+      <li><b>Solred</b>: solo Excel; qué columna va a qué campo se guarda en el lote.</li>
+      <li><b>Correo</b>: un buzón dedicado; el <code>message_id</code> evita leer dos veces.</li>
+      <li><b>Rutas</b>: OpenRouteService con perfil de camión; distancias en caché.</li>
+      <li><b>Visión</b>: la respuesta se guarda entera en <code>lectura_ia</code>.</li>
+    </ul></div>
+  </div>
+</section>
+
+<!-- ============ 06 FRONTEND ============ -->
+<section data-sec id="frontend" hidden>
+  <p class="eyebrow">Frontend</p>
+  <h1>Una sola web con dos zonas.</h1>
+  <p class="lead">El chófer y tráfico usan la misma aplicación, con los mismos componentes y colores que la demo. Cambia la zona y lo que deja ver cada interruptor.</p>
+
+  <div class="grid2" style="margin-top:24px">
+    <div class="card"><h4>/app · App del chófer</h4><ul class="l">
+      <li>Móvil Android, instalada desde Google Play (la misma web empaquetada).</li>
+      <li>Botones grandes, alto contraste y una acción por pantalla, como en DECA.</li>
+      <li>Con el camión en marcha, solo lectura: nada que tocar.</li>
+      <li>Sin cobertura, lo apuntado (servicio, ticket, nota) se guarda en el móvil y se envía al volver la señal.</li>
+    </ul></div>
+    <div class="card"><h4>/admin · Panel de tráfico</h4><ul class="l">
+      <li>Escritorio y tableta, menú lateral como en la demo.</li>
+      <li>Tablas con exportación a Excel, mapa con Leaflet y cronograma de asignaciones.</li>
+      <li>«Actualizado hace X min» en vez de errores cuando Movildata tarda.</li>
+      <li>Toda corrección pide un motivo y queda registrada.</li>
+    </ul></div>
+  </div>
+
+  <h2>Pantallas por fase</h2>
+  <div class="tbl-wrap" style="margin-top:12px"><table class="tbl">
+    <thead><tr><th>Fase</th><th>App del chófer</th><th>Panel</th></tr></thead>
+    <tbody>
+      <tr><td>0</td><td>Acceso con código y PIN, inicio</td><td>Acceso, conductores, camiones, remolques, usuarios y perfiles, interruptores</td></tr>
+      <tr><td>1</td><td>Corregir orden de transporte (DECA), Mis notas</td><td>Historial de correcciones DECA</td></tr>
+      <tr><td>2</td><td>Mis documentos, Mensajes</td><td>Documentación, Programar aviso, Mensajes</td></tr>
+      <tr><td>3</td><td class="muted">—</td><td>Repostaje, Importaciones, Estaciones</td></tr>
+      <tr><td>4</td><td>Camión detectado, cambio de camión, Mis datos</td><td>Resumen de flota, Cronograma, Alertas, Ficha del conductor</td></tr>
+      <tr><td>5</td><td>Parte del día, Foto del ticket, Cierre de jornada, Firma del mes</td><td>Partes mensuales (Anexo II), cruce con Solred</td></tr>
+      <tr><td>6</td><td>Necesito repostar</td><td>Precios de hoy, Avisos de corrección</td></tr>
+      <tr><td>7</td><td>Mi nota, Mis monedas</td><td>Recompensas, notas en la ficha</td></tr>
+      <tr><td>8</td><td>Carga ADR, Reportar incidencia</td><td>Estaciones ADR, Segunda tarjeta</td></tr>
+    </tbody>
+  </table></div>
+
+  <h2>Cómo se construye</h2>
+  <div class="grid3" style="margin-top:12px">
+    <div class="card"><h4>Datos</h4><p class="muted">TanStack Query para pedir y guardar en caché; el cliente de la API se genera desde FastAPI (OpenAPI), así los tipos nunca se desincronizan.</p></div>
+    <div class="card"><h4>Diseño</h4><p class="muted">Los colores, tipografías (Mulish y Barlow Condensed) y piezas de la demo pasan a <code>web/src/ui</code>. Nada se diseña dos veces.</p></div>
+    <div class="card"><h4>Menú</h4><p class="muted">Se construye con los interruptores que devuelve la API: una función apagada no aparece para nadie.</p></div>
+  </div>
+
+  <h2>Google Play</h2>
+  <div class="card" style="margin-top:12px"><ul class="l">
+    <li>Cuenta a nombre de Grupo Trimodos (25 $ una vez). Las cuentas personales nuevas exigen 14 días de pruebas con 12 testers.</li>
+    <li>La web se empaqueta como app Android (TWA) con Bubblewrap o PWABuilder; el dominio se verifica con <code>assetlinks.json</code>.</li>
+    <li>Primera versión en prueba interna con los 5 conductores del piloto, al terminar la fase 4. Después, el contenido se actualiza desde el servidor sin pasar revisión.</li>
+  </ul></div>
+</section>
+
+<!-- ============ 07 FORMA DE TRABAJAR ============ -->
+<section data-sec id="trabajo" hidden>
+  <p class="eyebrow">Forma de trabajar</p>
+  <h1>Una semana, una función, algo en producción.</h1>
+  <p class="lead">Pensado para una persona: poco proceso, pero el justo para no romper lo que ya usan los chóferes y para poder retomar cualquier cosa semanas después.</p>
+
+  <h2>La semana</h2>
+  <div class="steps" style="--n:3;margin-top:12px">
+    <div class="step"><code>Lunes</code><b>Elegir una función</b><p>De la fase en curso. Escribir en tres líneas qué hará y cómo se sabrá que está hecha (el «terminada cuando» de cada fase).</p></div>
+    <div class="step"><code>Martes – jueves</code><b>Construir en orden</b><p>Migración → API con tests → pantalla → datos de ejemplo. Subir a main cada día, apagada.</p></div>
+    <div class="step"><code>Viernes</code><b>Enseñar y subir</b><p>Probarla con tráfico en «pruebas», pasarla a producción en piloto y apuntar qué cambió.</p></div>
+  </div>
+
+  <h2>Ramas, subidas e interruptores</h2>
+  <div class="grid2" style="margin-top:12px">
+    <div class="card"><ul class="l">
+      <li><code>main</code> siempre funciona y es lo que hay en producción.</li>
+      <li>Una rama corta por función (<code>funcion/repostaje</code>) que vive de 1 a 3 días.</li>
+      <li>Pull request a ti mismo: la integración continua pasa los tests y aplica las migraciones desde cero; tú repasas la lista de «hecho».</li>
+      <li><b>Nada llega a producción sin un «sube» explícito.</b></li>
+    </ul></div>
+    <div class="card"><h4>Interruptores · sistema.funciones</h4>
+      <ul class="l">
+        <li><span class="pill">apagada</span> el código está subido pero nadie lo ve.</li>
+        <li><span class="pill y">piloto</span> solo lo ven los usuarios marcados <code>en_piloto</code>.</li>
+        <li><span class="pill ok">todos</span> abierta a toda la flota.</li>
+      </ul>
+      <p class="muted" style="margin-top:10px;font-size:14px">Si algo falla en producción, se apaga en un segundo, sin desplegar.</p>
+    </div>
+  </div>
+
+  <h2>Cuándo una función está hecha</h2>
+  <ul class="check grid2" style="margin-top:12px">
+    <li>Migración SQL con comentario en cada tabla y columna nueva.</li>
+    <li>Exportador ejecutado: esta ventana enseña las tablas nuevas.</li>
+    <li>Test de permisos: un conductor no puede ver ni tocar lo de otro.</li>
+    <li>Pantalla igual que en la demo, probada en un Android real.</li>
+    <li>Datos de ejemplo actualizados en <code>datos_ejemplo.sql</code>.</li>
+    <li>Interruptor creado, en «apagada» o «piloto».</li>
+    <li>Probada en pruebas con alguien de tráfico.</li>
+    <li>Nota de cambios y, si hubo decisión, su nota en <code>docs/decisiones</code>.</li>
+  </ul>
+
+  <h2>Entornos</h2>
+  <div class="tbl-wrap" style="margin-top:12px"><table class="tbl">
+    <thead><tr><th>Entorno</th><th>Dónde</th><th>Datos</th><th>Para qué</th></tr></thead>
+    <tbody>
+      <tr><td>Local</td><td>Tu Mac, con <code>docker compose</code></td><td>Los de ejemplo</td><td>Construir y probar</td></tr>
+      <tr><td>Pruebas</td><td>pruebas.conductores.grupotrimodos.com</td><td>Copia sin datos personales</td><td>Enseñar a tráfico antes de subir</td></tr>
+      <tr><td>Producción</td><td>conductores.grupotrimodos.com</td><td>Reales</td><td>Usar</td></tr>
+    </tbody>
+  </table></div>
+
+  <h2>Base de datos, secretos y copias</h2>
+  <div class="grid3" style="margin-top:12px">
+    <div class="card"><h4>Migraciones</h4><ul class="l"><li>Solo hacia delante: un SQL aplicado no se edita.</li><li>Una migración por función.</li><li>La integración continua las aplica desde cero en cada subida.</li></ul></div>
+    <div class="card"><h4>Secretos</h4><ul class="l"><li>Claves de Movildata, Odoo, correo y visión solo en <code>.env</code> (local) y en Coolify.</li><li>Nunca en git ni en el chat.</li></ul></div>
+    <div class="card"><h4>Copias</h4><ul class="l"><li>Cada noche, base de datos y fotos fuera del servidor.</li><li>Una vez al mes, restaurar una copia en pruebas para comprobar que sirve.</li></ul></div>
+  </div>
+
+  <h2>Qué no hacer</h2>
+  <div class="card" style="margin-top:12px"><ul class="l">
+    <li>Empezar dos funciones a la vez.</li>
+    <li>Dejar una rama abierta más de tres días.</li>
+    <li>Escribir en el Odoo de producción desde tu Mac.</li>
+    <li>Copiar datos reales de chóferes a tu ordenador: usa los de ejemplo o la copia sin datos personales.</li>
+    <li>Optimizar antes de tiempo: particiones, cachés o microservicios llegan cuando un número lo pida.</li>
+  </ul></div>
+
+  <h2>Trabajar con el asistente</h2>
+  <div class="card" style="margin-top:12px"><ul class="l">
+    <li>El <code>CLAUDE.md</code> del repositorio recoge estas normas: una función cada vez, SQL con comentarios, test de permisos y nada a producción sin «sube».</li>
+    <li>Pídele cada función con su «terminada cuando» de la sección de fases.</li>
+    <li>Que la pruebe en local con los datos de ejemplo antes de enseñártela.</li>
+  </ul></div>
+
+  <h2>Para arrancar · semana 0</h2>
+  <ul class="check" style="margin-top:12px">
+    <li>Crear el repositorio privado <code>controldrive</code> con la estructura de la sección Backend.</li>
+    <li>Copiar <code>bases/db</code> a <code>db/</code> y crear la primera versión de Alembic.</li>
+    <li><code>docker compose up</code>: PostgreSQL 16 local con las nueve fases y los datos de ejemplo.</li>
+    <li>Contratar el VPS, instalar Coolify y apuntar el subdominio (acceso al DNS de grupotrimodos.com).</li>
+    <li>Descubrimiento de Movildata: qué endpoint da la tarjeta insertada y la actividad, y pedir que lo activen.</li>
+    <li>Pedir a Tecnativa los tres cambios de DECA: imprimir sin contraseña web, informe de vehículos con permisos elevados y recortar permisos del usuario técnico.</li>
+    <li>Pedir a tráfico: Excel de detalle de Solred, listado de estaciones, correos de precios de ejemplo y fechas de documentos.</li>
+    <li>Abrir la cuenta de Google Play de la empresa.</li>
+  </ul>
+</section>
+
+<!-- ============ 08 DECISIONES ============ -->
+<section data-sec id="decisiones" hidden>
+  <p class="eyebrow">Decisiones</p>
+  <h1>Lo que ya está decidido y lo que bloquea cada fase.</h1>
+  <p class="lead">Las técnicas se toman aquí y se apuntan en <code>docs/decisiones</code>. Las de negocio son de dirección y tráfico: cada una indica la primera fase que la necesita.</p>
+
+  <h2>Técnicas</h2>
+  <div class="tbl-wrap" style="margin-top:12px"><table class="tbl">
+    <thead><tr><th>Decisión</th><th>Por qué</th></tr></thead>
+    <tbody>
+      <tr><td>Un solo repositorio para API, web y base de datos</td><td>Una persona, un sitio. Un cambio de función es un solo pull request.</td></tr>
+      <tr><td>La app, en un repositorio nuevo y privado</td><td>Este sigue publicando la propuesta en GitHub Pages; el código de la app no debe ser público.</td></tr>
+      <tr><td>FastAPI + React</td><td>Lo que ya usan DECA y el panel de Movildata.</td></tr>
+      <tr><td>Cuatro capas en PostgreSQL</td><td>Separar lo que llega, la verdad y lo calculado hace que todo sea trazable y recalculable.</td></tr>
+      <tr><td>SQL escrito a mano</td><td>Se lee como un documento y lleva los comentarios dentro; Alembic solo cuenta versiones.</td></tr>
+      <tr><td>Sin PostGIS ni TimescaleDB de inicio</td><td>Con 75 camiones y 2.425 estaciones basta PostgreSQL. Se añaden si un número lo pide.</td></tr>
+      <tr><td>La atribución se calcula, no se copia</td><td>Corregir una franja corrige al momento repostajes, km, notas y partes.</td></tr>
+      <tr><td>Parámetros con fecha de vigencia</td><td>La ayuda al gasóleo cambia cada mes; los cálculos de octubre usan la de octubre.</td></tr>
+      <tr><td>Monedas como libro de movimientos</td><td>El saldo es una suma: siempre se puede explicar y nunca se pierde un movimiento.</td></tr>
+      <tr><td>Redes y tarjetas como tablas desde el principio</td><td>La segunda tarjeta (Moeve) será un dato, no una obra.</td></tr>
+    </tbody>
+  </table></div>
+
+  <h2>De negocio, pendientes</h2>
+  <div class="tbl-wrap" style="margin-top:12px"><table class="tbl">
+    <thead><tr><th>Pregunta</th><th>Bloquea</th><th>Quién</th></tr></thead>
+    <tbody>
+      <tr><td>¿Cuánto dura el bloqueo del PIN tras 5 intentos? <span class="muted">Provisional: 15 min.</span></td><td><span class="pill">Fase 0</span></td><td>Dirección</td></tr>
+      <tr><td>¿Qué perfiles usarán la app y quién recibe los mensajes de los chóferes?</td><td><span class="pill">Fase 2</span></td><td>Dirección</td></tr>
+      <tr><td>¿Quién envía los avisos de corrección, automáticos o revisados, y por qué canal?</td><td><span class="pill">Fase 3</span></td><td>Tráfico</td></tr>
+      <tr><td>¿Tras cuántas horas sin actividad se cierra sola una jornada? <span class="muted">Provisional: 6 h.</span></td><td><span class="pill">Fase 4</span></td><td>Tráfico</td></tr>
+      <tr><td>¿Una hoja del Anexo II por camión y turno? ¿Quién valida el parte y a dónde va después?</td><td><span class="pill">Fase 5</span></td><td>Tráfico y oficina</td></tr>
+      <tr><td>¿Cómo viene el correo de precios (por estación, provincia o único)? ¿El precio pactado ya descuenta la ayuda al gasóleo?</td><td><span class="pill">Fase 6</span></td><td>Tráfico</td></tr>
+      <tr><td>¿Qué es un 10 en cada parte de la nota? ¿Qué eventos da la API de Movildata?</td><td><span class="pill">Fase 7</span></td><td>Tráfico</td></tr>
+      <tr><td>¿Quién aprueba los canjes? Nombre de las monedas, catálogo, presupuesto y tributación de los premios.</td><td><span class="pill">Fase 7</span></td><td>Dirección y asesoría</td></tr>
+      <tr><td>¿Qué mercancías peligrosas y por qué rutas? ¿Quién es el consejero de seguridad? ¿Hay estaciones vetadas o de confianza?</td><td><span class="pill">Fase 8</span></td><td>Tráfico y consejero</td></tr>
+    </tbody>
+  </table></div>
+  <div class="note gray"><b>Ya cerradas en la propuesta.</b><span>Acceso a la API de Movildata confirmado; Solred hoy y una segunda tarjeta después; qué ve el conductor (su nota, sin compararle); la más barata para la empresa con 10 min de desvío; servicio = viajes hechos; gas-oil en litros; tramos y rachas de monedas; caducidades controladas; DECA se integra, no se rehace; instalación desde Google Play.</span></div>
+</section>
+
+</div></main>
+</div>
+
+<!-- esquema:inicio -->
+<script type="application/json" id="esquema">{"generado":"2026-10-29","esquemas":{"ingesta":"Lo que llega de fuera, tal cual llega: archivos, correos y respuestas de API. Nunca se edita; si algo está mal, se reimporta.","nucleo":"La verdad del negocio: datos limpios, con claves y reglas. Es lo que lee y escribe la app.","calculo":"Lo que se deduce de nucleo: vistas y resultados guardados. Nadie lo edita a mano; se puede borrar y recalcular.","sistema":"Cómo funciona la app: parámetros, interruptores de funciones, auditoría, tareas y notificaciones."},"fases":[{"n":0,"archivo":"bases/db/fase0_cimientos.sql","titulo":"FASE 0 · CIMIENTOS","resumen":"Lo mínimo para que exista la app: las cuatro capas, quién entra (usuarios, roles, conductores), con qué se trabaja (empresas, camiones, remolques), dónde se guardan los archivos y cómo queda registrado todo (parámetros, interruptores de funciones, auditoría, tareas e ingesta)."},{"n":1,"archivo":"bases/db/fase1_deca_notas.sql","titulo":"FASE 1 · LO QUE YA ESTÁ HECHO","resumen":"DECA (corregir la orden de transporte en Odoo) ya funciona: se integra tal cual, pero ahora cada corrección lleva el conductor que la hizo (su PIN sustituye al código compartido). Y «Mis notas», que es la función más sencilla de la app. Depende de: fase 0."},{"n":2,"archivo":"bases/db/fase2_documentos_mensajes.sql","titulo":"FASE 2 · DOCUMENTACIÓN Y MENSAJES","resumen":"Funciones que no dependen de ningún sistema externo: caducidades con avisos programables y mensajes entre oficina y chóferes. Aquí nace la cola de notificaciones que usarán todas las fases siguientes. Depende de: fase 0."},{"n":3,"archivo":"bases/db/fase3_repostaje_solred.sql","titulo":"FASE 3 · REPOSTAJE CON EL EXCEL DE SOLRED","resumen":"El control de repostaje por matrícula, solo con los Excel que ya da Solred: el informe mensual «Vehículos», el detalle con fecha y hora y el listado de estaciones con descuento. No necesita Movildata: el conductor de cada repostaje se deduce en la fase 6. Las redes y las tarjetas son tablas desde el primer día: la segunda red (Moeve) será un INSERT, no un cambio de estructura. Depende de: fase 0 (lotes, vehículos) y fase 2 (notificaciones)."},{"n":4,"archivo":"bases/db/fase4_movildata_asignaciones.sql","titulo":"FASE 4 · MOVILDATA Y ASIGNACIONES","resumen":"El corazón de la app: el sincronizador trae de Movildata posiciones, odómetro y la tarjeta del tacógrafo, y con eso se sabe quién lleva cada camión y entre qué horas (asignaciones). Todo lo del conductor sale de cruzar sus franjas con los datos del camión. Depende de: fase 0. Es la base de las fases 5, 6 y 7."},{"n":5,"archivo":"bases/db/fase5_parte_mensual.sql","titulo":"FASE 5 · PARTE MENSUAL SIN PAPEL","resumen":"El Anexo II se rellena solo: horas y km de la tarjeta y Movildata; el chófer suma servicios, hace la foto del ticket y confirma lugar, remolque y taller. Los tickets se cruzan con el detalle de Solred. Depende de: fase 3 (repostajes) y fase 4 (asignaciones, telemetría)."},{"n":6,"archivo":"bases/db/fase6_precios_gasolinera_optima.sql","titulo":"FASE 6 · PRECIOS DEL DÍA Y GASOLINERA ÓPTIMA","resumen":"Un agente lee cada mañana el correo de precios de cada red; si no llega, se usa el precio de respaldo (Ministerio − descuento − ayuda). Con eso, «Necesito repostar» lleva al chófer a la más barata para la empresa con 10 min de desvío como máximo. Y cada repostaje de Solred se atribuye por fin a su conductor. Depende de: fase 3 (gasolineras, repostajes) y fase 4 (asignaciones)."},{"n":7,"archivo":"bases/db/fase7_nota_monedas.sql","titulo":"FASE 7 · NOTA DE CONDUCCIÓN Y MONEDAS TRIMODOS","resumen":"La nota de 0 a 10 es la media de seis partes, cada una contra objetivos fijos que marca tráfico. Cada lunes se calcula la semana anterior y se reparten monedas. Las monedas son un libro de movimientos: el saldo siempre es la suma, nunca un número que se pisa. Depende de: fase 4 (Movildata, tacógrafo) y fase 6 (nota de repostaje). Antes de empezar: tráfico fija qué es un 10 en cada parte y se confirma qué eventos da la API de Movildata."},{"n":8,"archivo":"bases/db/fase8_adr_segunda_red.sql","titulo":"FASE 8 · ESTACIONES ADR Y SEGUNDA RED","resumen":"Con carga ADR solo se recomiendan estaciones compatibles. Un agente revisa las estaciones, tráfico confirma las dudosas y los chóferes reportan incidencias. La falta de un dato nunca da verde. La segunda red no necesita tablas nuevas: se activa con datos. Depende de: fase 2 (carné ADR), fase 4 (carga ADR) y fase 6."}],"objetos":[{"esquema":"nucleo","nombre":"empresas","fase":0,"tipo":"tabla","descripcion":"Empresas del grupo. Cada camión, remolque y conductor pertenece a una.","columnas":[{"nombre":"codigo","tipo":"text","pk":true,"nn":true,"unico":false,"fk":null,"calculada":false},{"nombre":"nombre","tipo":"text","pk":false,"nn":true,"unico":false,"fk":null,"calculada":false},{"nombre":"odoo_empresa_id","tipo":"integer","pk":false,"nn":false,"unico":true,"fk":null,"calculada":false,"descripcion":"Id de la compañía en Odoo (DECA la necesita para buscar pedidos)."},{"nombre":"activa","tipo":"boolean","pk":false,"nn":true,"unico":false,"fk":null,"calculada":false}],"reglas":[]},{"esquema":"nucleo","nombre":"roles","fase":0,"tipo":"tabla","descripcion":"Perfiles de acceso. Añadir tráfico, oficina, taller o dirección es un INSERT, no un cambio de estructura.","columnas":[{"nombre":"codigo","tipo":"text","pk":true,"nn":true,"unico":false,"fk":null,"calculada":false},{"nombre":"nombre","tipo":"text","pk":false,"nn":true,"unico":false,"fk":null,"calculada":false},{"nombre":"descripcion","tipo":"text","pk":false,"nn":true,"unico":false,"fk":null,"calculada":false},{"nombre":"permisos","tipo":"text[]","pk":false,"nn":true,"unico":false,"fk":null,"calculada":false,"descripcion":"Permisos que comprueba la API, p. ej. {flota.ver, conductores.editar}. «*» = todos; «propio» = solo sus datos."}],"reglas":[]},{"esquema":"nucleo","nombre":"usuarios","fase":0,"tipo":"tabla","descripcion":"Todo el que entra en la app: conductores (código + PIN) y oficina (email + contraseña).","columnas":[{"nombre":"id","tipo":"bigint","pk":true,"nn":true,"unico":false,"fk":null,"calculada":false},{"nombre":"nombre","tipo":"text","pk":false,"nn":true,"unico":false,"fk":null,"calculada":false},{"nombre":"rol","tipo":"text","pk":false,"nn":true,"unico":false,"fk":"nucleo.roles","calculada":false},{"nombre":"codigo","tipo":"text","pk":false,"nn":false,"unico":true,"fk":null,"calculada":false,"descripcion":"Código de conductor con el que entra en el móvil."},{"nombre":"email","tipo":"text","pk":false,"nn":false,"unico":false,"fk":null,"calculada":false},{"nombre":"pin_hash","tipo":"text","pk":false,"nn":false,"unico":false,"fk":null,"calculada":false,"descripcion":"PIN de 4 cifras cifrado con argon2. El PIN nunca se guarda."},{"nombre":"clave_hash","tipo":"text","pk":false,"nn":false,"unico":false,"fk":null,"calculada":false,"descripcion":"Contraseña de oficina cifrada con argon2."},{"nombre":"intentos_fallidos","tipo":"smallint","pk":false,"nn":true,"unico":false,"fk":null,"calculada":false},{"nombre":"bloqueado_hasta","tipo":"timestamptz","pk":false,"nn":false,"unico":false,"fk":null,"calculada":false,"descripcion":"Tras sistema.parametro(acceso.intentos_max) fallos seguidos. Solo administración resetea el PIN."},{"nombre":"en_piloto","tipo":"boolean","pk":false,"nn":true,"unico":false,"fk":null,"calculada":false,"descripcion":"Ve las funciones encendidas en modo «piloto» (sistema.funciones)."},{"nombre":"activo","tipo":"boolean","pk":false,"nn":true,"unico":false,"fk":null,"calculada":false},{"nombre":"ultimo_acceso_en","tipo":"timestamptz","pk":false,"nn":false,"unico":false,"fk":null,"calculada":false},{"nombre":"creado_en","tipo":"timestamptz","pk":false,"nn":true,"unico":false,"fk":null,"calculada":false},{"nombre":"actualizado_en","tipo":"timestamptz","pk":false,"nn":true,"unico":false,"fk":null,"calculada":false}],"reglas":[]},{"esquema":"nucleo","nombre":"dispositivos","fase":0,"tipo":"tabla","descripcion":"Móviles recordados: al día siguiente el conductor solo pone el PIN. Revocar uno lo obliga a entrar con código otra vez.","columnas":[{"nombre":"id","tipo":"bigint","pk":true,"nn":true,"unico":false,"fk":null,"calculada":false},{"nombre":"usuario_id","tipo":"bigint","pk":false,"nn":true,"unico":false,"fk":"nucleo.usuarios","calculada":false},{"nombre":"token_hash","tipo":"text","pk":false,"nn":true,"unico":true,"fk":null,"calculada":false,"descripcion":"Huella del token que guarda el móvil. El token en claro nunca se guarda."},{"nombre":"nombre","tipo":"text","pk":false,"nn":false,"unico":false,"fk":null,"calculada":false},{"nombre":"creado_en","tipo":"timestamptz","pk":false,"nn":true,"unico":false,"fk":null,"calculada":false},{"nombre":"ultimo_uso_en","tipo":"timestamptz","pk":false,"nn":false,"unico":false,"fk":null,"calculada":false},{"nombre":"revocado_en","tipo":"timestamptz","pk":false,"nn":false,"unico":false,"fk":null,"calculada":false}],"reglas":[]},{"esquema":"nucleo","nombre":"archivos","fase":0,"tipo":"tabla","descripcion":"Todos los archivos (fotos de tickets, documentos, Excel, PDF, firmas). El archivo vive en disco; aquí, dónde está y su huella.","columnas":[{"nombre":"id","tipo":"bigint","pk":true,"nn":true,"unico":false,"fk":null,"calculada":false},{"nombre":"ruta","tipo":"text","pk":false,"nn":true,"unico":true,"fk":null,"calculada":false,"descripcion":"Ruta dentro del volumen de archivos, p. ej. tickets/2026/10/8f3a….jpg."},{"nombre":"nombre_original","tipo":"text","pk":false,"nn":false,"unico":false,"fk":null,"calculada":false},{"nombre":"tipo_mime","tipo":"text","pk":false,"nn":true,"unico":false,"fk":null,"calculada":false},{"nombre":"bytes","tipo":"bigint","pk":false,"nn":true,"unico":false,"fk":null,"calculada":false},{"nombre":"sha256","tipo":"text","pk":false,"nn":true,"unico":false,"fk":null,"calculada":false,"descripcion":"Huella del contenido: detecta el mismo archivo subido dos veces."},{"nombre":"subido_por","tipo":"bigint","pk":false,"nn":false,"unico":false,"fk":"nucleo.usuarios","calculada":false},{"nombre":"subido_en","tipo":"timestamptz","pk":false,"nn":true,"unico":false,"fk":null,"calculada":false}],"reglas":[]},{"esquema":"sistema","nombre":"parametros","fase":0,"tipo":"tabla","descripcion":"Números que decide la empresa y pueden cambiar (desvío máximo, ayuda al gasóleo, tramos de monedas…). Nunca se pisan: un cambio es una fila nueva con su fecha, y los cálculos de un mes usan el valor de ese mes.","columnas":[{"nombre":"id","tipo":"bigint","pk":true,"nn":true,"unico":false,"fk":null,"calculada":false},{"nombre":"clave","tipo":"text","pk":false,"nn":true,"unico":false,"fk":null,"calculada":false},{"nombre":"valor","tipo":"jsonb","pk":false,"nn":true,"unico":false,"fk":null,"calculada":false},{"nombre":"unidad","tipo":"text","pk":false,"nn":false,"unico":false,"fk":null,"calculada":false},{"nombre":"vigente_desde","tipo":"date","pk":false,"nn":true,"unico":false,"fk":null,"calculada":false,"descripcion":"Desde qué día vale. El valor de una fecha es el de la fila más reciente que no la supera."},{"nombre":"descripcion","tipo":"text","pk":false,"nn":true,"unico":false,"fk":null,"calculada":false},{"nombre":"cambiado_por","tipo":"bigint","pk":false,"nn":false,"unico":false,"fk":"nucleo.usuarios","calculada":false},{"nombre":"creado_en","tipo":"timestamptz","pk":false,"nn":true,"unico":false,"fk":null,"calculada":false}],"reglas":[]},{"esquema":"sistema","nombre":"funciones","fase":0,"tipo":"tabla","descripcion":"Interruptores: cada función nace «apagada», pasa a «piloto» (solo usuarios en_piloto) y después a «todos». Permite subir código a medias sin que nadie lo vea.","columnas":[{"nombre":"codigo","tipo":"text","pk":true,"nn":true,"unico":false,"fk":null,"calculada":false},{"nombre":"nombre","tipo":"text","pk":false,"nn":true,"unico":false,"fk":null,"calculada":false},{"nombre":"fase","tipo":"smallint","pk":false,"nn":true,"unico":false,"fk":null,"calculada":false},{"nombre":"estado","tipo":"text","pk":false,"nn":true,"unico":false,"fk":null,"calculada":false},{"nombre":"descripcion","tipo":"text","pk":false,"nn":false,"unico":false,"fk":null,"calculada":false},{"nombre":"actualizado_en","tipo":"timestamptz","pk":false,"nn":true,"unico":false,"fk":null,"calculada":false}],"reglas":[]},{"esquema":"sistema","nombre":"auditoria","fase":0,"tipo":"tabla","descripcion":"Quién hizo o vio qué, y cuándo. Responde a «¿quién ha mirado mis datos?» (LOPDGDD) y a «¿quién cambió esta asignación?».","columnas":[{"nombre":"id","tipo":"bigint","pk":true,"nn":true,"unico":false,"fk":null,"calculada":false},{"nombre":"ocurrido_en","tipo":"timestamptz","pk":false,"nn":true,"unico":false,"fk":null,"calculada":false},{"nombre":"usuario_id","tipo":"bigint","pk":false,"nn":false,"unico":false,"fk":"nucleo.usuarios","calculada":false,"descripcion":"Vacío = lo hizo una tarea automática."},{"nombre":"accion","tipo":"text","pk":false,"nn":true,"unico":false,"fk":null,"calculada":false},{"nombre":"entidad","tipo":"text","pk":false,"nn":true,"unico":false,"fk":null,"calculada":false,"descripcion":"Tabla afectada, p. ej. nucleo.asignaciones."},{"nombre":"entidad_id","tipo":"text","pk":false,"nn":false,"unico":false,"fk":null,"calculada":false},{"nombre":"sobre_conductor_id","tipo":"bigint","pk":false,"nn":false,"unico":false,"fk":null,"calculada":false,"descripcion":"De qué conductor son los datos vistos o tocados."},{"nombre":"antes","tipo":"jsonb","pk":false,"nn":false,"unico":false,"fk":null,"calculada":false},{"nombre":"despues","tipo":"jsonb","pk":false,"nn":false,"unico":false,"fk":null,"calculada":false},{"nombre":"motivo","tipo":"text","pk":false,"nn":false,"unico":false,"fk":null,"calculada":false},{"nombre":"ip","tipo":"inet","pk":false,"nn":false,"unico":false,"fk":null,"calculada":false}],"reglas":[]},{"esquema":"sistema","nombre":"ejecuciones","fase":0,"tipo":"tabla","descripcion":"Cada vez que corre una tarea programada (sincronizar Movildata, leer el correo, calcular notas…): cuándo, cómo acabó y cuántas filas tocó.","columnas":[{"nombre":"id","tipo":"bigint","pk":true,"nn":true,"unico":false,"fk":null,"calculada":false},{"nombre":"tarea","tipo":"text","pk":false,"nn":true,"unico":false,"fk":null,"calculada":false},{"nombre":"inicio","tipo":"timestamptz","pk":false,"nn":true,"unico":false,"fk":null,"calculada":false},{"nombre":"fin","tipo":"timestamptz","pk":false,"nn":false,"unico":false,"fk":null,"calculada":false},{"nombre":"estado","tipo":"text","pk":false,"nn":true,"unico":false,"fk":null,"calculada":false},{"nombre":"filas","tipo":"integer","pk":false,"nn":false,"unico":false,"fk":null,"calculada":false},{"nombre":"detalle","tipo":"text","pk":false,"nn":false,"unico":false,"fk":null,"calculada":false}],"reglas":[]},{"esquema":"ingesta","nombre":"lotes","fase":0,"tipo":"tabla","descripcion":"Cada entrega de datos: un Excel de Solred, un correo de precios, una llamada a Movildata. Todo dato de nucleo que vino de fuera apunta a su lote.","columnas":[{"nombre":"id","tipo":"bigint","pk":true,"nn":true,"unico":false,"fk":null,"calculada":false},{"nombre":"origen","tipo":"text","pk":false,"nn":true,"unico":false,"fk":null,"calculada":false},{"nombre":"descripcion","tipo":"text","pk":false,"nn":false,"unico":false,"fk":null,"calculada":false},{"nombre":"archivo_id","tipo":"bigint","pk":false,"nn":false,"unico":false,"fk":"nucleo.archivos","calculada":false},{"nombre":"huella","tipo":"text","pk":false,"nn":false,"unico":false,"fk":null,"calculada":false,"descripcion":"sha256 del archivo o de la respuesta. Impide importar dos veces lo mismo."},{"nombre":"periodo_desde","tipo":"date","pk":false,"nn":false,"unico":false,"fk":null,"calculada":false},{"nombre":"periodo_hasta","tipo":"date","pk":false,"nn":false,"unico":false,"fk":null,"calculada":false},{"nombre":"estado","tipo":"text","pk":false,"nn":true,"unico":false,"fk":null,"calculada":false,"descripcion":"recibido → en_revision (filas con error a la vista) → importado. O descartado / error."},{"nombre":"filas_total","tipo":"integer","pk":false,"nn":false,"unico":false,"fk":null,"calculada":false},{"nombre":"filas_ok","tipo":"integer","pk":false,"nn":false,"unico":false,"fk":null,"calculada":false},{"nombre":"filas_error","tipo":"integer","pk":false,"nn":false,"unico":false,"fk":null,"calculada":false},{"nombre":"mapeo_columnas","tipo":"jsonb","pk":false,"nn":false,"unico":false,"fk":null,"calculada":false,"descripcion":"Qué columna del archivo va a qué campo. Si Solred cambia el Excel, se cambia aquí, no el código."},{"nombre":"error","tipo":"text","pk":false,"nn":false,"unico":false,"fk":null,"calculada":false},{"nombre":"ejecucion_id","tipo":"bigint","pk":false,"nn":false,"unico":false,"fk":"sistema.ejecuciones","calculada":false},{"nombre":"recibido_en","tipo":"timestamptz","pk":false,"nn":true,"unico":false,"fk":null,"calculada":false},{"nombre":"importado_en","tipo":"timestamptz","pk":false,"nn":false,"unico":false,"fk":null,"calculada":false},{"nombre":"importado_por","tipo":"bigint","pk":false,"nn":false,"unico":false,"fk":"nucleo.usuarios","calculada":false}],"reglas":[]},{"esquema":"ingesta","nombre":"filas","fase":0,"tipo":"tabla","descripcion":"Cada fila de un archivo, tal cual se leyó, con su veredicto. Es la «lista de filas a revisar antes de confirmar» del importador.","columnas":[{"nombre":"lote_id","tipo":"bigint","pk":true,"nn":true,"unico":false,"fk":"ingesta.lotes","calculada":false},{"nombre":"n_fila","tipo":"integer","pk":true,"nn":true,"unico":false,"fk":null,"calculada":false},{"nombre":"datos","tipo":"jsonb","pk":false,"nn":true,"unico":false,"fk":null,"calculada":false,"descripcion":"La fila original: {\"Matrícula\": \"5963 HFH\", \"Litros\": \"252,4\", …}."},{"nombre":"estado","tipo":"text","pk":false,"nn":true,"unico":false,"fk":null,"calculada":false},{"nombre":"mensaje","tipo":"text","pk":false,"nn":false,"unico":false,"fk":null,"calculada":false,"descripcion":"Por qué no entró o qué hay que revisar, en lenguaje claro: «La matrícula 1234ABC no existe»."},{"nombre":"destino","tipo":"text","pk":false,"nn":false,"unico":false,"fk":null,"calculada":false,"descripcion":"Tabla donde acabó la fila (p. ej. nucleo.repostajes); destino_id es su id."},{"nombre":"destino_id","tipo":"bigint","pk":false,"nn":false,"unico":false,"fk":null,"calculada":false}],"reglas":[]},{"esquema":"ingesta","nombre":"respuestas_api","fase":0,"tipo":"tabla","descripcion":"Respuestas de API en bruto. Si Movildata cambia un nombre de campo, aquí se ve qué llegó. Se purgan a los 30 días salvo las de error.","columnas":[{"nombre":"id","tipo":"bigint","pk":true,"nn":true,"unico":false,"fk":null,"calculada":false},{"nombre":"lote_id","tipo":"bigint","pk":false,"nn":false,"unico":false,"fk":"ingesta.lotes","calculada":false},{"nombre":"servicio","tipo":"text","pk":false,"nn":true,"unico":false,"fk":null,"calculada":false},{"nombre":"endpoint","tipo":"text","pk":false,"nn":true,"unico":false,"fk":null,"calculada":false},{"nombre":"parametros","tipo":"jsonb","pk":false,"nn":false,"unico":false,"fk":null,"calculada":false,"descripcion":"Parámetros de la llamada sin la clave (apiKey nunca se guarda)."},{"nombre":"estado_http","tipo":"smallint","pk":false,"nn":false,"unico":false,"fk":null,"calculada":false},{"nombre":"cuerpo","tipo":"jsonb","pk":false,"nn":false,"unico":false,"fk":null,"calculada":false},{"nombre":"duracion_ms","tipo":"integer","pk":false,"nn":false,"unico":false,"fk":null,"calculada":false},{"nombre":"recibido_en","tipo":"timestamptz","pk":false,"nn":true,"unico":false,"fk":null,"calculada":false}],"reglas":[]},{"esquema":"nucleo","nombre":"conductores","fase":0,"tipo":"tabla","descripcion":"Datos de cada chófer. El nombre, el código y el PIN están en nucleo.usuarios (uno a uno).","columnas":[{"nombre":"id","tipo":"bigint","pk":true,"nn":true,"unico":false,"fk":null,"calculada":false},{"nombre":"usuario_id","tipo":"bigint","pk":false,"nn":true,"unico":true,"fk":"nucleo.usuarios","calculada":false},{"nombre":"empresa","tipo":"text","pk":false,"nn":false,"unico":false,"fk":"nucleo.empresas","calculada":false},{"nombre":"tarjeta_tacografo","tipo":"text","pk":false,"nn":false,"unico":true,"fk":null,"calculada":false,"descripcion":"Nº de su tarjeta de conductor. Es la llave con Movildata: dice en qué camión está y qué hace."},{"nombre":"base","tipo":"text","pk":false,"nn":false,"unico":false,"fk":null,"calculada":false},{"nombre":"telefono","tipo":"text","pk":false,"nn":false,"unico":false,"fk":null,"calculada":false},{"nombre":"fecha_alta","tipo":"date","pk":false,"nn":false,"unico":false,"fk":null,"calculada":false},{"nombre":"fecha_baja","tipo":"date","pk":false,"nn":false,"unico":false,"fk":null,"calculada":false},{"nombre":"creado_en","tipo":"timestamptz","pk":false,"nn":true,"unico":false,"fk":null,"calculada":false},{"nombre":"actualizado_en","tipo":"timestamptz","pk":false,"nn":true,"unico":false,"fk":null,"calculada":false}],"reglas":[]},{"esquema":"nucleo","nombre":"vehiculos","fase":0,"tipo":"tabla","descripcion":"Cabezas tractoras. La lista inicial sale de Movildata (GetVehiculos).","columnas":[{"nombre":"id","tipo":"bigint","pk":true,"nn":true,"unico":false,"fk":null,"calculada":false},{"nombre":"matricula","tipo":"text","pk":false,"nn":true,"unico":true,"fk":null,"calculada":false,"descripcion":"Sin espacios ni guiones, en mayúsculas (lo exige un CHECK)."},{"nombre":"empresa","tipo":"text","pk":false,"nn":false,"unico":false,"fk":"nucleo.empresas","calculada":false},{"nombre":"alias","tipo":"text","pk":false,"nn":false,"unico":false,"fk":null,"calculada":false},{"nombre":"marca_modelo","tipo":"text","pk":false,"nn":false,"unico":false,"fk":null,"calculada":false},{"nombre":"id_movildata","tipo":"text","pk":false,"nn":false,"unico":true,"fk":null,"calculada":false,"descripcion":"Identificador del vehículo en Movildata (imei)."},{"nombre":"base","tipo":"text","pk":false,"nn":false,"unico":false,"fk":null,"calculada":false},{"nombre":"qr_token","tipo":"text","pk":false,"nn":true,"unico":true,"fk":null,"calculada":false,"descripcion":"Lo que lleva la pegatina QR de la cabina: elegir camión sin teclear."},{"nombre":"tacografo_digital","tipo":"boolean","pk":false,"nn":true,"unico":false,"fk":null,"calculada":false,"descripcion":"false = no hay tarjeta que leer: la app pide la matrícula a mano o por QR."},{"nombre":"consumo_objetivo_l_100km","tipo":"numeric(4,1)","pk":false,"nn":false,"unico":false,"fk":null,"calculada":false,"descripcion":"Objetivo de consumo de este camión para la nota de conducción."},{"nombre":"fecha_matriculacion","tipo":"date","pk":false,"nn":false,"unico":false,"fk":null,"calculada":false,"descripcion":"Decide la frecuencia de la ITV (anual hasta 10 años, después cada 6 meses)."},{"nombre":"activo","tipo":"boolean","pk":false,"nn":true,"unico":false,"fk":null,"calculada":false},{"nombre":"lote_id","tipo":"bigint","pk":false,"nn":false,"unico":false,"fk":"ingesta.lotes","calculada":false},{"nombre":"creado_en","tipo":"timestamptz","pk":false,"nn":true,"unico":false,"fk":null,"calculada":false},{"nombre":"actualizado_en","tipo":"timestamptz","pk":false,"nn":true,"unico":false,"fk":null,"calculada":false}],"reglas":[]},{"esquema":"nucleo","nombre":"remolques","fase":0,"tipo":"tabla","descripcion":"Remolques y semirremolques. El chófer los elige de una lista o escanea su QR.","columnas":[{"nombre":"id","tipo":"bigint","pk":true,"nn":true,"unico":false,"fk":null,"calculada":false},{"nombre":"matricula","tipo":"text","pk":false,"nn":true,"unico":true,"fk":null,"calculada":false},{"nombre":"empresa","tipo":"text","pk":false,"nn":false,"unico":false,"fk":"nucleo.empresas","calculada":false},{"nombre":"tipo","tipo":"text","pk":false,"nn":false,"unico":false,"fk":null,"calculada":false,"descripcion":"Lona, frigorífico, cisterna, plataforma…"},{"nombre":"qr_token","tipo":"text","pk":false,"nn":true,"unico":true,"fk":null,"calculada":false},{"nombre":"fecha_matriculacion","tipo":"date","pk":false,"nn":false,"unico":false,"fk":null,"calculada":false},{"nombre":"activo","tipo":"boolean","pk":false,"nn":true,"unico":false,"fk":null,"calculada":false},{"nombre":"creado_en","tipo":"timestamptz","pk":false,"nn":true,"unico":false,"fk":null,"calculada":false},{"nombre":"actualizado_en","tipo":"timestamptz","pk":false,"nn":true,"unico":false,"fk":null,"calculada":false}],"reglas":[]},{"esquema":"nucleo","nombre":"deca_correcciones","fase":1,"tipo":"tabla","descripcion":"Registro propio de cada corrección hecha con DECA. Odoo sigue siendo la fuente de la orden; esto dice quién cambió qué y cuándo.","columnas":[{"nombre":"id","tipo":"bigint","pk":true,"nn":true,"unico":false,"fk":null,"calculada":false},{"nombre":"conductor_id","tipo":"bigint","pk":false,"nn":true,"unico":false,"fk":"nucleo.conductores","calculada":false},{"nombre":"empresa","tipo":"text","pk":false,"nn":true,"unico":false,"fk":"nucleo.empresas","calculada":false},{"nombre":"pedido","tipo":"text","pk":false,"nn":true,"unico":false,"fk":null,"calculada":false,"descripcion":"Nº de pedido de Odoo, p. ej. S2621473."},{"nombre":"tarea_odoo_id","tipo":"integer","pk":false,"nn":false,"unico":false,"fk":null,"calculada":false},{"nombre":"antes","tipo":"jsonb","pk":false,"nn":true,"unico":false,"fk":null,"calculada":false,"descripcion":"Mercancía, bultos, euro palets y peso antes del cambio."},{"nombre":"despues","tipo":"jsonb","pk":false,"nn":true,"unico":false,"fk":null,"calculada":false},{"nombre":"resultado","tipo":"text","pk":false,"nn":true,"unico":false,"fk":null,"calculada":false,"descripcion":"simulada = DRY_RUN (no se escribió en Odoo)."},{"nombre":"error","tipo":"text","pk":false,"nn":false,"unico":false,"fk":null,"calculada":false},{"nombre":"pdf_id","tipo":"bigint","pk":false,"nn":false,"unico":false,"fk":"nucleo.archivos","calculada":false},{"nombre":"ocurrido_en","tipo":"timestamptz","pk":false,"nn":true,"unico":false,"fk":null,"calculada":false}],"reglas":[]},{"esquema":"nucleo","nombre":"notas","fase":1,"tipo":"tabla","descripcion":"Notas privadas del conductor. Solo las ve él: ni administración puede leerlas (regla de la API, con test).","columnas":[{"nombre":"id","tipo":"bigint","pk":true,"nn":true,"unico":false,"fk":null,"calculada":false},{"nombre":"conductor_id","tipo":"bigint","pk":false,"nn":true,"unico":false,"fk":"nucleo.conductores","calculada":false},{"nombre":"texto","tipo":"text","pk":false,"nn":false,"unico":false,"fk":null,"calculada":false},{"nombre":"foto_id","tipo":"bigint","pk":false,"nn":false,"unico":false,"fk":"nucleo.archivos","calculada":false},{"nombre":"creada_en","tipo":"timestamptz","pk":false,"nn":true,"unico":false,"fk":null,"calculada":false},{"nombre":"editada_en","tipo":"timestamptz","pk":false,"nn":false,"unico":false,"fk":null,"calculada":false},{"nombre":"borrada_en","tipo":"timestamptz","pk":false,"nn":false,"unico":false,"fk":null,"calculada":false}],"reglas":[]},{"esquema":"nucleo","nombre":"tipos_documento","fase":2,"tipo":"tabla","descripcion":"Qué documentos se controlan y de quién son. Añadir uno nuevo (p. ej. CAP) es un INSERT.","columnas":[{"nombre":"codigo","tipo":"text","pk":true,"nn":true,"unico":false,"fk":null,"calculada":false},{"nombre":"nombre","tipo":"text","pk":false,"nn":true,"unico":false,"fk":null,"calculada":false},{"nombre":"titular","tipo":"text","pk":false,"nn":true,"unico":false,"fk":null,"calculada":false},{"nombre":"renovacion","tipo":"text","pk":false,"nn":true,"unico":false,"fk":null,"calculada":false,"descripcion":"Cada cuánto se renueva, en palabras: «Cada 5 años»."},{"nombre":"requiere_apto","tipo":"boolean","pk":false,"nn":true,"unico":false,"fk":null,"calculada":false,"descripcion":"Solo la revisión médica: se guarda si es apto, nunca diagnósticos."}],"reglas":[]},{"esquema":"nucleo","nombre":"documentos","fase":2,"tipo":"tabla","descripcion":"Cada documento con su fecha de caducidad. Un solo documento vigente por titular y tipo; al validar uno nuevo, el anterior pasa a «sustituido» y los avisos se paran solos.","columnas":[{"nombre":"id","tipo":"bigint","pk":true,"nn":true,"unico":false,"fk":null,"calculada":false},{"nombre":"tipo","tipo":"text","pk":false,"nn":true,"unico":false,"fk":"nucleo.tipos_documento","calculada":false},{"nombre":"titular","tipo":"text","pk":false,"nn":true,"unico":false,"fk":"nucleo.tipos_documento","calculada":false,"descripcion":"De quién es: conductor, vehiculo o remolque. Debe coincidir con el tipo y con la columna rellena (lo garantizan las restricciones)."},{"nombre":"conductor_id","tipo":"bigint","pk":false,"nn":false,"unico":false,"fk":"nucleo.conductores","calculada":false},{"nombre":"vehiculo_id","tipo":"bigint","pk":false,"nn":false,"unico":false,"fk":"nucleo.vehiculos","calculada":false},{"nombre":"remolque_id","tipo":"bigint","pk":false,"nn":false,"unico":false,"fk":"nucleo.remolques","calculada":false},{"nombre":"caduca_el","tipo":"date","pk":false,"nn":true,"unico":false,"fk":null,"calculada":false},{"nombre":"archivo_id","tipo":"bigint","pk":false,"nn":false,"unico":false,"fk":"nucleo.archivos","calculada":false},{"nombre":"apto","tipo":"boolean","pk":false,"nn":false,"unico":false,"fk":null,"calculada":false,"descripcion":"Solo revisión médica. Sin datos médicos: los informes se quedan en el servicio de prevención."},{"nombre":"estado","tipo":"text","pk":false,"nn":true,"unico":false,"fk":null,"calculada":false,"descripcion":"El chófer sube la foto (pendiente_validacion), tráfico la valida (vigente)."},{"nombre":"subido_por","tipo":"bigint","pk":false,"nn":false,"unico":false,"fk":"nucleo.usuarios","calculada":false},{"nombre":"validado_por","tipo":"bigint","pk":false,"nn":false,"unico":false,"fk":"nucleo.usuarios","calculada":false},{"nombre":"validado_en","tipo":"timestamptz","pk":false,"nn":false,"unico":false,"fk":null,"calculada":false},{"nombre":"creado_en","tipo":"timestamptz","pk":false,"nn":true,"unico":false,"fk":null,"calculada":false},{"nombre":"actualizado_en","tipo":"timestamptz","pk":false,"nn":true,"unico":false,"fk":null,"calculada":false}],"reglas":[]},{"esquema":"nucleo","nombre":"reglas_aviso","fase":2,"tipo":"tabla","descripcion":"Avisos de caducidad programados «rellenando una frase». Sin titular concreto, la regla vale para todos los documentos de ese tipo.","columnas":[{"nombre":"id","tipo":"bigint","pk":true,"nn":true,"unico":false,"fk":null,"calculada":false},{"nombre":"frase","tipo":"text","pk":false,"nn":true,"unico":false,"fk":null,"calculada":false,"descripcion":"La frase tal como la ve tráfico: «Avisar 30 días antes de que caduque la ITV del remolque a tráfico y al taller por app y email, cada semana hasta que se renueve»."},{"nombre":"tipo_documento","tipo":"text","pk":false,"nn":true,"unico":false,"fk":"nucleo.tipos_documento","calculada":false},{"nombre":"conductor_id","tipo":"bigint","pk":false,"nn":false,"unico":false,"fk":"nucleo.conductores","calculada":false},{"nombre":"vehiculo_id","tipo":"bigint","pk":false,"nn":false,"unico":false,"fk":"nucleo.vehiculos","calculada":false},{"nombre":"remolque_id","tipo":"bigint","pk":false,"nn":false,"unico":false,"fk":"nucleo.remolques","calculada":false},{"nombre":"dias_antes","tipo":"integer","pk":false,"nn":true,"unico":false,"fk":null,"calculada":false},{"nombre":"destinatarios","tipo":"text[]","pk":false,"nn":true,"unico":false,"fk":null,"calculada":false,"descripcion":"Roles (admin, trafico, taller…) o «titular» para el propio chófer."},{"nombre":"canales","tipo":"text[]","pk":false,"nn":true,"unico":false,"fk":null,"calculada":false},{"nombre":"repetir_cada_dias","tipo":"integer","pk":false,"nn":false,"unico":false,"fk":null,"calculada":false,"descripcion":"Vacío = un solo aviso. 7 = cada semana hasta que se renueve."},{"nombre":"activa","tipo":"boolean","pk":false,"nn":true,"unico":false,"fk":null,"calculada":false},{"nombre":"creada_por","tipo":"bigint","pk":false,"nn":false,"unico":false,"fk":"nucleo.usuarios","calculada":false},{"nombre":"creado_en","tipo":"timestamptz","pk":false,"nn":true,"unico":false,"fk":null,"calculada":false}],"reglas":[]},{"esquema":"sistema","nombre":"notificaciones","fase":2,"tipo":"tabla","descripcion":"Cola de salida: todo aviso (app, push, email, WhatsApp) se escribe aquí y una tarea lo envía. Si un envío falla, se reintenta sin perder nada.","columnas":[{"nombre":"id","tipo":"bigint","pk":true,"nn":true,"unico":false,"fk":null,"calculada":false},{"nombre":"usuario_id","tipo":"bigint","pk":false,"nn":true,"unico":false,"fk":"nucleo.usuarios","calculada":false},{"nombre":"canal","tipo":"text","pk":false,"nn":true,"unico":false,"fk":null,"calculada":false},{"nombre":"titulo","tipo":"text","pk":false,"nn":true,"unico":false,"fk":null,"calculada":false},{"nombre":"cuerpo","tipo":"text","pk":false,"nn":false,"unico":false,"fk":null,"calculada":false},{"nombre":"enlace","tipo":"text","pk":false,"nn":false,"unico":false,"fk":null,"calculada":false},{"nombre":"origen","tipo":"text","pk":false,"nn":true,"unico":false,"fk":null,"calculada":false},{"nombre":"origen_id","tipo":"bigint","pk":false,"nn":false,"unico":false,"fk":null,"calculada":false},{"nombre":"clave_unica","tipo":"text","pk":false,"nn":false,"unico":true,"fk":null,"calculada":false,"descripcion":"Evita duplicados si la tarea corre dos veces: «regla:12|doc:345|2026-11-02|u7|email»."},{"nombre":"programada_para","tipo":"timestamptz","pk":false,"nn":true,"unico":false,"fk":null,"calculada":false},{"nombre":"enviada_en","tipo":"timestamptz","pk":false,"nn":false,"unico":false,"fk":null,"calculada":false},{"nombre":"leida_en","tipo":"timestamptz","pk":false,"nn":false,"unico":false,"fk":null,"calculada":false},{"nombre":"intentos","tipo":"smallint","pk":false,"nn":true,"unico":false,"fk":null,"calculada":false},{"nombre":"error","tipo":"text","pk":false,"nn":false,"unico":false,"fk":null,"calculada":false},{"nombre":"creado_en","tipo":"timestamptz","pk":false,"nn":true,"unico":false,"fk":null,"calculada":false}],"reglas":[]},{"esquema":"nucleo","nombre":"conversaciones","fase":2,"tipo":"tabla","descripcion":"Hilos de mensajes. Cada chófer tiene uno con la oficina; además puede haber grupos y avisos a toda la flota.","columnas":[{"nombre":"id","tipo":"bigint","pk":true,"nn":true,"unico":false,"fk":null,"calculada":false},{"nombre":"tipo","tipo":"text","pk":false,"nn":true,"unico":false,"fk":null,"calculada":false},{"nombre":"titulo","tipo":"text","pk":false,"nn":false,"unico":false,"fk":null,"calculada":false},{"nombre":"conductor_id","tipo":"bigint","pk":false,"nn":false,"unico":false,"fk":"nucleo.conductores","calculada":false},{"nombre":"creada_por","tipo":"bigint","pk":false,"nn":false,"unico":false,"fk":"nucleo.usuarios","calculada":false},{"nombre":"creada_en","tipo":"timestamptz","pk":false,"nn":true,"unico":false,"fk":null,"calculada":false},{"nombre":"ultimo_mensaje_en","tipo":"timestamptz","pk":false,"nn":false,"unico":false,"fk":null,"calculada":false}],"reglas":[]},{"esquema":"nucleo","nombre":"participantes","fase":2,"tipo":"tabla","descripcion":"Quién está en cada conversación y hasta dónde ha leído.","columnas":[{"nombre":"conversacion_id","tipo":"bigint","pk":true,"nn":true,"unico":false,"fk":"nucleo.conversaciones","calculada":false},{"nombre":"usuario_id","tipo":"bigint","pk":true,"nn":true,"unico":false,"fk":"nucleo.usuarios","calculada":false},{"nombre":"leido_hasta","tipo":"timestamptz","pk":false,"nn":false,"unico":false,"fk":null,"calculada":false,"descripcion":"Un mensaje está leído por alguien si su enviado_en es anterior o igual a este valor."},{"nombre":"silenciada","tipo":"boolean","pk":false,"nn":true,"unico":false,"fk":null,"calculada":false}],"reglas":[]},{"esquema":"nucleo","nombre":"mensajes","fase":2,"tipo":"tabla","descripcion":"Cada mensaje, con texto o foto. Con el camión en marcha el chófer solo recibe el aviso (regla de la app).","columnas":[{"nombre":"id","tipo":"bigint","pk":true,"nn":true,"unico":false,"fk":null,"calculada":false},{"nombre":"conversacion_id","tipo":"bigint","pk":false,"nn":true,"unico":false,"fk":"nucleo.conversaciones","calculada":false},{"nombre":"autor_id","tipo":"bigint","pk":false,"nn":true,"unico":false,"fk":"nucleo.usuarios","calculada":false},{"nombre":"texto","tipo":"text","pk":false,"nn":false,"unico":false,"fk":null,"calculada":false},{"nombre":"foto_id","tipo":"bigint","pk":false,"nn":false,"unico":false,"fk":"nucleo.archivos","calculada":false},{"nombre":"enviado_en","tipo":"timestamptz","pk":false,"nn":true,"unico":false,"fk":null,"calculada":false},{"nombre":"borrado_en","tipo":"timestamptz","pk":false,"nn":false,"unico":false,"fk":null,"calculada":false}],"reglas":[]},{"esquema":"calculo","nombre":"mensajes_lectura","fase":2,"tipo":"vista","descripcion":"Confirmación de lectura de cada mensaje: a cuántos les llegó y cuántos lo han leído.","columnas":[],"reglas":[]},{"esquema":"calculo","nombre":"semaforo_documentos","fase":2,"tipo":"vista","descripcion":"Semáforo de caducidades: verde al día, ámbar a menos de 60 días (parámetro), rojo caducado.","columnas":[],"reglas":[]},{"esquema":"nucleo","nombre":"redes","fase":3,"tipo":"tabla","descripcion":"Redes de gasóleo con tarjeta de empresa. Hoy Solred; la segunda (p. ej. Moeve) se activa en la fase 8.","columnas":[{"nombre":"codigo","tipo":"text","pk":true,"nn":true,"unico":false,"fk":null,"calculada":false},{"nombre":"nombre","tipo":"text","pk":false,"nn":true,"unico":false,"fk":null,"calculada":false},{"nombre":"activa","tipo":"boolean","pk":false,"nn":true,"unico":false,"fk":null,"calculada":false}],"reglas":[]},{"esquema":"nucleo","nombre":"tarjetas_combustible","fase":3,"tipo":"tabla","descripcion":"Tarjetas de gasóleo. Van con el camión, no con la persona.","columnas":[{"nombre":"id","tipo":"bigint","pk":true,"nn":true,"unico":false,"fk":null,"calculada":false},{"nombre":"red","tipo":"text","pk":false,"nn":true,"unico":false,"fk":"nucleo.redes","calculada":false},{"nombre":"identificador","tipo":"text","pk":false,"nn":true,"unico":false,"fk":null,"calculada":false,"descripcion":"Como aparece en los informes de la red (normalmente enmascarado). Nunca el número completo ni el PIN."},{"nombre":"vehiculo_id","tipo":"bigint","pk":false,"nn":false,"unico":false,"fk":"nucleo.vehiculos","calculada":false},{"nombre":"activa","tipo":"boolean","pk":false,"nn":true,"unico":false,"fk":null,"calculada":false},{"nombre":"creado_en","tipo":"timestamptz","pk":false,"nn":true,"unico":false,"fk":null,"calculada":false}],"reglas":[]},{"esquema":"nucleo","nombre":"gasolineras","fase":3,"tipo":"tabla","descripcion":"Estaciones de nuestras redes (2.425 de Solred con descuento). Son las únicas que ve el chófer en el mapa.","columnas":[{"nombre":"id","tipo":"bigint","pk":true,"nn":true,"unico":false,"fk":null,"calculada":false},{"nombre":"red","tipo":"text","pk":false,"nn":true,"unico":false,"fk":"nucleo.redes","calculada":false},{"nombre":"codigo_red","tipo":"text","pk":false,"nn":true,"unico":false,"fk":null,"calculada":false,"descripcion":"Código de la estación en el listado de la red."},{"nombre":"nombre","tipo":"text","pk":false,"nn":true,"unico":false,"fk":null,"calculada":false},{"nombre":"direccion","tipo":"text","pk":false,"nn":false,"unico":false,"fk":null,"calculada":false},{"nombre":"municipio","tipo":"text","pk":false,"nn":false,"unico":false,"fk":null,"calculada":false},{"nombre":"provincia","tipo":"text","pk":false,"nn":false,"unico":false,"fk":null,"calculada":false},{"nombre":"lat","tipo":"numeric(9,6)","pk":false,"nn":true,"unico":false,"fk":null,"calculada":false,"descripcion":"El CHECK de lat/lon cubre España peninsular, Baleares, Canarias y Portugal: si alguien las intercambia, la fila no entra."},{"nombre":"lon","tipo":"numeric(9,6)","pk":false,"nn":true,"unico":false,"fk":null,"calculada":false},{"nombre":"descuento_eur_l","tipo":"numeric(5,3)","pk":false,"nn":false,"unico":false,"fk":null,"calculada":false,"descripcion":"Descuento pactado en €/L (0,220 en 1.631 estaciones de Solred)."},{"nombre":"acceso_pesados","tipo":"boolean","pk":false,"nn":false,"unico":false,"fk":null,"calculada":false},{"nombre":"tiene_adblue","tipo":"boolean","pk":false,"nn":false,"unico":false,"fk":null,"calculada":false},{"nombre":"horario","tipo":"text","pk":false,"nn":false,"unico":false,"fk":null,"calculada":false},{"nombre":"id_ministerio","tipo":"text","pk":false,"nn":false,"unico":false,"fk":null,"calculada":false,"descripcion":"Id en el geoportal de gasolineras del Ministerio: precio de surtidor de respaldo."},{"nombre":"servicios","tipo":"jsonb","pk":false,"nn":false,"unico":false,"fk":null,"calculada":false},{"nombre":"activa","tipo":"boolean","pk":false,"nn":true,"unico":false,"fk":null,"calculada":false},{"nombre":"lote_id","tipo":"bigint","pk":false,"nn":false,"unico":false,"fk":"ingesta.lotes","calculada":false},{"nombre":"creado_en","tipo":"timestamptz","pk":false,"nn":true,"unico":false,"fk":null,"calculada":false},{"nombre":"actualizado_en","tipo":"timestamptz","pk":false,"nn":true,"unico":false,"fk":null,"calculada":false}],"reglas":[]},{"esquema":"nucleo","nombre":"informes_red_mes","fase":3,"tipo":"tabla","descripcion":"Informe mensual «Vehículos» de la red: una fila por matrícula y mes, tal como lo calcula Solred.","columnas":[{"nombre":"id","tipo":"bigint","pk":true,"nn":true,"unico":false,"fk":null,"calculada":false},{"nombre":"red","tipo":"text","pk":false,"nn":true,"unico":false,"fk":"nucleo.redes","calculada":false},{"nombre":"mes","tipo":"date","pk":false,"nn":true,"unico":false,"fk":null,"calculada":false,"descripcion":"Primer día del mes: 2026-09-01 = septiembre de 2026."},{"nombre":"vehiculo_id","tipo":"bigint","pk":false,"nn":true,"unico":false,"fk":"nucleo.vehiculos","calculada":false},{"nombre":"tarjeta_id","tipo":"bigint","pk":false,"nn":false,"unico":false,"fk":"nucleo.tarjetas_combustible","calculada":false},{"nombre":"importe_eur","tipo":"numeric(10,2)","pk":false,"nn":false,"unico":false,"fk":null,"calculada":false},{"nombre":"litros","tipo":"numeric(10,2)","pk":false,"nn":false,"unico":false,"fk":null,"calculada":false},{"nombre":"n_repostajes","tipo":"integer","pk":false,"nn":false,"unico":false,"fk":null,"calculada":false},{"nombre":"pct_optimo","tipo":"numeric(5,2)","pk":false,"nn":false,"unico":false,"fk":null,"calculada":false,"descripcion":"«%Opt.» de Solred: porcentaje de repostajes hechos en la gasolinera óptima."},{"nombre":"descuento_eur","tipo":"numeric(10,2)","pk":false,"nn":false,"unico":false,"fk":null,"calculada":false},{"nombre":"ahorro_perdido_eur","tipo":"numeric(10,2)","pk":false,"nn":false,"unico":false,"fk":null,"calculada":false},{"nombre":"estacion_mas_perdida_id","tipo":"bigint","pk":false,"nn":false,"unico":false,"fk":"nucleo.gasolineras","calculada":false},{"nombre":"alternativa_id","tipo":"bigint","pk":false,"nn":false,"unico":false,"fk":"nucleo.gasolineras","calculada":false},{"nombre":"alternativa_precio_eur_l","tipo":"numeric(6,3)","pk":false,"nn":false,"unico":false,"fk":null,"calculada":false},{"nombre":"alternativa_desvio_min","tipo":"numeric(5,1)","pk":false,"nn":false,"unico":false,"fk":null,"calculada":false},{"nombre":"lote_id","tipo":"bigint","pk":false,"nn":true,"unico":false,"fk":"ingesta.lotes","calculada":false},{"nombre":"n_fila","tipo":"integer","pk":false,"nn":false,"unico":false,"fk":null,"calculada":false,"descripcion":"Junto con lote_id lleva a la fila original del Excel (ingesta.filas)."}],"reglas":[]},{"esquema":"nucleo","nombre":"repostajes","fase":3,"tipo":"tabla","descripcion":"Cada repostaje facturado por la red, del Excel de detalle con fecha y hora. El conductor no se guarda: se deduce (calculo.repostajes_atribuidos, fase 6).","columnas":[{"nombre":"id","tipo":"bigint","pk":true,"nn":true,"unico":false,"fk":null,"calculada":false},{"nombre":"red","tipo":"text","pk":false,"nn":true,"unico":false,"fk":"nucleo.redes","calculada":false},{"nombre":"tarjeta_id","tipo":"bigint","pk":false,"nn":false,"unico":false,"fk":"nucleo.tarjetas_combustible","calculada":false},{"nombre":"vehiculo_id","tipo":"bigint","pk":false,"nn":true,"unico":false,"fk":"nucleo.vehiculos","calculada":false},{"nombre":"fecha_hora","tipo":"timestamptz","pk":false,"nn":true,"unico":false,"fk":null,"calculada":false},{"nombre":"gasolinera_id","tipo":"bigint","pk":false,"nn":false,"unico":false,"fk":"nucleo.gasolineras","calculada":false},{"nombre":"producto","tipo":"text","pk":false,"nn":false,"unico":false,"fk":null,"calculada":false},{"nombre":"litros","tipo":"numeric(8,2)","pk":false,"nn":true,"unico":false,"fk":null,"calculada":false},{"nombre":"precio_eur_l","tipo":"numeric(6,3)","pk":false,"nn":false,"unico":false,"fk":null,"calculada":false},{"nombre":"importe_eur","tipo":"numeric(10,2)","pk":false,"nn":false,"unico":false,"fk":null,"calculada":false},{"nombre":"descuento_eur","tipo":"numeric(8,2)","pk":false,"nn":false,"unico":false,"fk":null,"calculada":false},{"nombre":"lote_id","tipo":"bigint","pk":false,"nn":true,"unico":false,"fk":"ingesta.lotes","calculada":false},{"nombre":"n_fila","tipo":"integer","pk":false,"nn":false,"unico":false,"fk":null,"calculada":false}],"reglas":["Reimportar el mismo Excel no duplica repostajes."]},{"esquema":"nucleo","nombre":"avisos_correccion","fase":3,"tipo":"tabla","descripcion":"Aviso a quien reposta fuera de la óptima, con su dato concreto. Tráfico lo revisa antes de enviarlo. Hasta la fase 6 va por matrícula; después, al conductor.","columnas":[{"nombre":"id","tipo":"bigint","pk":true,"nn":true,"unico":false,"fk":null,"calculada":false},{"nombre":"vehiculo_id","tipo":"bigint","pk":false,"nn":true,"unico":false,"fk":"nucleo.vehiculos","calculada":false},{"nombre":"conductor_id","tipo":"bigint","pk":false,"nn":false,"unico":false,"fk":"nucleo.conductores","calculada":false},{"nombre":"mes","tipo":"date","pk":false,"nn":true,"unico":false,"fk":null,"calculada":false},{"nombre":"motivo","tipo":"text","pk":false,"nn":true,"unico":false,"fk":null,"calculada":false},{"nombre":"mensaje","tipo":"text","pk":false,"nn":true,"unico":false,"fk":null,"calculada":false},{"nombre":"dato","tipo":"jsonb","pk":false,"nn":false,"unico":false,"fk":null,"calculada":false,"descripcion":"Lo que justifica el aviso: {\"cts_l_de_mas\": 6.1, \"coste_eur\": 212.40, \"pct_optimo\": 41}."},{"nombre":"estado","tipo":"text","pk":false,"nn":true,"unico":false,"fk":null,"calculada":false},{"nombre":"revisado_por","tipo":"bigint","pk":false,"nn":false,"unico":false,"fk":"nucleo.usuarios","calculada":false},{"nombre":"enviado_en","tipo":"timestamptz","pk":false,"nn":false,"unico":false,"fk":null,"calculada":false},{"nombre":"notificacion_id","tipo":"bigint","pk":false,"nn":false,"unico":false,"fk":"sistema.notificaciones","calculada":false},{"nombre":"pct_optimo_antes","tipo":"numeric(5,2)","pk":false,"nn":false,"unico":false,"fk":null,"calculada":false},{"nombre":"pct_optimo_despues","tipo":"numeric(5,2)","pk":false,"nn":false,"unico":false,"fk":null,"calculada":false,"descripcion":"Se rellena con el informe del mes siguiente: ¿ha mejorado tras el aviso? Cierra el ciclo."},{"nombre":"creado_en","tipo":"timestamptz","pk":false,"nn":true,"unico":false,"fk":null,"calculada":false}],"reglas":[]},{"esquema":"calculo","nombre":"perdida_repostaje_mes","fase":3,"tipo":"vista","descripcion":"Panel de repostaje: qué matrículas pierden más cada mes y qué parte del total acumulan («las 10 que más pierden suman el 57 %»).","columnas":[],"reglas":[]},{"esquema":"nucleo","nombre":"telemetria","fase":4,"tipo":"tabla","descripcion":"Serie temporal por camión, ya normalizada (el JSON original queda en ingesta.respuestas_api). Unas 50.000–100.000 filas al día: índice BRIN por fecha y, si pasa de 50 millones, particiones por mes.","columnas":[{"nombre":"vehiculo_id","tipo":"bigint","pk":true,"nn":true,"unico":false,"fk":"nucleo.vehiculos","calculada":false},{"nombre":"ts","tipo":"timestamptz","pk":true,"nn":true,"unico":false,"fk":null,"calculada":false},{"nombre":"lat","tipo":"numeric(9,6)","pk":false,"nn":false,"unico":false,"fk":null,"calculada":false},{"nombre":"lon","tipo":"numeric(9,6)","pk":false,"nn":false,"unico":false,"fk":null,"calculada":false},{"nombre":"velocidad_kmh","tipo":"numeric(5,1)","pk":false,"nn":false,"unico":false,"fk":null,"calculada":false},{"nombre":"rumbo_grados","tipo":"smallint","pk":false,"nn":false,"unico":false,"fk":null,"calculada":false},{"nombre":"km_odometro","tipo":"numeric(10,1)","pk":false,"nn":false,"unico":false,"fk":null,"calculada":false,"descripcion":"Odómetro del camión. Los km de un tramo = máximo − mínimo dentro de la franja."},{"nombre":"motor_encendido","tipo":"boolean","pk":false,"nn":false,"unico":false,"fk":null,"calculada":false},{"nombre":"tarjeta_tacografo","tipo":"text","pk":false,"nn":false,"unico":false,"fk":null,"calculada":false,"descripcion":"Tarjeta insertada en ese momento. Qué endpoint de Movildata la da se confirma en el descubrimiento (semana 1)."},{"nombre":"lote_id","tipo":"bigint","pk":false,"nn":false,"unico":false,"fk":"ingesta.lotes","calculada":false}],"reglas":[]},{"esquema":"nucleo","nombre":"actividad_tacografo","fase":4,"tipo":"tabla","descripcion":"Actividad de la tarjeta del tacógrafo: las horas y pausas oficiales, las mismas que vería un inspector.","columnas":[{"nombre":"id","tipo":"bigint","pk":true,"nn":true,"unico":false,"fk":null,"calculada":false},{"nombre":"tarjeta_tacografo","tipo":"text","pk":false,"nn":true,"unico":false,"fk":null,"calculada":false},{"nombre":"conductor_id","tipo":"bigint","pk":false,"nn":false,"unico":false,"fk":"nucleo.conductores","calculada":false,"descripcion":"Vacío si la tarjeta todavía no está dada de alta: tráfico lo ve como tarjeta desconocida."},{"nombre":"vehiculo_id","tipo":"bigint","pk":false,"nn":false,"unico":false,"fk":"nucleo.vehiculos","calculada":false},{"nombre":"actividad","tipo":"text","pk":false,"nn":true,"unico":false,"fk":null,"calculada":false},{"nombre":"inicio","tipo":"timestamptz","pk":false,"nn":true,"unico":false,"fk":null,"calculada":false},{"nombre":"fin","tipo":"timestamptz","pk":false,"nn":false,"unico":false,"fk":null,"calculada":false},{"nombre":"lote_id","tipo":"bigint","pk":false,"nn":false,"unico":false,"fk":"ingesta.lotes","calculada":false}],"reglas":[]},{"esquema":"nucleo","nombre":"asignaciones","fase":4,"tipo":"tabla","descripcion":"Franjas conductor ↔ camión: quién llevaba cada camión y entre qué horas. Es la llave de toda la atribución.","columnas":[{"nombre":"id","tipo":"bigint","pk":true,"nn":true,"unico":false,"fk":null,"calculada":false},{"nombre":"conductor_id","tipo":"bigint","pk":false,"nn":true,"unico":false,"fk":"nucleo.conductores","calculada":false},{"nombre":"vehiculo_id","tipo":"bigint","pk":false,"nn":true,"unico":false,"fk":"nucleo.vehiculos","calculada":false},{"nombre":"inicio","tipo":"timestamptz","pk":false,"nn":true,"unico":false,"fk":null,"calculada":false},{"nombre":"fin","tipo":"timestamptz","pk":false,"nn":false,"unico":false,"fk":null,"calculada":false,"descripcion":"Vacío = sigue abierta. Un conductor solo puede tener una abierta."},{"nombre":"origen","tipo":"text","pk":false,"nn":true,"unico":false,"fk":null,"calculada":false,"descripcion":"De dónde salió la franja: tacografo (automática), app (elegida a mano), qr, admin (corrección) o cierre_auto."},{"nombre":"confirmada_en","tipo":"timestamptz","pk":false,"nn":false,"unico":false,"fk":null,"calculada":false,"descripcion":"Cuándo confirmó el chófer con un toque el camión detectado."},{"nombre":"remolque_id","tipo":"bigint","pk":false,"nn":false,"unico":false,"fk":"nucleo.remolques","calculada":false},{"nombre":"carga_adr","tipo":"boolean","pk":false,"nn":true,"unico":false,"fk":null,"calculada":false},{"nombre":"numeros_onu","tipo":"text[]","pk":false,"nn":false,"unico":false,"fk":null,"calculada":false,"descripcion":"Nº ONU de la mercancía peligrosa que lleva, si marca «Carga ADR»."},{"nombre":"corregida_por","tipo":"bigint","pk":false,"nn":false,"unico":false,"fk":"nucleo.usuarios","calculada":false},{"nombre":"motivo_correccion","tipo":"text","pk":false,"nn":false,"unico":false,"fk":null,"calculada":false},{"nombre":"creado_en","tipo":"timestamptz","pk":false,"nn":true,"unico":false,"fk":null,"calculada":false},{"nombre":"actualizado_en","tipo":"timestamptz","pk":false,"nn":true,"unico":false,"fk":null,"calculada":false}],"reglas":["Un conductor no puede estar en dos camiones a la vez: la base de datos rechaza franjas que se pisan."]},{"esquema":"calculo","nombre":"telemetria_conductor","fase":4,"tipo":"vista","descripcion":"LA REGLA DE ATRIBUCIÓN: los datos de un conductor son los de cada camión dentro de SU franja. Filtrar siempre por conductor_id y fechas.","columnas":[],"reglas":[]},{"esquema":"calculo","nombre":"km_asignacion","fase":4,"tipo":"vista","descripcion":"Km de cada franja según el odómetro de Movildata.","columnas":[],"reglas":[]},{"esquema":"calculo","nombre":"horas_dia","fase":4,"tipo":"vista","descripcion":"Horas de conducción, descanso, disponibilidad y otros trabajos de cada conductor y día (hora de Madrid), según su tarjeta.","columnas":[],"reglas":[]},{"esquema":"calculo","nombre":"estado_flota","fase":4,"tipo":"vista","descripcion":"Foto de la flota ahora: última posición de cada camión, si está en marcha y quién lo lleva.","columnas":[],"reglas":[]},{"esquema":"calculo","nombre":"alertas","fase":4,"tipo":"vista","descripcion":"Alertas para tráfico, calculadas al momento: camión en marcha sin conductor, dos conductores en el mismo camión y Movildata atrasado.","columnas":[],"reglas":[]},{"esquema":"calculo","nombre":"frescura_datos","fase":4,"tipo":"vista","descripcion":"Para mostrar «actualizado hace X min» en lugar de fallar cuando Movildata tarda.","columnas":[],"reglas":[]},{"esquema":"nucleo","nombre":"servicios","fase":5,"tipo":"tabla","descripcion":"Cada viaje terminado, con un toque. Guardar el momento (y no solo un contador) permite comprobarlo y, más adelante, traerlo de Odoo.","columnas":[{"nombre":"id","tipo":"bigint","pk":true,"nn":true,"unico":false,"fk":null,"calculada":false},{"nombre":"conductor_id","tipo":"bigint","pk":false,"nn":true,"unico":false,"fk":"nucleo.conductores","calculada":false},{"nombre":"vehiculo_id","tipo":"bigint","pk":false,"nn":true,"unico":false,"fk":"nucleo.vehiculos","calculada":false},{"nombre":"ocurrido_en","tipo":"timestamptz","pk":false,"nn":true,"unico":false,"fk":null,"calculada":false},{"nombre":"lat","tipo":"numeric(9,6)","pk":false,"nn":false,"unico":false,"fk":null,"calculada":false},{"nombre":"lon","tipo":"numeric(9,6)","pk":false,"nn":false,"unico":false,"fk":null,"calculada":false},{"nombre":"origen","tipo":"text","pk":false,"nn":true,"unico":false,"fk":null,"calculada":false},{"nombre":"referencia_odoo","tipo":"text","pk":false,"nn":false,"unico":false,"fk":null,"calculada":false},{"nombre":"anulado_en","tipo":"timestamptz","pk":false,"nn":false,"unico":false,"fk":null,"calculada":false}],"reglas":[]},{"esquema":"nucleo","nombre":"tickets","fase":5,"tipo":"tabla","descripcion":"Foto del ticket de repostaje y lo que se leyó de ella. Cada dato por separado y con su unidad: nadie teclea un número suelto.","columnas":[{"nombre":"id","tipo":"bigint","pk":true,"nn":true,"unico":false,"fk":null,"calculada":false},{"nombre":"conductor_id","tipo":"bigint","pk":false,"nn":true,"unico":false,"fk":"nucleo.conductores","calculada":false},{"nombre":"vehiculo_id","tipo":"bigint","pk":false,"nn":true,"unico":false,"fk":"nucleo.vehiculos","calculada":false},{"nombre":"foto_id","tipo":"bigint","pk":false,"nn":true,"unico":false,"fk":"nucleo.archivos","calculada":false},{"nombre":"fecha_hora","tipo":"timestamptz","pk":false,"nn":false,"unico":false,"fk":null,"calculada":false},{"nombre":"estacion_texto","tipo":"text","pk":false,"nn":false,"unico":false,"fk":null,"calculada":false},{"nombre":"gasolinera_id","tipo":"bigint","pk":false,"nn":false,"unico":false,"fk":"nucleo.gasolineras","calculada":false},{"nombre":"litros","tipo":"numeric(8,2)","pk":false,"nn":false,"unico":false,"fk":null,"calculada":false},{"nombre":"precio_eur_l","tipo":"numeric(6,3)","pk":false,"nn":false,"unico":false,"fk":null,"calculada":false},{"nombre":"importe_eur","tipo":"numeric(10,2)","pk":false,"nn":false,"unico":false,"fk":null,"calculada":false},{"nombre":"lleno","tipo":"boolean","pk":false,"nn":true,"unico":false,"fk":null,"calculada":false,"descripcion":"«¿Depósito lleno?» con un toque. Dos llenados seguidos dan el consumo real."},{"nombre":"km_odometro","tipo":"numeric(10,1)","pk":false,"nn":false,"unico":false,"fk":null,"calculada":false},{"nombre":"lectura_ia","tipo":"jsonb","pk":false,"nn":false,"unico":false,"fk":null,"calculada":false,"descripcion":"Respuesta del modelo de visión tal cual, para revisar si algo se leyó mal."},{"nombre":"cuadra","tipo":"boolean","pk":false,"nn":false,"unico":false,"fk":null,"calculada":true,"descripcion":"Calculada por la base de datos: litros × €/L = importe (±0,05 €). Si no cuadra, la app pide repetir la foto."},{"nombre":"estado","tipo":"text","pk":false,"nn":true,"unico":false,"fk":null,"calculada":false},{"nombre":"repostaje_id","tipo":"bigint","pk":false,"nn":false,"unico":false,"fk":"nucleo.repostajes","calculada":false,"descripcion":"Su repostaje en el detalle de Solred, cuando se encuentra. Un repostaje solo puede tener un ticket."},{"nombre":"creado_en","tipo":"timestamptz","pk":false,"nn":true,"unico":false,"fk":null,"calculada":false},{"nombre":"actualizado_en","tipo":"timestamptz","pk":false,"nn":true,"unico":false,"fk":null,"calculada":false}],"reglas":[]},{"esquema":"nucleo","nombre":"partes_dia","fase":5,"tipo":"tabla","descripcion":"Una fila del Anexo II: un camión, un día, un conductor. Horas y km vienen puestos; el chófer confirma servicios, lugar, remolque y taller.","columnas":[{"nombre":"id","tipo":"bigint","pk":true,"nn":true,"unico":false,"fk":null,"calculada":false},{"nombre":"vehiculo_id","tipo":"bigint","pk":false,"nn":true,"unico":false,"fk":"nucleo.vehiculos","calculada":false},{"nombre":"fecha","tipo":"date","pk":false,"nn":true,"unico":false,"fk":null,"calculada":false},{"nombre":"conductor_id","tipo":"bigint","pk":false,"nn":true,"unico":false,"fk":"nucleo.conductores","calculada":false},{"nombre":"lugar","tipo":"text","pk":false,"nn":false,"unico":false,"fk":null,"calculada":false},{"nombre":"empieza_en","tipo":"timestamptz","pk":false,"nn":false,"unico":false,"fk":null,"calculada":false},{"nombre":"termina_en","tipo":"timestamptz","pk":false,"nn":false,"unico":false,"fk":null,"calculada":false},{"nombre":"km_inicio","tipo":"numeric(10,1)","pk":false,"nn":false,"unico":false,"fk":null,"calculada":false},{"nombre":"km_fin","tipo":"numeric(10,1)","pk":false,"nn":false,"unico":false,"fk":null,"calculada":false},{"nombre":"recorrido_km","tipo":"numeric(10,1)","pk":false,"nn":false,"unico":false,"fk":null,"calculada":true,"descripcion":"Lo calcula la base de datos: km_fin − km_inicio. La columna que en papel nadie rellenaba."},{"nombre":"servicios","tipo":"smallint","pk":false,"nn":false,"unico":false,"fk":null,"calculada":false},{"nombre":"remolque_id","tipo":"bigint","pk":false,"nn":false,"unico":false,"fk":"nucleo.remolques","calculada":false},{"nombre":"taller","tipo":"boolean","pk":false,"nn":true,"unico":false,"fk":null,"calculada":false},{"nombre":"taller_motivo","tipo":"text","pk":false,"nn":false,"unico":false,"fk":null,"calculada":false},{"nombre":"taller_n_orden","tipo":"text","pk":false,"nn":false,"unico":false,"fk":null,"calculada":false},{"nombre":"taller_foto_id","tipo":"bigint","pk":false,"nn":false,"unico":false,"fk":"nucleo.archivos","calculada":false},{"nombre":"estado","tipo":"text","pk":false,"nn":true,"unico":false,"fk":null,"calculada":false,"descripcion":"sin_confirmar = el chófer no cerró la jornada; se rellenó con Movildata y queda para tráfico."},{"nombre":"confirmado_en","tipo":"timestamptz","pk":false,"nn":false,"unico":false,"fk":null,"calculada":false},{"nombre":"creado_en","tipo":"timestamptz","pk":false,"nn":true,"unico":false,"fk":null,"calculada":false},{"nombre":"actualizado_en","tipo":"timestamptz","pk":false,"nn":true,"unico":false,"fk":null,"calculada":false}],"reglas":[]},{"esquema":"nucleo","nombre":"partes_mes","fase":5,"tipo":"tabla","descripcion":"La hoja del Anexo II de un camión y un mes. Pendiente: confirmar si hay una hoja por turno (mañanas / tardes).","columnas":[{"nombre":"id","tipo":"bigint","pk":true,"nn":true,"unico":false,"fk":null,"calculada":false},{"nombre":"vehiculo_id","tipo":"bigint","pk":false,"nn":true,"unico":false,"fk":"nucleo.vehiculos","calculada":false},{"nombre":"mes","tipo":"date","pk":false,"nn":true,"unico":false,"fk":null,"calculada":false},{"nombre":"validado_por","tipo":"bigint","pk":false,"nn":false,"unico":false,"fk":"nucleo.usuarios","calculada":false},{"nombre":"validado_en","tipo":"timestamptz","pk":false,"nn":false,"unico":false,"fk":null,"calculada":false},{"nombre":"exportado_id","tipo":"bigint","pk":false,"nn":false,"unico":false,"fk":"nucleo.archivos","calculada":false},{"nombre":"creado_en","tipo":"timestamptz","pk":false,"nn":true,"unico":false,"fk":null,"calculada":false}],"reglas":[]},{"esquema":"nucleo","nombre":"firmas_parte","fase":5,"tipo":"tabla","descripcion":"Firma de cada chófer que condujo ese camión en el mes, hecha desde el móvil.","columnas":[{"nombre":"parte_mes_id","tipo":"bigint","pk":true,"nn":true,"unico":false,"fk":"nucleo.partes_mes","calculada":false},{"nombre":"conductor_id","tipo":"bigint","pk":true,"nn":true,"unico":false,"fk":"nucleo.conductores","calculada":false},{"nombre":"firma_id","tipo":"bigint","pk":false,"nn":true,"unico":false,"fk":"nucleo.archivos","calculada":false},{"nombre":"firmado_en","tipo":"timestamptz","pk":false,"nn":true,"unico":false,"fk":null,"calculada":false}],"reglas":[]},{"esquema":"calculo","nombre":"anexo_ii","fase":5,"tipo":"vista","descripcion":"Las filas del Anexo II con las columnas del papel. El gas-oil, en litros y sumando los tickets confirmados del día.","columnas":[],"reglas":[]},{"esquema":"calculo","nombre":"consumo_entre_llenados","fase":5,"tipo":"vista","descripcion":"Consumo real: litros cargados entre dos llenados completos ÷ km recorridos. El dato que hoy no sale del parte en papel.","columnas":[],"reglas":[]},{"esquema":"calculo","nombre":"incidencias_tickets","fase":5,"tipo":"vista","descripcion":"Lo que no cuadra entre tickets y Solred, sin tener que buscarlo: ticket sin repostaje, repostaje sin ticket, litros distintos y repostaje lejos del camión.","columnas":[],"reglas":[]},{"esquema":"ingesta","nombre":"correos","fase":6,"tipo":"tabla","descripcion":"Correos de precios tal como llegan al buzón. El message_id impide leer dos veces el mismo.","columnas":[{"nombre":"id","tipo":"bigint","pk":true,"nn":true,"unico":false,"fk":null,"calculada":false},{"nombre":"message_id","tipo":"text","pk":false,"nn":true,"unico":true,"fk":null,"calculada":false},{"nombre":"buzon","tipo":"text","pk":false,"nn":true,"unico":false,"fk":null,"calculada":false},{"nombre":"remitente","tipo":"text","pk":false,"nn":true,"unico":false,"fk":null,"calculada":false},{"nombre":"asunto","tipo":"text","pk":false,"nn":false,"unico":false,"fk":null,"calculada":false},{"nombre":"recibido_en","tipo":"timestamptz","pk":false,"nn":true,"unico":false,"fk":null,"calculada":false},{"nombre":"cuerpo_texto","tipo":"text","pk":false,"nn":false,"unico":false,"fk":null,"calculada":false},{"nombre":"adjuntos","tipo":"bigint[]","pk":false,"nn":false,"unico":false,"fk":null,"calculada":false,"descripcion":"Ids de nucleo.archivos (el Excel o PDF adjunto)."},{"nombre":"red","tipo":"text","pk":false,"nn":false,"unico":false,"fk":"nucleo.redes","calculada":false},{"nombre":"estado","tipo":"text","pk":false,"nn":true,"unico":false,"fk":null,"calculada":false},{"nombre":"lote_id","tipo":"bigint","pk":false,"nn":false,"unico":false,"fk":"ingesta.lotes","calculada":false},{"nombre":"error","tipo":"text","pk":false,"nn":false,"unico":false,"fk":null,"calculada":false}],"reglas":[]},{"esquema":"nucleo","nombre":"precios_dia","fase":6,"tipo":"tabla","descripcion":"Precio pactado del gasóleo profesional de cada día. Admite precio por estación, por provincia o uno para toda la red, porque aún no se sabe cómo viene el correo.","columnas":[{"nombre":"id","tipo":"bigint","pk":true,"nn":true,"unico":false,"fk":null,"calculada":false},{"nombre":"fecha","tipo":"date","pk":false,"nn":true,"unico":false,"fk":null,"calculada":false},{"nombre":"red","tipo":"text","pk":false,"nn":true,"unico":false,"fk":"nucleo.redes","calculada":false},{"nombre":"ambito","tipo":"text","pk":false,"nn":true,"unico":false,"fk":null,"calculada":false,"descripcion":"A qué se aplica: una estación, una provincia o toda la red. Gana el más concreto."},{"nombre":"gasolinera_id","tipo":"bigint","pk":false,"nn":false,"unico":false,"fk":"nucleo.gasolineras","calculada":false},{"nombre":"provincia","tipo":"text","pk":false,"nn":false,"unico":false,"fk":null,"calculada":false},{"nombre":"precio_eur_l","tipo":"numeric(6,3)","pk":false,"nn":true,"unico":false,"fk":null,"calculada":false,"descripcion":"Pendiente: confirmar si el precio del correo ya descuenta la ayuda al gasóleo profesional; si no, hay que restarla para compararlo con el respaldo."},{"nombre":"origen","tipo":"text","pk":false,"nn":true,"unico":false,"fk":null,"calculada":false},{"nombre":"lote_id","tipo":"bigint","pk":false,"nn":false,"unico":false,"fk":"ingesta.lotes","calculada":false},{"nombre":"cargado_por","tipo":"bigint","pk":false,"nn":false,"unico":false,"fk":"nucleo.usuarios","calculada":false},{"nombre":"cargado_en","tipo":"timestamptz","pk":false,"nn":true,"unico":false,"fk":null,"calculada":false}],"reglas":[]},{"esquema":"nucleo","nombre":"precios_ministerio","fase":6,"tipo":"tabla","descripcion":"Precio de surtidor del geoportal del Ministerio. Solo se usa como respaldo si no llega el correo.","columnas":[{"nombre":"fecha","tipo":"date","pk":true,"nn":true,"unico":false,"fk":null,"calculada":false},{"nombre":"id_ministerio","tipo":"text","pk":true,"nn":true,"unico":false,"fk":null,"calculada":false},{"nombre":"precio_gasoleo_a_eur_l","tipo":"numeric(6,3)","pk":false,"nn":true,"unico":false,"fk":null,"calculada":false},{"nombre":"lote_id","tipo":"bigint","pk":false,"nn":false,"unico":false,"fk":"ingesta.lotes","calculada":false}],"reglas":[]},{"esquema":"nucleo","nombre":"recomendaciones_repostaje","fase":6,"tipo":"tabla","descripcion":"Cada vez que el chófer pulsa «Necesito repostar»: qué se le propuso, por qué y si luego repostó allí.","columnas":[{"nombre":"id","tipo":"bigint","pk":true,"nn":true,"unico":false,"fk":null,"calculada":false},{"nombre":"conductor_id","tipo":"bigint","pk":false,"nn":true,"unico":false,"fk":"nucleo.conductores","calculada":false},{"nombre":"vehiculo_id","tipo":"bigint","pk":false,"nn":true,"unico":false,"fk":"nucleo.vehiculos","calculada":false},{"nombre":"pedida_en","tipo":"timestamptz","pk":false,"nn":true,"unico":false,"fk":null,"calculada":false},{"nombre":"km_restantes","tipo":"integer","pk":false,"nn":true,"unico":false,"fk":null,"calculada":false},{"nombre":"carga_adr","tipo":"boolean","pk":false,"nn":true,"unico":false,"fk":null,"calculada":false},{"nombre":"lat","tipo":"numeric(9,6)","pk":false,"nn":false,"unico":false,"fk":null,"calculada":false},{"nombre":"lon","tipo":"numeric(9,6)","pk":false,"nn":false,"unico":false,"fk":null,"calculada":false},{"nombre":"gasolinera_id","tipo":"bigint","pk":false,"nn":false,"unico":false,"fk":"nucleo.gasolineras","calculada":false},{"nombre":"pagar_con_red","tipo":"text","pk":false,"nn":false,"unico":false,"fk":"nucleo.redes","calculada":false},{"nombre":"precio_eur_l","tipo":"numeric(6,3)","pk":false,"nn":false,"unico":false,"fk":null,"calculada":false},{"nombre":"origen_precio","tipo":"text","pk":false,"nn":false,"unico":false,"fk":null,"calculada":false},{"nombre":"distancia_km","tipo":"numeric(6,1)","pk":false,"nn":false,"unico":false,"fk":null,"calculada":false},{"nombre":"desvio_min","tipo":"numeric(5,1)","pk":false,"nn":false,"unico":false,"fk":null,"calculada":false},{"nombre":"coste_total_eur","tipo":"numeric(10,2)","pk":false,"nn":false,"unico":false,"fk":null,"calculada":false},{"nombre":"candidatas","tipo":"jsonb","pk":false,"nn":true,"unico":false,"fk":null,"calculada":false,"descripcion":"Todas las gasolineras evaluadas, con su coste y el motivo si se descartaron."},{"nombre":"fuentes","tipo":"jsonb","pk":false,"nn":true,"unico":false,"fk":null,"calculada":false,"descripcion":"Qué se consultó (rutas, precios, validación ADR): toda recomendación se puede explicar."},{"nombre":"repostaje_id","tipo":"bigint","pk":false,"nn":false,"unico":false,"fk":"nucleo.repostajes","calculada":false},{"nombre":"seguida","tipo":"boolean","pk":false,"nn":false,"unico":false,"fk":null,"calculada":false,"descripcion":"Se rellena al importar el detalle de Solred: ¿repostó donde se le dijo?"}],"reglas":[]},{"esquema":"calculo","nombre":"repostajes_atribuidos","fase":6,"tipo":"vista","descripcion":"Quién repostó: la tarjeta va con el camión, así que cada repostaje se cruza con la franja del conductor. Si se corrige una asignación, la atribución cambia sola.","columnas":[],"reglas":[]},{"esquema":"nucleo","nombre":"eventos_conduccion","fase":7,"tipo":"tabla","descripcion":"Eventos de conducción de Movildata. Se atribuyen al conductor con su franja, igual que la telemetría.","columnas":[{"nombre":"vehiculo_id","tipo":"bigint","pk":true,"nn":true,"unico":false,"fk":"nucleo.vehiculos","calculada":false},{"nombre":"ocurrido_en","tipo":"timestamptz","pk":true,"nn":true,"unico":false,"fk":null,"calculada":false},{"nombre":"tipo","tipo":"text","pk":true,"nn":true,"unico":false,"fk":null,"calculada":false},{"nombre":"duracion_s","tipo":"integer","pk":false,"nn":false,"unico":false,"fk":null,"calculada":false},{"nombre":"valor","tipo":"numeric","pk":false,"nn":false,"unico":false,"fk":null,"calculada":false,"descripcion":"Lo que mida el evento: km/h por encima del límite, fuerza de la frenada…"},{"nombre":"lote_id","tipo":"bigint","pk":false,"nn":false,"unico":false,"fk":"ingesta.lotes","calculada":false}],"reglas":[]},{"esquema":"nucleo","nombre":"objetivos_nota","fase":7,"tipo":"tabla","descripcion":"Qué es un 10 y qué es un 0 en cada parte de la nota. Lo fija tráfico; vacía hasta entonces. Cambiar un objetivo no reescribe las notas pasadas.","columnas":[{"nombre":"id","tipo":"bigint","pk":true,"nn":true,"unico":false,"fk":null,"calculada":false},{"nombre":"componente","tipo":"text","pk":false,"nn":true,"unico":false,"fk":null,"calculada":false},{"nombre":"valor_diez","tipo":"numeric","pk":false,"nn":true,"unico":false,"fk":null,"calculada":false,"descripcion":"Medida con la que se saca un 10, p. ej. 0,5 eventos cada 100 km. Entre valor_diez y valor_cero la nota es proporcional."},{"nombre":"valor_cero","tipo":"numeric","pk":false,"nn":true,"unico":false,"fk":null,"calculada":false},{"nombre":"unidad","tipo":"text","pk":false,"nn":true,"unico":false,"fk":null,"calculada":false},{"nombre":"vigente_desde","tipo":"date","pk":false,"nn":true,"unico":false,"fk":null,"calculada":false},{"nombre":"fijado_por","tipo":"bigint","pk":false,"nn":false,"unico":false,"fk":"nucleo.usuarios","calculada":false}],"reglas":[]},{"esquema":"calculo","nombre":"notas_semana","fase":7,"tipo":"tabla","descripcion":"Nota de cada parte, por conductor y semana. La calcula la tarea de los lunes y se guarda tal cual, para que la nota de una semana no cambie después.","columnas":[{"nombre":"conductor_id","tipo":"bigint","pk":true,"nn":true,"unico":false,"fk":"nucleo.conductores","calculada":false},{"nombre":"semana","tipo":"date","pk":true,"nn":true,"unico":false,"fk":null,"calculada":false,"descripcion":"Lunes de la semana."},{"nombre":"componente","tipo":"text","pk":true,"nn":true,"unico":false,"fk":null,"calculada":false},{"nombre":"valor_medido","tipo":"numeric","pk":false,"nn":false,"unico":false,"fk":null,"calculada":false},{"nombre":"unidad","tipo":"text","pk":false,"nn":false,"unico":false,"fk":null,"calculada":false},{"nombre":"nota","tipo":"numeric(3,1)","pk":false,"nn":true,"unico":false,"fk":null,"calculada":false},{"nombre":"detalle","tipo":"jsonb","pk":false,"nn":false,"unico":false,"fk":null,"calculada":false,"descripcion":"De dónde sale el número, para enseñárselo al chófer: eventos, km, objetivos usados…"},{"nombre":"calculado_en","tipo":"timestamptz","pk":false,"nn":true,"unico":false,"fk":null,"calculada":false}],"reglas":[]},{"esquema":"calculo","nombre":"semanas_conductor","fase":7,"tipo":"tabla","descripcion":"Resumen semanal que decide si hay monedas: jornadas trabajadas y pausas saltadas o excesos de horas.","columnas":[{"nombre":"conductor_id","tipo":"bigint","pk":true,"nn":true,"unico":false,"fk":"nucleo.conductores","calculada":false},{"nombre":"semana","tipo":"date","pk":true,"nn":true,"unico":false,"fk":null,"calculada":false},{"nombre":"jornadas","tipo":"smallint","pk":false,"nn":true,"unico":false,"fk":null,"calculada":false},{"nombre":"infracciones_tiempos","tipo":"smallint","pk":false,"nn":true,"unico":false,"fk":null,"calculada":false},{"nombre":"calculado_en","tipo":"timestamptz","pk":false,"nn":true,"unico":false,"fk":null,"calculada":false}],"reglas":[]},{"esquema":"nucleo","nombre":"premios","fase":7,"tipo":"tabla","descripcion":"Catálogo de premios. Lo decide la empresa; antes de abrirlo, confirmar con la asesoría cómo tributan.","columnas":[{"nombre":"id","tipo":"bigint","pk":true,"nn":true,"unico":false,"fk":null,"calculada":false},{"nombre":"nombre","tipo":"text","pk":false,"nn":true,"unico":false,"fk":null,"calculada":false},{"nombre":"descripcion","tipo":"text","pk":false,"nn":false,"unico":false,"fk":null,"calculada":false},{"nombre":"coste_monedas","tipo":"integer","pk":false,"nn":true,"unico":false,"fk":null,"calculada":false},{"nombre":"foto_id","tipo":"bigint","pk":false,"nn":false,"unico":false,"fk":"nucleo.archivos","calculada":false},{"nombre":"stock","tipo":"integer","pk":false,"nn":false,"unico":false,"fk":null,"calculada":false,"descripcion":"Vacío = sin límite."},{"nombre":"activo","tipo":"boolean","pk":false,"nn":true,"unico":false,"fk":null,"calculada":false},{"nombre":"creado_en","tipo":"timestamptz","pk":false,"nn":true,"unico":false,"fk":null,"calculada":false}],"reglas":[]},{"esquema":"nucleo","nombre":"canjes","fase":7,"tipo":"tabla","descripcion":"El chófer pide un premio y la oficina lo aprueba. Las monedas se descuentan al aprobar; mientras tanto quedan reservadas.","columnas":[{"nombre":"id","tipo":"bigint","pk":true,"nn":true,"unico":false,"fk":null,"calculada":false},{"nombre":"conductor_id","tipo":"bigint","pk":false,"nn":true,"unico":false,"fk":"nucleo.conductores","calculada":false},{"nombre":"premio_id","tipo":"bigint","pk":false,"nn":true,"unico":false,"fk":"nucleo.premios","calculada":false},{"nombre":"coste_monedas","tipo":"integer","pk":false,"nn":true,"unico":false,"fk":null,"calculada":false,"descripcion":"Lo que costaba al pedirlo, aunque el catálogo cambie después."},{"nombre":"estado","tipo":"text","pk":false,"nn":true,"unico":false,"fk":null,"calculada":false},{"nombre":"pedido_en","tipo":"timestamptz","pk":false,"nn":true,"unico":false,"fk":null,"calculada":false},{"nombre":"resuelto_por","tipo":"bigint","pk":false,"nn":false,"unico":false,"fk":"nucleo.usuarios","calculada":false},{"nombre":"resuelto_en","tipo":"timestamptz","pk":false,"nn":false,"unico":false,"fk":null,"calculada":false},{"nombre":"motivo_rechazo","tipo":"text","pk":false,"nn":false,"unico":false,"fk":null,"calculada":false},{"nombre":"entregado_en","tipo":"timestamptz","pk":false,"nn":false,"unico":false,"fk":null,"calculada":false}],"reglas":[]},{"esquema":"nucleo","nombre":"monedas","fase":7,"tipo":"tabla","descripcion":"Libro de movimientos de Monedas Trimodos: lo que se gana suma, lo que se canjea o caduca resta. El saldo es la suma; nada se sobrescribe.","columnas":[{"nombre":"id","tipo":"bigint","pk":true,"nn":true,"unico":false,"fk":null,"calculada":false},{"nombre":"conductor_id","tipo":"bigint","pk":false,"nn":true,"unico":false,"fk":"nucleo.conductores","calculada":false},{"nombre":"ocurrido_en","tipo":"timestamptz","pk":false,"nn":true,"unico":false,"fk":null,"calculada":false},{"nombre":"tipo","tipo":"text","pk":false,"nn":true,"unico":false,"fk":null,"calculada":false},{"nombre":"cantidad","tipo":"integer","pk":false,"nn":true,"unico":false,"fk":null,"calculada":false},{"nombre":"semana","tipo":"date","pk":false,"nn":false,"unico":false,"fk":null,"calculada":false},{"nombre":"canje_id","tipo":"bigint","pk":false,"nn":false,"unico":false,"fk":"nucleo.canjes","calculada":false},{"nombre":"caduca_el","tipo":"date","pk":false,"nn":false,"unico":false,"fk":null,"calculada":false},{"nombre":"motivo","tipo":"text","pk":false,"nn":true,"unico":false,"fk":null,"calculada":false,"descripcion":"En palabras del chófer: «Semana del 5 de octubre: nota 8,6»."},{"nombre":"creado_por","tipo":"bigint","pk":false,"nn":false,"unico":false,"fk":"nucleo.usuarios","calculada":false}],"reglas":["Si la tarea de los lunes corre dos veces, no paga dos veces."]},{"esquema":"calculo","nombre":"nota_semana","fase":7,"tipo":"vista","descripcion":"Una sola nota para el chófer: media simple de sus partes, el cambio respecto a la semana anterior y lo que más le baja.","columnas":[],"reglas":[]},{"esquema":"calculo","nombre":"saldo_monedas","fase":7,"tipo":"vista","descripcion":"Saldo de cada chófer, monedas reservadas en canjes pendientes y cuántas ganadas caducan en 30 días (para avisarle antes).","columnas":[],"reglas":[]},{"esquema":"nucleo","nombre":"validaciones_adr","fase":8,"tipo":"tabla","descripcion":"Historial de revisiones ADR de cada estación. Nunca se pisa: el estado actual es la última revisión (calculo.estado_adr).","columnas":[{"nombre":"id","tipo":"bigint","pk":true,"nn":true,"unico":false,"fk":null,"calculada":false},{"nombre":"gasolinera_id","tipo":"bigint","pk":false,"nn":true,"unico":false,"fk":"nucleo.gasolineras","calculada":false},{"nombre":"estado","tipo":"text","pk":false,"nn":true,"unico":false,"fk":null,"calculada":false},{"nombre":"motivo","tipo":"text","pk":false,"nn":true,"unico":false,"fk":null,"calculada":false},{"nombre":"fuentes","tipo":"jsonb","pk":false,"nn":true,"unico":false,"fk":null,"calculada":false,"descripcion":"Qué se consultó y qué dijo cada fuente: RIMP, túneles, altura de marquesina, OSM, llamada de tráfico…"},{"nombre":"origen","tipo":"text","pk":false,"nn":true,"unico":false,"fk":null,"calculada":false},{"nombre":"revisado_por","tipo":"bigint","pk":false,"nn":false,"unico":false,"fk":"nucleo.usuarios","calculada":false,"descripcion":"Quién confirmó (tráfico o el consejero de seguridad). Vacío si lo revisó el agente."},{"nombre":"revisado_en","tipo":"timestamptz","pk":false,"nn":true,"unico":false,"fk":null,"calculada":false},{"nombre":"lote_id","tipo":"bigint","pk":false,"nn":false,"unico":false,"fk":"ingesta.lotes","calculada":false}],"reglas":[]},{"esquema":"nucleo","nombre":"incidencias_gasolinera","fase":8,"tipo":"tabla","descripcion":"Lo que reportan los chóferes desde la gasolinera. Tráfico la revisa y, si procede, crea una validación nueva.","columnas":[{"nombre":"id","tipo":"bigint","pk":true,"nn":true,"unico":false,"fk":null,"calculada":false},{"nombre":"gasolinera_id","tipo":"bigint","pk":false,"nn":true,"unico":false,"fk":"nucleo.gasolineras","calculada":false},{"nombre":"conductor_id","tipo":"bigint","pk":false,"nn":true,"unico":false,"fk":"nucleo.conductores","calculada":false},{"nombre":"ocurrida_en","tipo":"timestamptz","pk":false,"nn":true,"unico":false,"fk":null,"calculada":false},{"nombre":"tipo","tipo":"text","pk":false,"nn":true,"unico":false,"fk":null,"calculada":false},{"nombre":"texto","tipo":"text","pk":false,"nn":false,"unico":false,"fk":null,"calculada":false},{"nombre":"foto_id","tipo":"bigint","pk":false,"nn":false,"unico":false,"fk":"nucleo.archivos","calculada":false},{"nombre":"estado","tipo":"text","pk":false,"nn":true,"unico":false,"fk":null,"calculada":false},{"nombre":"revisada_por","tipo":"bigint","pk":false,"nn":false,"unico":false,"fk":"nucleo.usuarios","calculada":false},{"nombre":"revisada_en","tipo":"timestamptz","pk":false,"nn":false,"unico":false,"fk":null,"calculada":false}],"reglas":[]},{"esquema":"calculo","nombre":"estado_adr","fase":8,"tipo":"vista","descripcion":"Semáforo ADR actual de cada estación. Sin revisión = pendiente: solo «compatible» se recomienda sin aviso.","columnas":[],"reglas":[]}],"funciones":[{"nombre":"sistema.tocar_actualizado_en","fase":0,"descripcion":"Pone actualizado_en a la hora actual en cada UPDATE. Se engancha con un trigger en cada tabla que tiene esa columna."},{"nombre":"nucleo.normalizar_matricula","fase":0,"descripcion":"Matrícula sin espacios ni guiones y en mayúsculas: «5963 hfh» → «5963HFH». Así cruzan Movildata, Solred y la app."},{"nombre":"calculo.distancia_km","fase":0,"descripcion":"Distancia en línea recta (km) entre dos puntos. Sirve para descartar rápido; la distancia por carretera la da el servicio de rutas."},{"nombre":"sistema.parametro","fase":0,"descripcion":"Valor de un parámetro en una fecha: sistema.parametro('repostaje.desvio_max_min')."},{"nombre":"nucleo.abrir_asignacion","fase":4,"descripcion":"Cambio de camión en una sola transacción: cierra la franja abierta del conductor y abre la nueva. Si ya está en ese camión, no hace nada."},{"nombre":"calculo.precios_del_dia","fase":6,"descripcion":"Precio de cada gasolinera en una fecha y de dónde sale: correo (estación > provincia > red) o, si no llegó, respaldo = Ministerio − descuento − ayuda."},{"nombre":"nucleo.puede_cargar_adr","fase":8,"descripcion":"Con el carné ADR caducado (o sin carné) no se puede marcar «Carga ADR»."}],"interruptores":[{"codigo":"deca","nombre":"Corregir orden de transporte","fase":1,"descripcion":"Flujo DECA contra Odoo, con el PIN de cada conductor."},{"codigo":"notas","nombre":"Mis notas","fase":1,"descripcion":"Notas privadas del conductor, con texto o foto."},{"codigo":"documentos","nombre":"Documentación y caducidades","fase":2,"descripcion":"Carné ADR, revisión médica e ITV con semáforo y avisos."},{"codigo":"mensajes","nombre":"Mensajes","fase":2,"descripcion":"Conversaciones con cada chófer, con varios o con toda la flota."},{"codigo":"repostaje","nombre":"Control de repostaje","fase":3,"descripcion":"Informe mensual de Solred por matrícula: % en la óptima y ahorro perdido."},{"codigo":"avisos_correccion","nombre":"Avisos de corrección","fase":3,"descripcion":"Aviso con el dato concreto a quien reposta peor, revisado por tráfico."},{"codigo":"camion_detectado","nombre":"Camión detectado","fase":4,"descripcion":"La tarjeta del tacógrafo dice en qué camión está el chófer; él confirma con un toque."},{"codigo":"mis_datos","nombre":"Mis datos","fase":4,"descripcion":"Horas de conducción y pausas, km y consumo de sus tramos."},{"codigo":"panel_flota","nombre":"Resumen y cronograma","fase":4,"descripcion":"Estado de la flota, cronograma de asignaciones y ficha de conductor."},{"codigo":"alertas","nombre":"Alertas","fase":4,"descripcion":"En marcha sin conductor, solapes y sincronización atrasada."},{"codigo":"parte_dia","nombre":"Parte del día y cierre de jornada","fase":5,"descripcion":"Contador de servicios y cierre: su fila del Anexo II queda hecha."},{"codigo":"tickets","nombre":"Foto del ticket","fase":5,"descripcion":"Lectura del ticket con IA y cruce con Solred."},{"codigo":"anexo_ii","nombre":"Partes mensuales","fase":5,"descripcion":"El Anexo II de cada camión sale solo; firma y exportación en PDF o Excel."},{"codigo":"precios_dia","nombre":"Precios del día","fase":6,"descripcion":"El agente lee el correo de cada red; tráfico ve «Precios de hoy cargados a las 7:12»."},{"codigo":"necesito_repostar","nombre":"Necesito repostar","fase":6,"descripcion":"La gasolinera más barata para la empresa con 10 min de desvío como máximo."},{"codigo":"nota_repostaje","nombre":"Nota de repostaje","fase":6,"descripcion":"Repostajes atribuidos al conductor por su tarjeta y nota de 0 a 10."},{"codigo":"nota_conduccion","nombre":"Nota de conducción","fase":7,"descripcion":"Nota de 0 a 10, qué la baja y cómo mejorarla, sin compararle con nadie."},{"codigo":"monedas","nombre":"Monedas Trimodos","fase":7,"descripcion":"Monedas por la nota de la semana, rachas y canjes por premios."},{"codigo":"estaciones_adr","nombre":"Estaciones ADR","fase":8,"descripcion":"El agente revisa, tráfico confirma las ámbar y los chóferes reportan incidencias."},{"codigo":"filtro_adr","nombre":"Filtro ADR","fase":8,"descripcion":"Con «Carga ADR» solo se proponen estaciones compatibles."},{"codigo":"segunda_red","nombre":"Segunda tarjeta","fase":8,"descripcion":"Precios, mapa y control de dos redes; la app dice con qué tarjeta pagar."}],"parametros":[{"clave":"zona_horaria","valor":"\"Europe/Madrid\"","unidad":null,"vigente_desde":"2026-10-01","descripcion":"Zona horaria para decidir a qué día pertenece cada dato.","fase":0},{"clave":"acceso.intentos_max","valor":"5","unidad":"intentos","vigente_desde":"2026-10-01","descripcion":"PIN fallidos seguidos antes de bloquear el acceso.","fase":0},{"clave":"acceso.bloqueo_min","valor":"15","unidad":"min","vigente_desde":"2026-10-01","descripcion":"Minutos de bloqueo tras agotar los intentos. Valor inicial, a revisar.","fase":0},{"clave":"documentos.ambar_dias","valor":"60","unidad":"días","vigente_desde":"2026-10-01","descripcion":"A partir de cuántos días antes de caducar un documento se pone en ámbar.","fase":2},{"clave":"movildata.cada_min","valor":"5","unidad":"min","vigente_desde":"2026-10-01","descripcion":"Cada cuánto se sincroniza Movildata.","fase":4},{"clave":"alertas.en_marcha_kmh","valor":"5","unidad":"km/h","vigente_desde":"2026-10-01","descripcion":"Por encima de esta velocidad el camión se considera en marcha (la app bloquea acciones).","fase":4},{"clave":"alertas.datos_atrasados_min","valor":"15","unidad":"min","vigente_desde":"2026-10-01","descripcion":"Sin datos nuevos de Movildata durante este tiempo, alerta a tráfico.","fase":4},{"clave":"jornada.cierre_auto_horas","valor":"6","unidad":"h","vigente_desde":"2026-10-01","descripcion":"Horas sin actividad del camión tras las que la jornada se cierra sola y queda para revisar. Valor inicial, a revisar con tráfico.","fase":4},{"clave":"tickets.cruce_horas","valor":"3","unidad":"h","vigente_desde":"2026-10-01","descripcion":"Margen de hora para emparejar un ticket con su repostaje de Solred.","fase":5},{"clave":"tickets.cruce_litros_pct","valor":"2","unidad":"%","vigente_desde":"2026-10-01","descripcion":"Diferencia de litros a partir de la cual el cruce se marca como «no cuadra».","fase":5},{"clave":"tickets.lejos_km","valor":"5","unidad":"km","vigente_desde":"2026-10-01","descripcion":"Distancia entre la gasolinera y el camión a esa hora para marcar «repostaje lejos del camión».","fase":5},{"clave":"repostaje.desvio_max_min","valor":"10","unidad":"min","vigente_desde":"2026-10-01","descripcion":"Desvío máximo sobre la ruta para proponer una gasolinera.","fase":6},{"clave":"repostaje.margen_alcance_pct","valor":"15","unidad":"%","vigente_desde":"2026-10-01","descripcion":"Alcance seguro = km que indica el chófer menos este margen.","fase":6},{"clave":"repostaje.litros_llenado","valor":"400","unidad":"L","vigente_desde":"2026-10-01","descripcion":"Litros de un lleno típico para comparar el coste total.","fase":6},{"clave":"repostaje.consumo_desvio_l_100km","valor":"32","unidad":"L/100 km","vigente_desde":"2026-10-01","descripcion":"Consumo con el que se valora el gasóleo que gasta el desvío.","fase":6},{"clave":"precios.hora_limite_correo","valor":"\"09:00\"","unidad":null,"vigente_desde":"2026-10-01","descripcion":"Si a esta hora no ha llegado el correo de una red, se avisa a tráfico y se usa el respaldo.","fase":6},{"clave":"gasoleo.ayuda_eur_l","valor":"0.05","unidad":"€/L","vigente_desde":"2026-10-01","descripcion":"Ayuda extraordinaria al gasóleo profesional (RDL 25/2026), octubre.","fase":6},{"clave":"gasoleo.ayuda_eur_l","valor":"0.12","unidad":"€/L","vigente_desde":"2026-11-01","descripcion":"Noviembre, salvo corrección a la baja.","fase":6},{"clave":"gasoleo.ayuda_eur_l","valor":"0.19","unidad":"€/L","vigente_desde":"2026-12-01","descripcion":"Diciembre, salvo corrección a la baja.","fase":6},{"clave":"nota_repostaje.pesos","valor":"{\"pct_optimo\": 0.5, \"ahorro_perdido_l\": 0.3, \"buenas_practicas\": 0.2}","unidad":null,"vigente_desde":"2026-10-01","descripcion":"Peso de cada parte en la nota de repostaje.","fase":6},{"clave":"monedas.tramos","valor":"[{\"nota_desde\": 9, \"monedas\": 30}, {\"nota_desde\": 8, \"monedas\": 20}, {\"nota_desde\": 7, \"monedas\": 10}]","unidad":"monedas","vigente_desde":"2026-10-01","descripcion":"Monedas por la nota media de la semana. Menos de 7, ninguna.","fase":7},{"clave":"monedas.hitos_racha","valor":"{\"4\": 20, \"8\": 50, \"12\": 100}","unidad":"monedas","vigente_desde":"2026-10-01","descripcion":"Semanas seguidas con 8 o más → monedas extra.","fase":7},{"clave":"monedas.nota_racha","valor":"8","unidad":"nota","vigente_desde":"2026-10-01","descripcion":"Nota mínima para que la semana cuente en la racha.","fase":7},{"clave":"monedas.jornadas_min","valor":"3","unidad":"jornadas","vigente_desde":"2026-10-01","descripcion":"Solo cuentan las semanas con al menos 3 jornadas trabajadas.","fase":7},{"clave":"monedas.caducidad_meses","valor":"12","unidad":"meses","vigente_desde":"2026-10-01","descripcion":"Cada moneda dura un año desde que se gana.","fase":7}]}</script>
+<!-- esquema:fin -->
+
+<script>
+(function(){
+  const $ = (s, el = document) => el.querySelector(s);
+  const $$ = (s, el = document) => [...el.querySelectorAll(s)];
+  const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+  let datos = {};
+  try { datos = JSON.parse($('#esquema').textContent) || {}; } catch (e) {}
+  const objetos = datos.objetos || [];
+
+  const CAPAS = {
+    ingesta: {nombre: 'Ingesta', color: 'var(--c-ingesta)'},
+    nucleo:  {nombre: 'Núcleo',  color: 'var(--c-nucleo)'},
+    calculo: {nombre: 'Cálculo', color: 'var(--c-calculo)'},
+    sistema: {nombre: 'Sistema', color: 'var(--c-sistema)'}
+  };
+
+  /* ---------- Fases (contenido) ---------- */
+  const FASES = [
+    {n:0, titulo:'Cimientos', ini:1, fin:2, dif:2,
+     porque:'Sin esto no hay dónde poner nada. Y en la semana 1, el descubrimiento de Movildata (qué endpoint da la tarjeta del tacógrafo), porque es el riesgo que más puede cambiar el plan.',
+     chofer:['Entrar con código + PIN', 'Móvil recordado: al día siguiente, solo el PIN'],
+     panel:['Entrar con email', 'Alta de conductores, camiones y remolques (la lista inicial sale de Movildata)', 'Interruptores y registro de accesos'],
+     antes:['Contratar el VPS y tener acceso al DNS', 'Clave de Movildata en el .env', 'Pedir a Movildata que active tacógrafo y actividad'],
+     hecho:'un conductor de prueba entra con su PIN en conductores.grupotrimodos.com y el panel muestra la flota real importada de Movildata.'},
+    {n:1, titulo:'Lo que ya está hecho', ini:3, fin:3, dif:1, tag:'Ya construido',
+     porque:'DECA funciona contra Odoo y tiene 91 tests; «Mis notas» es la función más sencilla. Primer uso real con el mínimo riesgo.',
+     chofer:['Corregir la orden de transporte (DECA) con su PIN', 'Mis notas, con texto o foto'],
+     panel:['Historial de correcciones DECA: quién, qué pedido y qué cambió'],
+     antes:['Pedir a Tecnativa los tres cambios de DECA', 'Su backend pasa a funciones/deca con sus tests; sus pantallas se sirven tal cual al principio', 'Sale de Vercel Hobby, que es solo para uso no comercial'],
+     hecho:'un chófer del piloto corrige una orden real con su PIN y su nombre aparece en la nota de Odoo.'},
+    {n:2, titulo:'Documentación y mensajes', ini:4, fin:5, dif:2,
+     porque:'No dependen de ningún sistema externo y crean la cola de avisos que usarán todas las fases siguientes.',
+     chofer:['Mis documentos: caducidades y foto del renovado', 'Mensajes con tráfico, con fotos y confirmación de lectura'],
+     panel:['Documentación con semáforo', 'Programar aviso rellenando una frase', 'Mensajes con cada chófer, con varios o con toda la flota'],
+     antes:['Excel con las fechas actuales de carné ADR, revisión médica e ITV', 'Quién recibe los mensajes de los chóferes'],
+     hecho:'el lunes llega a tráfico el resumen de lo que caduca en 30 días y un chófer recibe en el móvil un mensaje enviado desde el panel.'},
+    {n:3, titulo:'Repostaje con el Excel de Solred', ini:6, fin:7, dif:2,
+     porque:'Es el ahorro más medible (5.451 € perdidos en septiembre) y solo necesita los Excel que ya da Solred. Además deja hecho el importador que reutilizan las demás fases.',
+     chofer:[],
+     panel:['Importar el informe mensual y el detalle, revisando fila a fila', 'Matrículas que más pierden y qué parte del total suman', 'Listado de las 2.425 estaciones con descuento', 'Aviso de corrección por matrícula, revisado por tráfico'],
+     antes:['El Excel de detalle con fecha y hora', 'El listado de estaciones exportado de Solred', 'Quién envía los avisos y por qué canal'],
+     hecho:'se sube el informe de septiembre y el panel enseña lo mismo que Solred: 550 repostajes, 243.823 €, 64 % en la óptima y 5.451 € perdidos.'},
+    {n:4, titulo:'Movildata y asignaciones', ini:8, fin:10, dif:4,
+     porque:'Es el corazón de la app y también lo más delicado: datos continuos, huecos de tarjeta y campos que cambian de nombre. Llega con las bases ya probadas en producción.',
+     chofer:['Camión detectado: confirmar con un toque, «No es mi camión», QR', 'Cambio de camión automático al pasar la tarjeta', 'Mis datos: horas, pausas y km', 'Solo lectura con el camión en marcha'],
+     panel:['Resumen de flota casi en tiempo real', 'Cronograma de asignaciones y corrección con motivo', 'Alertas', 'Ficha del conductor'],
+     antes:['Endpoint de la tarjeta del tacógrafo confirmado (semana 1)', 'Reutilizar el cliente de Movildata del panel de flota', 'Informar a los conductores (geolocalización, LOPDGDD art. 90)'],
+     hecho:'durante una semana, las franjas de los 5 conductores del piloto coinciden con lo que dice tráfico, tocando a mano solo los huecos sin tarjeta. Al terminar: piloto e instalación desde Google Play.'},
+    {n:5, titulo:'Parte mensual sin papel', ini:11, fin:13, dif:4,
+     porque:'Necesita las horas y km de la fase 4 y el detalle de Solred de la fase 3.',
+     chofer:['Contador de servicios', 'Foto del ticket, leída y comprobada', 'Cierre de jornada: lugar, remolque y taller', 'Firma del mes desde el móvil'],
+     panel:['Partes mensuales con el Anexo II', 'Cruce de tickets con Solred', 'Consumo real entre llenados', 'Exportar en PDF o Excel'],
+     antes:['¿Una hoja por camión y turno?', '¿Quién valida el parte y a dónde va después?'],
+     hecho:'durante un mes de piloto, papel y app en paralelo dan las mismas horas, km y litros.'},
+    {n:6, titulo:'Precios del día y gasolinera óptima', ini:14, fin:15, dif:4,
+     porque:'Cruza tres fuentes externas: rutas, el correo de cada red y la posición en vivo.',
+     chofer:['Necesito repostar: km de depósito → gasolinera, tarjeta con la que pagar y navegación'],
+     panel:['«Precios de hoy cargados a las 7:12», red por red', 'Subir un precio a mano', 'Repostajes atribuidos a cada conductor y su nota de repostaje', 'Avisos de corrección al conductor'],
+     antes:['Un correo de precios de ejemplo de cada red', '¿El precio pactado ya descuenta la ayuda al gasóleo?'],
+     hecho:'con el GPS real de un camión del piloto, la recomendación coincide con la que elegiría tráfico, y el informe del mes siguiente mide si se siguió.'},
+    {n:7, titulo:'Nota de conducción y monedas', ini:16, fin:17, dif:3,
+     porque:'Es lo que más decisiones pendientes tiene y necesita todo lo anterior. El cálculo es sencillo; acordar los objetivos, no.',
+     chofer:['Mi nota: de 0 a 10, cambio semanal, qué la baja y desglose', 'Mis monedas: saldo, racha, catálogo y canje'],
+     panel:['Notas en la ficha del conductor', 'Recompensas: aprobar canjes y catálogo'],
+     antes:['Objetivos de cada parte, fijados por tráfico', 'Eventos que da la API de Movildata', 'Catálogo, presupuesto y tributación de los premios', 'Explicárselo a los conductores antes de empezar'],
+     hecho:'un lunes del piloto las notas y las monedas se calculan solas y cada chófer entiende de dónde sale su número.'},
+    {n:8, titulo:'Estaciones ADR y segunda red', ini:18, fin:20, dif:5,
+     porque:'Es la de más riesgo legal y la que más fuentes cruza. Mientras tanto, la recomendación funciona sin filtro ADR.',
+     chofer:['«Carga ADR», solo con el carné vigente: solo estaciones compatibles', 'Reportar una incidencia en una gasolinera'],
+     panel:['Estaciones ADR: revisión del agente, lista de llamadas y validación', 'Segunda tarjeta: precios, mapa y «paga con»'],
+     antes:['Clases y nº ONU habituales y rutas', 'Consejero de seguridad', 'Estaciones vetadas o de confianza', 'Contrato de la segunda tarjeta'],
+     hecho:'con «Carga ADR» ninguna recomendación es una estación en ámbar sin aviso, y cada una guarda qué fuentes se consultaron.'}
+  ];
+  const HITOS = [
+    {sem:3,  t:'Primer uso real', d:'DECA con el PIN de cada chófer'},
+    {sem:10, t:'Piloto', d:'5 conductores e instalación desde Google Play'},
+    {sem:13, t:'Adiós al papel', d:'Anexo II en paralelo con el de papel'},
+    {sem:17, t:'Toda la propuesta', d:'Repostaje, nota y monedas'},
+    {sem:20, t:'ADR y Moeve', d:'Filtro ADR y segunda tarjeta'}
+  ];
+  const SEMANAS = 20;
+
+  /* ---------- Navegación ---------- */
+  const secciones = $$('section[data-sec]');
+  function ir(id, mover = true) {
+    if (!secciones.some(s => s.id === id)) id = 'resumen';
+    secciones.forEach(s => { s.hidden = s.id !== id; });
+    $$('#nav a').forEach(a => { if (a.getAttribute('href') === '#' + id) a.setAttribute('aria-current', 'page'); else a.removeAttribute('aria-current'); });
+    const activo = $(`#nav a[href="#${id}"]`);
+    if (activo && activo.scrollIntoView && matchMedia('(max-width:820px)').matches) activo.scrollIntoView({block: 'nearest', inline: 'center'});
+    if (mover) window.scrollTo(0, 0);
+    if (location.hash.slice(1) !== id) { try { history.replaceState(null, '', '#' + id); } catch (e) {} }
+  }
+  window.addEventListener('hashchange', () => ir(location.hash.slice(1)));
+  window.addEventListener('message', e => { if (e.data && typeof e.data.estructura === 'string') ir(e.data.estructura); });
+
+  /* ---------- Resumen ---------- */
+  const tablas = objetos.filter(o => o.tipo === 'tabla');
+  const vistas = objetos.filter(o => o.tipo === 'vista');
+  const columnas = tablas.reduce((n, t) => n + t.columnas.length, 0);
+  $('#kpis').innerHTML = [
+    [FASES.length, 'fases, de la más sencilla a la más compleja'],
+    ['~' + SEMANAS, 'semanas para una persona'],
+    [tablas.length || '—', `tablas y ${vistas.length} vistas en 4 capas`],
+    [(datos.interruptores || []).length || '—', 'funciones con su interruptor'],
+    ['16–20 €', 'al mes de servidor y servicios']
+  ].map(([b, s]) => `<div class="kpi"><b>${esc(b)}</b><small>${esc(s)}</small></div>`).join('');
+  if (datos.generado) $('#genFecha').textContent = ' (' + datos.generado.split('-').reverse().join('/') + ')';
+
+  function lineaTiempo() {
+    const ticks = [];
+    for (let i = 1; i <= SEMANAS; i += i === 1 ? 1 : 2) ticks.push(`<span style="left:${(i - .5) / SEMANAS * 100}%">S${i}</span>`);
+    return `<div class="tl">` + FASES.map(f => `
+      <div class="tl-row"><a href="#fases" data-fase="${f.n}">${f.n} · ${esc(f.titulo)}</a>
+        <div class="tl-track"><div class="tl-bar${f.tag ? ' done' : ''}" style="left:${(f.ini - 1) / SEMANAS * 100}%;width:${(f.fin - f.ini + 1) / SEMANAS * 100}%">S${f.ini}${f.fin > f.ini ? '–' + f.fin : ''}</div></div>
+      </div>`).join('') +
+      `<div class="tl-axis"><div></div><div class="tl-ticks">${ticks.join('')}</div></div>
+       <div class="tl-hitos">${HITOS.map(h => `<div class="hito"><b>S${h.sem} · ${esc(h.t)}</b>${esc(h.d)}</div>`).join('')}</div></div>`;
+  }
+  $('#tlResumen').innerHTML = lineaTiempo();
+  $('#tlFases').innerHTML = lineaTiempo();
+
+  /* ---------- Fases ---------- */
+  const chipsTabla = (lista) => lista.length
+    ? `<div class="tchips">${lista.map(o => `<a href="#bd" data-tabla="${esc(o.esquema + '.' + o.nombre)}" title="${esc(o.descripcion)}"><i style="background:${CAPAS[o.esquema].color}"></i>${esc(o.esquema + '.' + o.nombre)}</a>`).join('')}</div>`
+    : '<p class="muted">—</p>';
+  const lista = (xs) => xs.length ? `<ul class="l">${xs.map(x => `<li>${esc(x)}</li>`).join('')}</ul>` : '<p class="muted">Nada para el chófer en esta fase.</p>';
+  $('#listaFases').innerHTML = FASES.map(f => {
+    const suyos = objetos.filter(o => o.fase === f.n);
+    const inter = (datos.interruptores || []).filter(i => i.fase === f.n);
+    const dots = '●'.repeat(f.dif) + `<i>${'●'.repeat(5 - f.dif)}</i>`;
+    return `<article class="fase" id="fase-${f.n}">
+      <div class="fase-h"><span class="n">${f.n}</span><div><h3>${esc(f.titulo)}</h3>
+        <div class="fase-meta"><span>Semana${f.fin > f.ini ? 's' : ''} ${f.ini}${f.fin > f.ini ? '–' + f.fin : ''}</span><span>Complejidad <span class="dots" aria-label="${f.dif} de 5">${dots}</span></span><span>${suyos.length} tablas y vistas</span></div></div>
+        ${f.tag ? `<span class="pill ok">${esc(f.tag)}</span>` : ''}</div>
+      <p class="porque"><b>Por qué aquí.</b> ${esc(f.porque)}</p>
+      <div class="grid2">
+        <div><h4>App del chófer</h4>${lista(f.chofer)}</div>
+        <div><h4>Panel de tráfico</h4>${lista(f.panel)}</div>
+        <div><h4>Antes de empezar</h4>${lista(f.antes)}</div>
+        <div><h4>Base de datos · <code>${esc((datos.fases || []).find(x => x.n === f.n)?.archivo || '')}</code></h4>${chipsTabla(suyos)}
+          ${inter.length ? `<h4 style="margin-top:12px">Interruptores</h4><div class="tchips">${inter.map(i => `<a href="#trabajo" title="${esc(i.descripcion)}">${esc(i.codigo)}</a>`).join('')}</div>` : ''}</div>
+      </div>
+      <p class="hecho"><b>Terminada cuando</b><span>${esc(f.hecho)}</span></p>
+    </article>`;
+  }).join('');
+
+  /* ---------- Base de datos ---------- */
+  const porCapa = c => objetos.filter(o => o.esquema === c);
+  const flecha = '<div class="flecha"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div>';
+  const tarjetaCapa = c => {
+    const xs = porCapa(c), t = xs.filter(o => o.tipo === 'tabla').length, v = xs.length - t;
+    return `<div class="capa-c" style="--cc:${CAPAS[c].color}"><h3>${CAPAS[c].nombre}<small>${t} tablas${v ? ' · ' + v + ' vistas' : ''}</small></h3>
+      <p>${esc((datos.esquemas || {})[c] || '')}</p>
+      <div class="ej">${xs.slice(0, 5).map(o => `<code>${esc(o.nombre)}</code>`).join('')}${xs.length > 5 ? `<code>+${xs.length - 5}</code>` : ''}</div></div>`;
+  };
+  $('#capas').innerHTML = tarjetaCapa('ingesta') + flecha + tarjetaCapa('nucleo') + flecha + tarjetaCapa('calculo');
+  const sis = porCapa('sistema');
+  $('#capaSis').innerHTML = `<h3>Sistema <small class="muted">· ${sis.length} tablas</small></h3><p>${esc((datos.esquemas || {}).sistema || '')} <code>${sis.map(o => o.nombre).join(' · ')}</code></p>`;
+
+  const estado = {q: '', capa: 'todas', fase: 'todas'};
+  const tituloFase = n => { const f = FASES.find(x => x.n === n); return f ? f.titulo : ''; };
+  $('#bdCapas').innerHTML = ['todas', 'ingesta', 'nucleo', 'calculo', 'sistema'].map(c =>
+    `<button type="button" class="chip" data-capa="${c}" aria-pressed="${c === 'todas'}">${c === 'todas' ? 'Todas las capas' : CAPAS[c].nombre}</button>`).join('');
+  $('#bdFases').innerHTML = ['todas', ...FASES.map(f => f.n)].map(n =>
+    `<button type="button" class="chip" data-fasef="${n}" aria-pressed="${n === 'todas'}" ${n === 'todas' ? '' : `title="${esc(tituloFase(n))}"`}>${n === 'todas' ? 'Todas las fases' : 'Fase ' + n}</button>`).join('');
+
+  function coincide(o, q) {
+    if (!q) return {ok: true, col: false};
+    const txt = (o.esquema + '.' + o.nombre + ' ' + o.descripcion).toLowerCase();
+    if (txt.includes(q)) return {ok: true, col: false};
+    const col = o.columnas.some(c => (c.nombre + ' ' + (c.descripcion || '')).toLowerCase().includes(q));
+    return {ok: col, col};
+  }
+  function filaColumna(c) {
+    const f = [];
+    if (c.pk) f.push('<span class="flag pk">clave</span>');
+    if (c.fk) f.push(`<a href="#bd" class="flag fk" data-tabla="${esc(c.fk)}">→ ${esc(c.fk)}</a>`);
+    if (c.nn && !c.pk) f.push('<span class="flag">obligatoria</span>');
+    if (c.unico) f.push('<span class="flag">única</span>');
+    if (c.calculada) f.push('<span class="flag calc">la calcula la BD</span>');
+    return `<tr><td>${esc(c.nombre)}</td><td>${esc(c.tipo)}</td><td>${f.join('')}</td><td>${esc(c.descripcion || '')}</td></tr>`;
+  }
+  function tarjetaObjeto(o, abrir) {
+    const id = o.esquema + '.' + o.nombre;
+    const cuerpo = o.tipo === 'vista'
+      ? '<p class="muted" style="font-size:13.5px">Vista: se calcula al consultarla a partir de las tablas de núcleo. No guarda datos propios.</p>'
+      : `<table class="cols"><tbody>${o.columnas.map(filaColumna).join('')}</tbody></table>`;
+    return `<details class="tb" id="t-${esc(id)}"${abrir ? ' open' : ''}><summary>
+        <span class="capa ${esc(o.esquema)}">${CAPAS[o.esquema].nombre}</span>
+        <code class="tb-n">${esc(o.esquema)}.<b>${esc(o.nombre)}</b></code>
+        <span></span>
+        <span class="tb-k">${o.tipo === 'vista' ? 'vista' : o.columnas.length + ' columnas'}</span>
+        <span class="tb-d">${esc(o.descripcion)}</span></summary>
+      <div class="tb-body">${cuerpo}${o.reglas.length ? `<div class="reglas">${o.reglas.map(r => `<p><b>Regla.</b> ${esc(r)}</p>`).join('')}</div>` : ''}</div></details>`;
+  }
+  function pintarLista() {
+    const q = estado.q.trim().toLowerCase();
+    const grupos = FASES.map(f => {
+      const xs = objetos.filter(o => o.fase === f.n
+        && (estado.capa === 'todas' || o.esquema === estado.capa)
+        && (estado.fase === 'todas' || String(o.fase) === String(estado.fase)))
+        .map(o => ({o, m: coincide(o, q)})).filter(x => x.m.ok);
+      if (!xs.length) return '';
+      return `<div class="grupo"><b>Fase ${f.n}</b><small>${esc(f.titulo)} · ${xs.length}</small></div>` + xs.map(x => tarjetaObjeto(x.o, x.m.col)).join('');
+    }).join('');
+    $('#bdLista').innerHTML = grupos || (objetos.length
+      ? '<div class="vacio">Ninguna tabla coincide con la búsqueda.</div>'
+      : '<div class="vacio">Falta el esquema. Ejecuta <code>python3 bases/db/exportar_esquema.py</code>.</div>');
+  }
+  $('#bdBuscar').addEventListener('input', e => { estado.q = e.target.value; pintarLista(); });
+  $('#bdCapas').addEventListener('click', e => {
+    const b = e.target.closest('[data-capa]'); if (!b) return;
+    estado.capa = b.dataset.capa; $$('#bdCapas .chip').forEach(x => x.setAttribute('aria-pressed', x === b)); pintarLista();
+  });
+  $('#bdFases').addEventListener('click', e => {
+    const b = e.target.closest('[data-fasef]'); if (!b) return;
+    estado.fase = b.dataset.fasef; $$('#bdFases .chip').forEach(x => x.setAttribute('aria-pressed', x === b)); pintarLista();
+  });
+  pintarLista();
+
+  function mostrarTabla(id) {
+    let el = document.getElementById('t-' + id);
+    if (!el) {
+      estado.q = ''; estado.capa = 'todas'; estado.fase = 'todas'; $('#bdBuscar').value = '';
+      $$('#bdCapas .chip, #bdFases .chip').forEach(x => x.setAttribute('aria-pressed', x.dataset.capa === 'todas' || x.dataset.fasef === 'todas'));
+      pintarLista(); el = document.getElementById('t-' + id);
+    }
+    if (!el) return;
+    el.open = true;
+    requestAnimationFrame(() => el.scrollIntoView({block: 'center'}));
+  }
+
+  $('#bdFunciones tbody').innerHTML = (datos.funciones || []).map(f =>
+    `<tr><td><code>${esc(f.nombre)}()</code></td><td>${f.fase}</td><td>${esc(f.descripcion)}</td></tr>`).join('');
+  $('#bdParametros tbody').innerHTML = (datos.parametros || []).map(p =>
+    `<tr><td><code>${esc(p.clave)}</code></td><td class="nowrap">${esc(p.valor.replace(/^"|"$/g, ''))}${p.unidad ? ' ' + esc(p.unidad) : ''}</td><td class="nowrap">${esc(p.vigente_desde.split('-').reverse().join('/'))}</td><td>${esc(p.descripcion)}</td></tr>`).join('');
+
+  /* ---------- Enlaces internos ---------- */
+  document.addEventListener('click', e => {
+    const t = e.target.closest('[data-tabla]');
+    if (t) { e.preventDefault(); ir('bd', false); mostrarTabla(t.dataset.tabla); return; }
+    const f = e.target.closest('[data-fase]');
+    if (f) { e.preventDefault(); ir('fases', false); const el = document.getElementById('fase-' + f.dataset.fase); if (el) requestAnimationFrame(() => el.scrollIntoView({block: 'start'})); }
+  });
+
+  ir(location.hash.slice(1) || 'resumen', false);
+})();
+</script>
+</body>
+</html>

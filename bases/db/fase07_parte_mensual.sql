@@ -1,16 +1,16 @@
 -- =====================================================================
--- FASE 5 · PARTE MENSUAL SIN PAPEL
+-- FASE 7 · PARTE MENSUAL SIN PAPEL
 -- ---------------------------------------------------------------------
 -- El Anexo II se rellena solo: horas y km de la tarjeta y Movildata; el
 -- chófer suma servicios, hace la foto del ticket y confirma lugar,
 -- remolque y taller. Los tickets se cruzan con el detalle de Solred.
--- Depende de: fase 3 (repostajes) y fase 4 (asignaciones, telemetría).
+-- Depende de: fase 4 (repostajes) y fase 5 (asignaciones, telemetría).
 -- =====================================================================
 
 INSERT INTO sistema.funciones (codigo, nombre, fase, descripcion) VALUES
-  ('parte_dia', 'Parte del día y cierre de jornada', 5, 'Contador de servicios y cierre: su fila del Anexo II queda hecha.'),
-  ('tickets',   'Foto del ticket',                    5, 'Lectura del ticket con IA y cruce con Solred.'),
-  ('anexo_ii',  'Partes mensuales',                   5, 'El Anexo II de cada camión sale solo; firma y exportación en PDF o Excel.');
+  ('parte_dia', 'Parte del día y cierre de jornada', 7, 'Contador de servicios y cierre: su fila del Anexo II queda hecha.'),
+  ('tickets',   'Foto del ticket',                    7, 'Lectura del ticket con IA y cruce con Solred.'),
+  ('anexo_ii',  'Partes mensuales',                   7, 'El Anexo II de cada camión sale solo; firma y exportación en PDF o Excel.');
 
 INSERT INTO sistema.parametros (clave, valor, unidad, vigente_desde, descripcion) VALUES
   ('tickets.cruce_horas',       '3',    'h',   '2026-10-01', 'Margen de hora para emparejar un ticket con su repostaje de Solred.'),

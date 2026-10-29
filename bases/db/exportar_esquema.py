@@ -3,7 +3,7 @@
 Uso (desde la raíz del repositorio):
     python3 bases/db/exportar_esquema.py
 
-No necesita base de datos ni dependencias: lee los archivos fase*_*.sql, saca
+No necesita base de datos ni dependencias: lee los archivos fase00_…fase10_*.sql, saca
 tablas, columnas, vistas, funciones, comentarios, interruptores y parámetros, y
 los escribe como JSON dentro de estructura-tecnica.html, entre las marcas
 <!-- esquema:inicio --> y <!-- esquema:fin -->.
@@ -28,7 +28,7 @@ FIN_DE_TIPO = re.compile(r"\s+(NOT NULL|NULL|DEFAULT|REFERENCES|PRIMARY KEY|UNIQ
 COMENTARIO = re.compile(
     r"COMMENT ON (SCHEMA|TABLE|VIEW|COLUMN|FUNCTION|CONSTRAINT)\s+([\w.]+)(?:\([^)]*\))?(?:\s+ON\s+([\w.]+))?\s+IS\s+'((?:[^']|'')*)';"
 )
-INTERRUPTOR = re.compile(r"\('(\w+)',\s*'((?:[^']|'')*)',\s*(\d),\s*'((?:[^']|'')*)'\)")
+INTERRUPTOR = re.compile(r"\('(\w+)',\s*'((?:[^']|'')*)',\s*(\d+),\s*'((?:[^']|'')*)'\)")
 PARAMETRO = re.compile(
     r"\('([\w.]+)',\s*'((?:[^']|'')*)',\s*(NULL|'(?:[^']|'')*'),\s*'([\d-]+)',\s*'((?:[^']|'')*)'\)"
 )
@@ -94,9 +94,9 @@ def main():
     fases, objetos, funciones_sql, interruptores, parametros, esquemas = [], {}, [], [], [], {}
     comentarios = []
 
-    for archivo in sorted(DIR.glob("fase[0-9]_*.sql")):
+    for archivo in sorted(DIR.glob("fase[0-9][0-9]_*.sql")):
         sql = archivo.read_text(encoding="utf-8")
-        n = int(archivo.name[4])
+        n = int(archivo.name[4:6])
         titulo, resumen = leer_cabecera(sql)
         fases.append({"n": n, "archivo": f"bases/db/{archivo.name}", "titulo": titulo, "resumen": resumen})
 

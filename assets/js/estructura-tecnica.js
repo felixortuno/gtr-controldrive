@@ -21,6 +21,7 @@
     '.et-launch i{width:32px;height:32px;border-radius:50%;background:#FDDA00;display:grid;place-items:center;color:#121212}' +
     '.et-launch svg{width:17px;height:17px}' +
     '.et-launch[aria-expanded="true"]{display:none}' +
+    '.et-launch.et-fuera{opacity:0;transform:translateY(12px);pointer-events:none}' +
     '.et-launch.et-min::after{content:"";width:6px;height:6px;border-radius:50%;background:#FDDA00;margin-left:2px}' +
     '.et-win{position:fixed;z-index:1200;display:flex;flex-direction:column;background:#F6F6F6;border-radius:14px;overflow:hidden;box-shadow:0 0 0 1px rgba(253,218,0,.7),0 0 0 6px rgba(253,218,0,.09),0 40px 90px -24px rgba(0,0,0,.6);animation:et-in .28s cubic-bezier(.22,.8,.24,1)}' +
     '.et-win[hidden]{display:none}' +
@@ -95,6 +96,14 @@
 
   document.body.appendChild(boton);
   document.body.appendChild(ventana);
+
+  /* Sobre la demo en ventanas, el botón tapaba el panel: se aparta mientras se ve */
+  var demo = document.getElementById('ws');
+  if (demo && 'IntersectionObserver' in window) {
+    new IntersectionObserver(function (es) {
+      boton.classList.toggle('et-fuera', es[0].isIntersecting);
+    }, {threshold: 0.2}).observe(demo);
+  }
 
   var marco = ventana.querySelector('iframe');
   var enlace = ventana.querySelector('[data-et="tab"]');

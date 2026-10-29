@@ -1,18 +1,18 @@
 -- =====================================================================
--- FASE 7 · NOTA DE CONDUCCIÓN Y MONEDAS TRIMODOS
+-- FASE 9 · NOTA DE CONDUCCIÓN Y MONEDAS TRIMODOS
 -- ---------------------------------------------------------------------
 -- La nota de 0 a 10 es la media de seis partes, cada una contra objetivos
 -- fijos que marca tráfico. Cada lunes se calcula la semana anterior y se
 -- reparten monedas. Las monedas son un libro de movimientos: el saldo
 -- siempre es la suma, nunca un número que se pisa.
--- Depende de: fase 4 (Movildata, tacógrafo) y fase 6 (nota de repostaje).
+-- Depende de: fase 5 (Movildata, tacógrafo) y fase 8 (nota de repostaje).
 -- Antes de empezar: tráfico fija qué es un 10 en cada parte y se confirma
 -- qué eventos da la API de Movildata.
 -- =====================================================================
 
 INSERT INTO sistema.funciones (codigo, nombre, fase, descripcion) VALUES
-  ('nota_conduccion', 'Nota de conducción', 7, 'Nota de 0 a 10, qué la baja y cómo mejorarla, sin compararle con nadie.'),
-  ('monedas',         'Monedas Trimodos',   7, 'Monedas por la nota de la semana, rachas y canjes por premios.');
+  ('nota_conduccion', 'Nota de conducción', 9, 'Nota de 0 a 10, qué la baja y cómo mejorarla, sin compararle con nadie.'),
+  ('monedas',         'Monedas Trimodos',   9, 'Monedas por la nota de la semana, rachas y canjes por premios.');
 
 INSERT INTO sistema.parametros (clave, valor, unidad, vigente_desde, descripcion) VALUES
   ('monedas.tramos',          '[{"nota_desde": 9, "monedas": 30}, {"nota_desde": 8, "monedas": 20}, {"nota_desde": 7, "monedas": 10}]', 'monedas', '2026-10-01', 'Monedas por la nota media de la semana. Menos de 7, ninguna.'),

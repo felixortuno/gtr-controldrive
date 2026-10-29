@@ -108,7 +108,7 @@ CREATE TABLE sistema.notificaciones (
   titulo           text NOT NULL,
   cuerpo           text,
   enlace           text,
-  origen           text NOT NULL CHECK (origen IN ('regla_aviso', 'aviso_correccion', 'mensaje', 'canje', 'sistema')),
+  origen           text NOT NULL CHECK (origen IN ('regla_aviso', 'aviso_correccion', 'mensaje', 'ausencia', 'tarea', 'canje', 'sistema')),
   origen_id        bigint,
   clave_unica      text UNIQUE,
   programada_para  timestamptz NOT NULL DEFAULT now(),

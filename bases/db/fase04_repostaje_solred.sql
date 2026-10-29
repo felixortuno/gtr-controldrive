@@ -1,25 +1,25 @@
 -- =====================================================================
--- FASE 3 · REPOSTAJE CON EL EXCEL DE SOLRED
+-- FASE 4 · REPOSTAJE CON EL EXCEL DE SOLRED
 -- ---------------------------------------------------------------------
 -- El control de repostaje por matrícula, solo con los Excel que ya da
 -- Solred: el informe mensual «Vehículos», el detalle con fecha y hora y
 -- el listado de estaciones con descuento. No necesita Movildata: el
--- conductor de cada repostaje se deduce en la fase 6.
+-- conductor de cada repostaje se deduce en la fase 8.
 -- Las redes y las tarjetas son tablas desde el primer día: la segunda
 -- red (Moeve) será un INSERT, no un cambio de estructura.
 -- Depende de: fase 0 (lotes, vehículos) y fase 2 (notificaciones).
 -- =====================================================================
 
 INSERT INTO sistema.funciones (codigo, nombre, fase, descripcion) VALUES
-  ('repostaje',          'Control de repostaje',  3, 'Informe mensual de Solred por matrícula: % en la óptima y ahorro perdido.'),
-  ('avisos_correccion',  'Avisos de corrección',  3, 'Aviso con el dato concreto a quien reposta peor, revisado por tráfico.');
+  ('repostaje',          'Control de repostaje',  4, 'Informe mensual de Solred por matrícula: % en la óptima y ahorro perdido.'),
+  ('avisos_correccion',  'Avisos de corrección',  4, 'Aviso con el dato concreto a quien reposta peor, revisado por tráfico.');
 
 CREATE TABLE nucleo.redes (
   codigo   text PRIMARY KEY,
   nombre   text NOT NULL,
   activa   boolean NOT NULL DEFAULT true
 );
-COMMENT ON TABLE nucleo.redes IS 'Redes de gasóleo con tarjeta de empresa. Hoy Solred; la segunda (p. ej. Moeve) se activa en la fase 8.';
+COMMENT ON TABLE nucleo.redes IS 'Redes de gasóleo con tarjeta de empresa. Hoy Solred; la segunda (p. ej. Moeve) se activa en la fase 10.';
 
 INSERT INTO nucleo.redes (codigo, nombre, activa) VALUES
   ('solred', 'Solred', true),
@@ -110,7 +110,7 @@ CREATE TABLE nucleo.repostajes (
   CONSTRAINT repostajes_sin_duplicados UNIQUE (red, vehiculo_id, fecha_hora, litros)
 );
 CREATE INDEX repostajes_vehiculo_fecha ON nucleo.repostajes (vehiculo_id, fecha_hora);
-COMMENT ON TABLE nucleo.repostajes IS 'Cada repostaje facturado por la red, del Excel de detalle con fecha y hora. El conductor no se guarda: se deduce (calculo.repostajes_atribuidos, fase 6).';
+COMMENT ON TABLE nucleo.repostajes IS 'Cada repostaje facturado por la red, del Excel de detalle con fecha y hora. El conductor no se guarda: se deduce (calculo.repostajes_atribuidos, fase 8).';
 COMMENT ON CONSTRAINT repostajes_sin_duplicados ON nucleo.repostajes IS 'Reimportar el mismo Excel no duplica repostajes.';
 
 CREATE TABLE nucleo.avisos_correccion (
@@ -130,7 +130,7 @@ CREATE TABLE nucleo.avisos_correccion (
   creado_en            timestamptz NOT NULL DEFAULT now(),
   CHECK (estado NOT IN ('revisado', 'enviado') OR revisado_por IS NOT NULL)
 );
-COMMENT ON TABLE nucleo.avisos_correccion IS 'Aviso a quien reposta fuera de la óptima, con su dato concreto. Tráfico lo revisa antes de enviarlo. Hasta la fase 6 va por matrícula; después, al conductor.';
+COMMENT ON TABLE nucleo.avisos_correccion IS 'Aviso a quien reposta fuera de la óptima, con su dato concreto. Tráfico lo revisa antes de enviarlo. Hasta la fase 8 va por matrícula; después, al conductor.';
 COMMENT ON COLUMN nucleo.avisos_correccion.dato IS 'Lo que justifica el aviso: {"cts_l_de_mas": 6.1, "coste_eur": 212.40, "pct_optimo": 41}.';
 COMMENT ON COLUMN nucleo.avisos_correccion.pct_optimo_despues IS 'Se rellena con el informe del mes siguiente: ¿ha mejorado tras el aviso? Cierra el ciclo.';
 

@@ -1,18 +1,18 @@
 -- =====================================================================
--- FASE 6 · PRECIOS DEL DÍA Y GASOLINERA ÓPTIMA
+-- FASE 8 · PRECIOS DEL DÍA Y GASOLINERA ÓPTIMA
 -- ---------------------------------------------------------------------
 -- Un agente lee cada mañana el correo de precios de cada red; si no
 -- llega, se usa el precio de respaldo (Ministerio − descuento − ayuda).
 -- Con eso, «Necesito repostar» lleva al chófer a la más barata para la
 -- empresa con 10 min de desvío como máximo. Y cada repostaje de Solred
 -- se atribuye por fin a su conductor.
--- Depende de: fase 3 (gasolineras, repostajes) y fase 4 (asignaciones).
+-- Depende de: fase 4 (gasolineras, repostajes) y fase 5 (asignaciones).
 -- =====================================================================
 
 INSERT INTO sistema.funciones (codigo, nombre, fase, descripcion) VALUES
-  ('precios_dia',       'Precios del día',     6, 'El agente lee el correo de cada red; tráfico ve «Precios de hoy cargados a las 7:12».'),
-  ('necesito_repostar', 'Necesito repostar',   6, 'La gasolinera más barata para la empresa con 10 min de desvío como máximo.'),
-  ('nota_repostaje',    'Nota de repostaje',   6, 'Repostajes atribuidos al conductor por su tarjeta y nota de 0 a 10.');
+  ('precios_dia',       'Precios del día',     8, 'El agente lee el correo de cada red; tráfico ve «Precios de hoy cargados a las 7:12».'),
+  ('necesito_repostar', 'Necesito repostar',   8, 'La gasolinera más barata para la empresa con 10 min de desvío como máximo.'),
+  ('nota_repostaje',    'Nota de repostaje',   8, 'Repostajes atribuidos al conductor por su tarjeta y nota de 0 a 10.');
 
 INSERT INTO sistema.parametros (clave, valor, unidad, vigente_desde, descripcion) VALUES
   ('repostaje.desvio_max_min',        '10',   'min',      '2026-10-01', 'Desvío máximo sobre la ruta para proponer una gasolinera.'),

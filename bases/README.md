@@ -6,8 +6,8 @@ La explicación completa (arquitectura, base de datos, fases, backend, frontend,
 
 | Archivo | Qué es |
 |---|---|
-| `fase0_cimientos.sql` … `fase8_adr_segunda_red.sql` | El esquema de PostgreSQL 16, una migración por fase. Se aplican en orden y cada una solo necesita las anteriores. |
-| `datos_ejemplo.sql` | Un día de trabajo inventado (dos chóferes, dos camiones, repostajes, tickets, parte y monedas) para el entorno local. |
+| `fase00_cimientos.sql` … `fase10_adr_segunda_red.sql` | El esquema de PostgreSQL 16, una migración por fase (once). Se aplican en orden y cada una solo necesita las anteriores. El número va con dos cifras para que el orden alfabético sea el de las fases. |
+| `datos_ejemplo.sql` | Un día de trabajo inventado (dos chóferes, dos camiones, repostajes, tickets, parte y monedas), con una semana de registro horario, vacaciones, fotos del frontal y una tarea a medias, para el entorno local. |
 | `exportar_esquema.py` | Lee los SQL y actualiza la sección «Base de datos» de la ventana técnica. |
 
 ## Probarlo en local

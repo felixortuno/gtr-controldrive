@@ -1382,6 +1382,178 @@ section.sec.dark{background:var(--ink)}
 .gp-ic{width:28px;height:28px;border-radius:8px;background:var(--y);display:grid;place-items:center;flex:none;margin-top:-3px}
 .gp-ic svg{width:16px;height:16px}
 .gp-line+.pf-pend{margin-top:16px}
+/* ============ CONDUCTORES · AUSENCIAS · TAREAS · FOTO DEL FRONTAL ============ */
+.ad-side{overflow-y:auto;scrollbar-width:none}
+.ad-side::-webkit-scrollbar{display:none}
+.ad-side .wm{margin-bottom:14px}
+.ad-nav{padding:6px 10px}
+.ad-hr{display:flex;align-items:center;gap:8px;flex:none}
+.ad-card h5 .seg button{padding:5px 10px;font-size:11px}
+@container adm (max-width:900px){.ws .ad-nav{padding:7px 0}}
+.st.vac{background:#ece9fb;color:#4b3aa8}
+.cd-n{display:flex;flex-direction:column;line-height:1.25}
+.tb td .cd-n small{display:flex;align-items:center;gap:5px;font-weight:500;white-space:nowrap}
+.cd-dot{width:6px;height:6px;border-radius:50%;flex:none;background:#9aa0a8}
+.cd-dot.ok{background:#209C8F}.cd-dot.pause{background:#056DB2}.cd-dot.bad{background:#e5484d}.cd-dot.vac{background:#6b5bd6}
+.cd-more{display:inline-block;margin-left:5px;font:700 10.5px Mulish,sans-serif;color:var(--muted);background:#eceef0;border-radius:6px;padding:2px 5px;vertical-align:middle}
+.tb.cd th,.tb.cd td{padding:6px 5px}
+.tb.cd td{white-space:nowrap}
+.tb.cd .hbar{gap:6px}
+.tb.cd .hbar div{width:30px}
+.cd-foot{font-size:11px;color:var(--muted);margin:8px 2px 0;line-height:1.45}
+.cd-empty{color:var(--muted);font-size:12px;text-align:center;padding:10px;margin:0}
+.cd-bars{display:flex;flex-direction:column;gap:6px}
+.cd-bar{display:grid;grid-template-columns:66px 1fr 44px;align-items:center;gap:8px;font-size:11.5px}
+.cd-bar>div{height:10px;background:#eceef0;border-radius:5px;display:flex;overflow:hidden}
+.cd-bar i{display:block;height:100%}.cd-bar i.o{background:#3d434b}.cd-bar i.x{background:var(--orange)}
+.cd-bar b{text-align:right;font-weight:600}
+.cd-bar .lp{font-size:10.5px}
+.cd-segs{display:inline-flex;gap:6px;flex-wrap:wrap;justify-content:flex-end}
+.tb th small{display:block;font:500 10px Mulish,sans-serif;letter-spacing:0;text-transform:none;color:#9a9ca2}
+.cd-bar2{grid-template-columns:66px 1fr 64px}
+.cd-bar2>div{flex-direction:column;justify-content:center;gap:2px;height:14px;background:none;border-radius:0}
+.cd-bar2 i{height:5px;border-radius:3px}.cd-bar2 i.mv{background:#3d434b}.cd-bar2 i.od{background:#5b8fd0}
+.cd-leg{display:flex;gap:12px;font-size:10.5px;color:var(--muted);margin-top:8px}
+.cd-leg i{display:inline-block;width:9px;height:9px;border-radius:2px;margin-right:4px;vertical-align:-1px}
+.cd-rev{display:flex;flex-direction:column;gap:9px}
+.cd-rev div{display:flex;gap:8px;align-items:flex-start;font-size:12px;line-height:1.4}
+.cd-rev svg{width:15px;height:15px;flex:none;margin-top:1px;color:#9a5a00}
+.cd-g2{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:10px;margin-top:10px}
+.cd-g3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-top:10px}
+.cd-ph{display:flex;gap:10px;align-items:center;padding:6px 0;border-bottom:1px solid #eceef0}
+.cd-ph:last-child{border-bottom:0}
+.cd-ph>svg{width:70px;height:56px;border-radius:8px;flex:none}
+.cd-ph b{display:block;font-size:12px}
+.cd-ph small{display:block;color:var(--muted);font-size:11px}
+.cd-ph .tq-dots{margin:3px 0}
+.cd-ok{color:#17766C!important;font-weight:600}
+.cd-warn{color:#9a5a00;font-weight:600}
+.cd-okt{color:#17766C}
+.cd-vbar{display:inline-flex;width:60px;height:7px;background:#cfeee5;border-radius:4px;overflow:hidden;vertical-align:middle;margin-right:7px}
+.cd-vbar i{display:block;height:100%}.cd-vbar i.u{background:#9aa0a8}.cd-vbar i.p{background:#e8930c}
+.cd-mini{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:10px}
+.cd-mini div{background:#f6f7f9;border-radius:9px;padding:7px 9px}
+.cd-mini small{display:block;font-size:10px;color:var(--muted)}
+.cd-mini b{font:500 18px/1.2 Mulish,sans-serif}
+.au-cal{display:grid;grid-template-columns:92px repeat(31,minmax(0,1fr));gap:3px 1px;align-items:center;font-size:10px}
+.au-cal>i{height:16px;font-style:normal;display:block}
+.au-cal>i.we{background:#f1f2f4}
+.au-cal>i.va{background:#209C8F}.au-cal>i.pe{background:#056DB2}
+.au-cal>i.pd{background:repeating-linear-gradient(135deg,#f6c46b 0 3px,#fde7bd 3px 6px)}
+.au-cal>i.a{border-top-left-radius:5px;border-bottom-left-radius:5px}.au-cal>i.z{border-top-right-radius:5px;border-bottom-right-radius:5px}
+.au-cal>i.h{height:28px;background:none;text-align:center;color:var(--muted);font-size:8.5px;line-height:1.2}
+.au-cal>i.h b{display:block;margin:1px auto 0;width:17px;font-size:10.5px;color:var(--ink);font-weight:600;border-radius:4px}
+.au-cal>i.h.we b{color:var(--muted)}.au-cal>i.h.fe b{color:#c0262c}.au-cal>i.h.hoy b{background:var(--ink);color:#fff}
+.au-cal>i.au-c{height:18px;line-height:18px;background:#f6f7f9;text-align:center;font-weight:700;color:#3a3f46;border-radius:3px}
+.au-cal>i.au-c.warn{background:#fff1dc;color:#9a5a00}.au-cal>i.au-c.bad{background:#fde8e8;color:#c0262c}
+.au-n{display:flex;align-items:center;gap:6px;font-weight:600;font-size:11.5px;white-space:nowrap;overflow:hidden;height:18px}
+.au-n .av{width:20px;height:20px;font-size:8.5px}
+.au-tot{color:var(--muted);font-size:10px;text-transform:uppercase;letter-spacing:.06em;margin-top:4px}
+.au-leg{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:10.5px;color:var(--muted);margin-top:10px}
+.au-leg i{display:inline-block;width:14px;height:9px;border-radius:3px;margin-right:5px;vertical-align:-1px}
+.tq-dots{display:inline-flex;gap:3px;vertical-align:middle}
+.tq-dots i{width:15px;height:7px;border-radius:4px;background:#e1e4e8}
+.tq-dots i.d{background:#209C8F}.tq-dots i.n{background:#fff;box-shadow:inset 0 0 0 1.5px var(--ink)}
+.tq-pb{display:flex;gap:10px;align-items:flex-start;padding:9px 0;border-bottom:1px solid #eceef0}
+.tq-pb:last-child{border-bottom:0}
+.tq-pb>div:nth-child(2){flex:1;min-width:0}
+.tq-pb b{display:block;font-size:12.5px}.tq-pb span{display:block;font-size:12px;color:#3a3f46}.tq-pb small{display:block;font-size:11px;color:var(--muted);margin-top:2px}
+.tq-pb>.st{flex:none}
+.tq-pi{width:30px;height:30px;border-radius:9px;background:#fff1dc;color:#9a5a00;display:grid;place-items:center;flex:none}
+.tq-pi svg{width:15px;height:15px}
+.tq-pb.ok{opacity:.65}.tq-pb.ok .tq-pi{background:#e5f6ee;color:#17766C}
+.tq-pa{display:flex;gap:6px;flex:none}
+.tq-f{margin-top:12px}
+.tq-f label{display:block;font:700 10px Mulish,sans-serif;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
+.tq-op{display:grid;grid-template-columns:80px 1fr auto;gap:10px;align-items:center;width:100%;text-align:left;border:1.5px solid var(--line);background:#fff;border-radius:10px;padding:8px 10px;margin-bottom:6px;cursor:pointer;font:inherit;color:inherit}
+.tq-op.on{border-color:var(--ink);background:#fffbe0}
+.tq-op small{color:var(--muted);font-size:11px}
+.tq-ch{display:flex;flex-wrap:wrap;gap:6px}
+.tq-c{display:inline-flex;align-items:center;gap:6px;border:1.5px solid var(--line);background:#fff;border-radius:20px;padding:3px 10px 3px 3px;font:600 12px Mulish,sans-serif;cursor:pointer;color:var(--ink)}
+.tq-c .av{width:22px;height:22px;font-size:9px}
+.tq-c.on{border-color:var(--ink);background:var(--metal)}
+.tq-et{display:flex;flex-wrap:wrap;gap:6px}
+.tq-et span{display:inline-flex;align-items:center;gap:6px;font-size:12px;background:#f6f7f9;border-radius:8px;padding:5px 9px}
+.tq-et i{font:700 10px Mulish,sans-serif;font-style:normal;width:16px;height:16px;border-radius:50%;background:var(--ink);color:#fff;display:grid;place-items:center}
+.ta-now{display:flex;align-items:center;gap:10px;width:100%;margin-top:10px;background:#fff;border:1.5px solid var(--ink);border-radius:14px;padding:10px 12px;cursor:pointer;text-align:left;font:inherit;color:inherit}
+.ta-ic{width:34px;height:34px;border-radius:10px;background:var(--metal);display:grid;place-items:center;flex:none}
+.ta-ic svg{width:18px;height:18px}
+.ta-tx{flex:1;min-width:0;display:flex;flex-direction:column;gap:3px}
+.ta-tx small{font-size:10px;color:var(--muted)}
+.ta-tx>b{font-size:12.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ta-now>svg:last-child{width:15px;height:15px;flex:none}
+.ta-card{display:flex;flex-direction:column;align-items:stretch;gap:6px;width:100%;background:#fff;border:0;border-radius:14px;padding:11px 12px;margin-bottom:8px;cursor:pointer;text-align:left;font:inherit;color:inherit}
+.ta-card.done{opacity:.65}
+.ta-h{display:flex;align-items:center;gap:8px}
+.ta-h b{font:600 14px Mulish,sans-serif;letter-spacing:.03em}
+.ta-h .st{margin-left:auto}
+.ta-h em{font-style:normal;background:var(--ink);color:#fff;font:700 9.5px Mulish,sans-serif;padding:2px 6px;border-radius:10px}
+.ta-r{font-size:11.5px;color:#3a3f46}
+.ta-r i{font:700 9px Mulish,sans-serif;font-style:normal;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);display:inline-block;width:64px}
+.ta-pr{display:flex;align-items:center;gap:6px;font-size:11px;color:#9a5a00;font-weight:600}
+.ta-pr svg{width:13px;height:13px}
+.ta-lg{display:flex;flex-direction:column;gap:9px}
+.ta-lg span{display:flex;flex-direction:column}
+.ta-lg i{font:700 9px Mulish,sans-serif;font-style:normal;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.ta-lg b{font-size:13px}.ta-lg small{font-size:10.5px;color:var(--muted)}
+.ta-st{display:flex;align-items:center;gap:10px;padding:6px 0;border-bottom:1px solid #eceef0}
+.ta-st:last-child{border-bottom:0}
+.ta-c{width:24px;height:24px;border-radius:50%;background:#eceef0;color:var(--muted);display:grid;place-items:center;font:700 11px Mulish,sans-serif;flex:none}
+.ta-c svg{width:13px;height:13px}
+.ta-st.d .ta-c{background:#209C8F;color:#fff}
+.ta-st.n .ta-c{background:var(--metal);color:var(--ink);box-shadow:0 0 0 2px var(--ink)}
+.ta-st b{font-size:12.5px;font-weight:600;flex:1}
+.ta-st.d b{color:var(--muted);font-weight:500}
+.ta-st small{font-size:10.5px;color:var(--muted)}
+.ta-st.n small{color:var(--ink);font-weight:700}
+.ta-pb{background:#fff;border-left:3px solid #e8930c;border-radius:10px;padding:8px 10px;margin-bottom:6px;font-size:11.5px}
+.ta-pb.ok{border-left-color:#209C8F}
+.ta-pb b{display:block;font-size:12px}.ta-pb span{display:block}.ta-pb small{display:block;color:var(--muted);font-size:10px;margin-top:3px}
+.vc-saldo{background:#fff;border-radius:16px;padding:12px 14px}
+.vc-saldo>small{font:700 9.5px Mulish,sans-serif;letter-spacing:.13em;text-transform:uppercase;color:var(--muted)}
+.vc-big{display:flex;align-items:baseline;gap:8px;margin:4px 0 8px}
+.vc-big b{font:500 38px/1 Mulish,sans-serif}
+.vc-big span{font-size:12px;color:var(--muted);font-weight:600}
+.vc-bar{display:flex;height:9px;border-radius:5px;overflow:hidden;background:#eceef0}
+.vc-bar i{display:block;height:100%}
+.vc-bar i.u,.vc-leg i.u{background:#9aa0a8}.vc-bar i.p,.vc-leg i.p{background:#e8930c}.vc-bar i.d,.vc-leg i.d{background:#209C8F}
+.vc-leg{display:flex;gap:4px 10px;font-size:10px;color:var(--muted);margin-top:6px;flex-wrap:wrap}
+.vc-leg i{display:inline-block;width:8px;height:8px;border-radius:2px;margin-right:4px}
+.vc-saldo p{font-size:10.5px;color:#3a3f46;margin:8px 0 0;line-height:1.4}
+.vc-cal{background:#fff;border-radius:16px;padding:10px 10px 9px;margin-top:10px}
+.vc-mh{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px}
+.vc-mh b{font:600 13px Mulish,sans-serif;text-transform:capitalize}
+.vc-mh button{width:30px;height:30px;border-radius:9px;border:0;background:#f3f4f6;display:grid;place-items:center;cursor:pointer;color:var(--ink);padding:0}
+.vc-mh button:disabled{opacity:.3;cursor:default}
+.vc-mh svg{width:15px;height:15px}
+.vc-g{display:grid;grid-template-columns:repeat(7,1fr);gap:3px}
+.vc-g>small{text-align:center;font:700 9px Mulish,sans-serif;color:var(--muted);padding:2px 0}
+.vc-d{height:31px;border:0;border-radius:8px;background:#f6f7f9;font:600 12px Mulish,sans-serif;color:var(--ink);cursor:pointer;position:relative;padding:0}
+.vc-d.fds{background:#eceef0}
+.vc-d.fe{color:#c0262c}
+.vc-d.past{background:transparent;color:#c3c6cb;cursor:default}
+.vc-d.full:after{content:"";position:absolute;left:8px;right:8px;bottom:4px;height:3px;border-radius:2px;background:#e8930c}
+.vc-d.ok{background:#209C8F;color:#fff;cursor:default}
+.vc-d.pd{background:repeating-linear-gradient(135deg,#f6c46b 0 4px,#fde7bd 4px 8px);color:#6b3f00;cursor:default}
+.vc-d.sel{background:var(--ink);color:#fff;border-radius:0}
+.vc-d.sel.s0{border-top-left-radius:8px;border-bottom-left-radius:8px}.vc-d.sel.s1{border-top-right-radius:8px;border-bottom-right-radius:8px}
+.vc-lg{display:flex;flex-wrap:wrap;gap:4px 10px;font-size:9.5px;color:var(--muted);margin-top:8px}
+.vc-lg i{display:inline-block;width:9px;height:9px;border-radius:3px;margin-right:4px;vertical-align:-1px}
+.vc-sum{display:flex;flex-direction:column;background:var(--ink);color:#fff;border-radius:12px;padding:9px 12px;margin-top:10px}
+.vc-sum b{font:600 15px Mulish,sans-serif}.vc-sum span{font-size:11px;color:#c9ccd2}
+.vc-req{display:flex;align-items:center;gap:8px;background:#fff;border-radius:12px;padding:8px 10px;margin-bottom:6px;font-size:11.5px}
+.vc-req div{flex:1;min-width:0}.vc-req b{display:block;font-size:12.5px}.vc-req small{color:var(--muted);font-size:10.5px}
+.fr-cam{padding:8px 14px 16px}
+.fr-cam .a-cam-fr{padding:12px}
+.fr-svg{display:block;width:100%;height:auto}
+.fr-cam .fr-svg{width:206px;border-radius:10px}
+.fr-shot{width:62px;height:62px;border-radius:50%;border:4px solid rgba(255,255,255,.85);background:transparent;display:grid;place-items:center;cursor:pointer;margin-top:4px;padding:0}
+.fr-shot i{display:block;width:46px;height:46px;border-radius:50%;background:#fff;transition:background .15s}
+.fr-shot:disabled{opacity:.4;cursor:default}
+.fr-shot.vp-press i{background:var(--y)}
+.fr-skip{border:0;background:transparent;color:#a9acb4;font:600 11.5px Mulish,sans-serif;cursor:pointer;text-decoration:underline;padding:4px}
+.fr-ph{background:#fff;border-radius:16px;padding:8px}
+.fr-ph .fr-svg{border-radius:10px}
 </style>
 </head>
 <body>
@@ -1417,7 +1589,7 @@ section.sec.dark{background:var(--ink)}
     <p class="intro">Cada persona entra con su acceso y solo ve lo que le toca.</p>
     <div class="parts">
       <div><span class="pi" data-ic="phone"></span><div><h3>La app del chófer</h3><p>En su móvil Android, instalada desde Google Play. Entra con un PIN de 4 cifras y solo ve sus datos.</p></div></div>
-      <div><span class="pi" data-ic="monitor"></span><div><h3>El panel de tráfico</h3><p>En el ordenador. Toda la flota en una pantalla: quién lleva cada camión, partes, repostajes y avisos.</p></div></div>
+      <div><span class="pi" data-ic="monitor"></span><div><h3>El panel de tráfico</h3><p>En el ordenador. Toda la flota en una pantalla: quién lleva cada camión, horas, vacaciones, tareas, partes, repostajes y avisos.</p></div></div>
     </div>
     <p class="gp-line"><span class="gp-ic" data-ic="phone"></span><span><b>Se instala desde Google Play.</b> Es la mejor opción porque se instala como cualquier app, se actualiza sola y es oficial: la publica Grupo Trimodos, sin archivos sueltos ni avisos de seguridad.</span></p>
     <p class="pf-pend"><span class="pf-tag">Pendiente de definir</span><span>Qué perfiles usarán la app (por ejemplo tráfico, oficina, taller o dirección) y qué ve y qué puede hacer cada uno.</span></p>
@@ -1426,29 +1598,34 @@ section.sec.dark{background:var(--ink)}
 <section class="bsec grey" id="chofer">
   <div class="wrap">
     <h2>La app del chófer</h2>
-    <p class="intro">Once funciones: seis en el orden en que las usa durante el día y cinco que usa cuando le hace falta. Para cada una, qué hace, cómo se usa y por qué ayuda.</p>
+    <p class="intro">Trece funciones: siete en el orden en que las usa durante el día y seis que usa cuando le hace falta. Para cada una, qué hace, cómo se usa y por qué ayuda.</p>
     <div class="dia">
-      <article class="paso"><div class="paso-when"><span class="paso-ic" data-ic="truck"></span></div><div class="paso-main"><h3>Empezar el día</h3><p class="paso-lead">La app sabe en qué camión está el chófer por la tarjeta del tacógrafo, que Movildata ya lee. No hay que teclear ninguna matrícula.</p><p class="porque"><b>Por qué ayuda</b>Cada hora y cada kilómetro quedan unidos a quien conducía. Si a mitad del día pasa la tarjeta a otro camión, el tramo anterior se cierra solo.</p></div><div class="uso"><h4>Cómo se usa</h4><ol><li>Entra con su código de conductor y un PIN de 4 cifras. El móvil queda recordado.</li><li>La app le enseña el camión en el que ha metido la tarjeta.</li><li>Lo confirma con un toque. Sin tarjeta, elige la matrícula o escanea el QR de la cabina.</li></ol></div></article>
+      <article class="paso"><div class="paso-when"><span class="paso-ic" data-ic="truck"></span></div><div class="paso-main"><h3>Empezar el día</h3><p class="paso-lead">La app sabe en qué camión está el chófer por la tarjeta del tacógrafo, que Movildata ya lee. No hay que teclear ninguna matrícula.</p><p class="porque"><b>Por qué ayuda</b>Cada hora y cada kilómetro quedan unidos a quien conducía. Si a mitad del día pasa la tarjeta a otro camión, el tramo anterior se cierra solo. Y su hora de entrada queda en el registro horario.</p></div><div class="uso"><h4>Cómo se usa</h4><ol><li>Entra con su código de conductor y un PIN de 4 cifras. El móvil queda recordado.</li><li>La app le enseña el camión en el que ha metido la tarjeta.</li><li>Lo confirma con un toque. Sin tarjeta, elige la matrícula o escanea el QR de la cabina.</li><li>Hace una foto al frente del camión: la app lee la matrícula, comprueba que es el suyo y guarda cómo estaba.</li></ol></div></article>
       <article class="paso"><div class="paso-when"><span class="paso-ic" data-ic="clock"></span></div><div class="paso-main"><h3>Su jornada</h3><p class="paso-lead">Una pantalla con todo su día, que se actualiza sola con los datos del camión y de la tarjeta.</p><p class="porque"><b>Por qué ayuda</b>Hoy el chófer no tiene dónde ver sus propios datos. Con esto planifica las pausas y los descansos sin hacer cuentas.</p></div><div class="uso"><h4>Qué ve</h4><ul><li>Horas de conducción y cuánto le falta para la próxima pausa.</li><li>Kilómetros y consumo de hoy.</li><li>Los camiones que ha llevado y el resumen de horas de la semana.</li></ul></div></article>
       <article class="paso"><div class="paso-when"><span class="paso-ic" data-ic="fuel"></span></div><div class="paso-main"><h3>Repostar al mejor precio</h3><p class="paso-lead">Cuando tiene que repostar, la app le dice a qué gasolinera ir para que la empresa pague menos, sin apartarle de su ruta.</p><p class="porque"><b>Por qué ayuda</b>Ya no depende de que el chófer conozca el precio de cada gasolinera: la cuenta la hace la app. Más adelante, si lleva mercancía peligrosa, solo le saldrán las que la admiten.</p></div><div class="uso"><h4>Cómo se usa</h4><ol><li>Pulsa «Repostar» y pone los kilómetros que le quedan en el depósito.</li><li>La app busca las gasolineras de nuestra tarjeta a 10 minutos de desvío como máximo y elige la más barata con el precio del día.</li><li>Le dice con qué tarjeta pagar y le abre la navegación en Google Maps o Waze.</li></ol></div></article>
       <article class="paso"><div class="paso-when"><span class="paso-ic" data-ic="cam"></span></div><div class="paso-main"><h3>Viajes y tickets</h3><p class="paso-lead">Lo que hoy se apunta de memoria se apunta en el momento, con un toque.</p><p class="porque"><b>Por qué ayuda</b>Se acaban los tickets sueltos por la cabina. Cada ticket se comprueba con lo que factura Solred.</p></div><div class="uso"><h4>Cómo se usa</h4><ol><li>Al terminar cada viaje, suma un servicio.</li><li>Al repostar, hace una foto al ticket: la app lee los litros, el precio y el importe, y él solo lo revisa.</li><li>Si va al taller o tiene una avería, lo marca con un botón, con el motivo y una foto.</li></ol></div></article>
+      <article class="paso"><div class="paso-when"><span class="paso-ic" data-ic="task"></span></div><div class="paso-main"><h3>Sus tareas</h3><p class="paso-lead">Tráfico le manda cada servicio como una tarea: dónde carga y descarga, a qué hora y qué tiene que saber. Él marca cada etapa con un toque.</p><p class="porque"><b>Por qué ayuda</b>Tráfico ve cómo va cada servicio sin llamar al chófer, y si algo se tuerce lo sabe en el momento, con foto. Todo queda en la tarea de Odoo.</p></div><div class="uso"><h4>Cómo se usa</h4><ol><li>Abre la tarea en curso desde el inicio o desde «Mis tareas».</li><li>Marca cada etapa: salida hacia la carga, en carga, cargado, en descarga y descargado.</li><li>Si hay un retraso, una avería o la mercancía llega mal, registra el problema con una foto. Si al cargar cambia algo, corrige la orden desde la misma tarea.</li></ol></div></article>
       <article class="paso"><div class="paso-when"><span class="paso-ic" data-ic="qr"></span></div><div class="paso-main"><h3>Orden de transporte</h3><p class="paso-lead">Si al cargar cambian los bultos, los palets o el peso, lo corrige desde el móvil. Esta parte ya está funcionando.</p><p class="porque"><b>Por qué ayuda</b>La orden queda corregida en el sistema al momento, con el nombre de quien la cambió.</p></div><div class="uso"><h4>Cómo se usa</h4><ol><li>Escanea el QR de la orden o escribe su número.</li><li>Cambia solo lo que haya cambiado: mercancía, bultos, palets o peso.</li><li>Revisa el antes y el después, confirma y descarga la orden nueva en PDF.</li></ol></div></article>
-      <article class="paso"><div class="paso-when"><span class="paso-ic" data-ic="check"></span></div><div class="paso-main"><h3>Cerrar la jornada</h3><p class="paso-lead">Al acabar, el día está casi hecho: solo confirma lo que la app no puede saber.</p><p class="porque"><b>Por qué ayuda</b>Se acaba el parte mensual en papel. La hoja sale con el formato de siempre, así que en la oficina no cambia nada.</p></div><div class="uso"><h4>Cómo se usa</h4><ol><li>Horas, kilómetros y tickets ya vienen puestos.</li><li>Confirma los servicios, el lugar, el remolque y si ha pasado por el taller.</li><li>A fin de mes firma la hoja en el móvil y tráfico la valida.</li></ol></div></article>
+      <article class="paso"><div class="paso-when"><span class="paso-ic" data-ic="check"></span></div><div class="paso-main"><h3>Cerrar la jornada</h3><p class="paso-lead">Al acabar, el día está casi hecho: solo confirma lo que la app no puede saber.</p><p class="porque"><b>Por qué ayuda</b>Se acaba el parte mensual en papel. La hoja sale con el formato de siempre, así que en la oficina no cambia nada.</p></div><div class="uso"><h4>Cómo se usa</h4><ol><li>Horas, kilómetros y tickets ya vienen puestos, y su hora de salida queda en el registro horario.</li><li>Confirma los servicios, el lugar, el remolque y si ha pasado por el taller.</li><li>A fin de mes firma la hoja en el móvil y tráfico la valida.</li></ol></div></article>
       <article class="paso"><div class="paso-when"><span class="when">Cada semana</span><span class="paso-ic" data-ic="chart"></span></div><div class="paso-main"><h3>Su nota de conducción</h3><p class="paso-lead">Una nota del 0 al 10 que le dice cómo conduce y qué puede mejorar.</p><p class="porque"><b>Por qué ayuda</b>Ve qué le baja la nota y un consejo concreto para mejorarla. No ve la nota de nadie más: solo se compara consigo mismo.</p></div><div class="uso"><h4>De dónde sale</h4><ul><li>Acelerones y frenazos, ralentí y velocidad.</li><li>Consumo de su camión y repostajes en la gasolinera buena.</li><li>Pausas respetadas. Las seis partes cuentan igual.</li></ul></div></article>
       <article class="paso"><div class="paso-when"><span class="when">Cada lunes</span><span class="paso-ic" data-ic="coin"></span></div><div class="paso-main"><h3>Sus monedas</h3><p class="paso-lead">Según su nota media de la semana gana Monedas Trimodos, que cambia por premios de la empresa.</p><p class="porque"><b>Por qué ayuda</b>Premia conducir bien y con seguridad: la semana que se salta una pausa obligatoria no hay monedas.</p></div><div class="uso"><h4>Cómo funciona</h4><ol><li>Con un 9 o más gana 30 monedas; con un 8, 20; con un 7, 10.</li><li>Las semanas seguidas con buena nota dan monedas extra.</li><li>Pide el premio desde la app y la oficina lo aprueba.</li></ol></div></article>
       <article class="paso"><div class="paso-when"><span class="when">Cuando toca</span><span class="paso-ic" data-ic="idcard"></span></div><div class="paso-main"><h3>Sus documentos</h3><p class="paso-lead">Ve cuándo caducan su carné ADR, su revisión médica y la ITV de su camión, con tiempo para renovarlos.</p><p class="porque"><b>Por qué ayuda</b>Nadie se entera tarde de un carné o una ITV caducados. De la revisión médica solo se guarda si es apto.</p></div><div class="uso"><h4>Cómo se usa</h4><ol><li>La app le avisa antes de que caduque cada documento.</li><li>Cuando lo renueva, le hace una foto y lo sube.</li><li>Tráfico lo valida y los avisos dejan de salir.</li></ol></div></article>
       <article class="paso"><div class="paso-when"><span class="when">Al momento</span><span class="paso-ic" data-ic="msg"></span></div><div class="paso-main"><h3>Mensajes con la oficina</h3><p class="paso-lead">Un chat dentro de la app para hablar con tráfico y con la oficina, sin tener que llamar ni buscar el número de nadie.</p><p class="porque"><b>Por qué ayuda</b>Todo queda escrito en un mismo sitio, con hora y nombre. Si el camión está en marcha, la app solo avisa de que hay un mensaje: se lee y se contesta parado.</p></div><div class="uso"><h4>Cómo se usa</h4><ol><li>Abre «Mensajes» y escribe a tráfico o a la oficina. Puede mandar una foto, por ejemplo de un albarán.</li><li>Recibe lo que le manda la oficina: un cambio en la carga, un recordatorio o un documento que falta.</li><li>Ve cuándo han leído su mensaje y quién le ha contestado.</li></ol></div></article>
       <article class="paso"><div class="paso-when"><span class="when">Cuando quiera</span><span class="paso-ic" data-ic="file"></span></div><div class="paso-main"><h3>Sus notas</h3><p class="paso-lead">Un bloc de notas propio en el móvil para apuntar lo que quiera: un muelle de carga, un horario, un contacto o cualquier cosa que tenga que recordar.</p><p class="porque"><b>Por qué ayuda</b>Lo que tiene que recordar queda guardado en el móvil y siempre a mano. Sus notas son solo suyas: la oficina no las ve.</p></div><div class="uso"><h4>Cómo se usa</h4><ol><li>Abre «Mis notas» y escribe lo que quiera; también puede añadir una foto.</li><li>Las encuentra buscando una palabra, por ejemplo el nombre de un cliente.</li><li>Las cambia o las borra cuando quiera.</li></ol></div></article>
+      <article class="paso"><div class="paso-when"><span class="when">Cuando quiera</span><span class="paso-ic" data-ic="sun"></span></div><div class="paso-main"><h3>Sus vacaciones</h3><p class="paso-lead">Ve cuántos días de vacaciones le quedan según el tiempo que lleva trabajado y los pide en un calendario, sin papeles ni llamadas.</p><p class="porque"><b>Por qué ayuda</b>Sabe siempre cuántos días tiene y cómo va cada solicitud. Tráfico las aprueba viendo quién más falta esos días, y todo queda en Ausencias de Odoo.</p></div><div class="uso"><h4>Cómo se usa</h4><ol><li>Abre «Vacaciones» y ve los días generados (2,5 por mes trabajado), los usados y los libres.</li><li>Elige el primer y el último día en el calendario. La app le dice cuántos le quedarán y si esos días ya faltan compañeros.</li><li>Los pide con un toque y ve cuándo los aprueba tráfico. También puede pedir un permiso, con su motivo.</li></ol></div></article>
     </div>
   </div>
 </section>
 <section class="bsec" id="panel">
   <div class="wrap">
     <h2>El panel de tráfico</h2>
-    <p class="intro">Diez apartados en el ordenador de tráfico. Cada uno junta lo que hoy está repartido entre Movildata, los informes de Solred y los papeles de cada camión, y lo importante sale solo.</p>
+    <p class="intro">Trece apartados en el ordenador de tráfico. Cada uno junta lo que hoy está repartido entre Movildata, Odoo, los informes de Solred y los papeles de cada camión, y lo importante sale solo.</p>
     <div class="apartados">
       <article class="apartado"><span class="apartado-ic" data-ic="grid"></span><h3>La flota, ahora</h3><p>La pantalla de inicio: cada chófer, el camión que lleva y cómo va su día, con datos de hace unos minutos.</p><h4>Qué puede hacer tráfico</h4><ul><li>Ver quién conduce, quién está en pausa y quién no tiene tarjeta.</li><li>Ver las horas y los kilómetros de hoy de cada chófer.</li><li>Abrir la ficha de un chófer con su histórico y su nota.</li></ul><p class="datos"><span data-ic="db"></span><span><b>Datos:</b> Movildata y tarjeta del tacógrafo.</span></p></article>
+      <article class="apartado"><span class="apartado-ic" data-ic="users"></span><h3>Conductores</h3><p>Las horas de verdad de cada chófer, las de la tarjeta del tacógrafo en Movildata, frente a las que se pagan en Odoo: hoy, esta semana y este mes. Si no se acercan, sale para revisar.</p><h4>Qué puede hacer tráfico</h4><ul><li>Ver qué chóferes se separan más de 15 minutos al día y en qué día pasa.</li><li>Abrir la ficha de un chófer: sus horas día a día, sus camiones con la foto del frontal, sus tareas y sus vacaciones.</li><li>Exportar la comparación del mes para nóminas.</li></ul><p class="datos"><span data-ic="db"></span><span><b>Datos:</b> Movildata y tarjeta del tacógrafo (horas reales) y Asistencias de Odoo (horas pagadas).</span></p></article>
       <article class="apartado"><span class="apartado-ic" data-ic="cal"></span><h3>Quién llevó cada camión</h3><p>Un cronograma del día, hora a hora, con cada camión y el chófer que lo llevaba. Se monta solo con las tarjetas del tacógrafo.</p><h4>Qué puede hacer tráfico</h4><ul><li>Ver los cambios de camión del día.</li><li>Corregir una asignación a mano; queda registrado quién lo hizo.</li><li>Exportarlo a Excel.</li></ul><p class="datos"><span data-ic="db"></span><span><b>Datos:</b> Tarjeta del tacógrafo.</span></p></article>
+      <article class="apartado"><span class="apartado-ic" data-ic="task"></span><h3>Tareas</h3><p>Lo que tiene que hacer cada chófer hoy, etapa a etapa: salida, en carga, cargado, en descarga y descargado.</p><h4>Qué puede hacer tráfico</h4><ul><li>Mandar una tarea a un chófer, que le llega al móvil al momento.</li><li>Ver en qué etapa va cada servicio sin llamar.</li><li>Ver los problemas que registra el chófer, con su foto, y marcarlos resueltos.</li></ul><p class="datos"><span data-ic="db"></span><span><b>Datos:</b> Proyecto de Odoo y lo que marca el chófer.</span></p></article>
+      <article class="apartado"><span class="apartado-ic" data-ic="sun"></span><h3>Ausencias</h3><p>Las vacaciones y los permisos de todos los chóferes en un calendario, con las solicitudes que piden desde la app.</p><h4>Qué puede hacer tráfico</h4><ul><li>Aprobar o rechazar una solicitud viendo quién más falta esos días.</li><li>Ver cuántos chóferes quedan disponibles cada día.</li><li>Ver el saldo de cada uno: días generados, usados y libres.</li></ul><p class="datos"><span data-ic="db"></span><span><b>Datos:</b> Ausencias de Odoo.</span></p></article>
       <article class="apartado"><span class="apartado-ic" data-ic="file"></span><h3>Partes mensuales</h3><p>El Anexo II de cada camión se rellena solo cada día, y el día 1 sale la hoja del mes con el formato de siempre.</p><h4>Qué puede hacer tráfico</h4><ul><li>Ver las horas, los kilómetros y los servicios de cada día.</li><li>Revisar los tickets, ya comprobados con Solred.</li><li>Validar la hoja que firma el chófer y sacarla en PDF o Excel.</li></ul><p class="datos"><span data-ic="db"></span><span><b>Datos:</b> Tacógrafo, Movildata, lo que confirma el chófer y Solred.</span></p></article>
       <article class="apartado"><span class="apartado-ic" data-ic="alert"></span><h3>Alertas</h3><p>Avisos que salen solos cuando algo no cuadra, para actuar en el momento y no a fin de mes.</p><h4>Qué puede hacer tráfico</h4><ul><li>Saber si un camión está en marcha sin tarjeta.</li><li>Ver qué pausas obligatorias están a punto de vencer.</li><li>Detectar chóferes sin camión o dos chóferes en el mismo camión.</li></ul><p class="datos"><span data-ic="db"></span><span><b>Datos:</b> Movildata y tarjeta del tacógrafo.</span></p></article>
       <article class="apartado"><span class="apartado-ic" data-ic="idcard"></span><h3>Caducidades</h3><p>Todas las fechas de carnés ADR, revisiones médicas e ITV de cabezas tractoras y remolques, en una lista con semáforo.</p><h4>Qué puede hacer tráfico</h4><ul><li>Ver de un vistazo qué está al día, qué caduca pronto y qué ha caducado.</li><li>Validar el documento renovado que sube el chófer.</li><li>Impedir que un chófer con el carné ADR caducado marque carga ADR.</li></ul><p class="datos"><span data-ic="db"></span><span><b>Datos:</b> Los documentos que sube cada chófer.</span></p></article>
@@ -1481,21 +1658,24 @@ section.sec.dark{background:var(--ink)}
         <section class="win" id="winDrv" aria-label="App del chófer"><div class="win-bar"><span class="win-dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="win-ttl"><span data-ic="phone" aria-hidden="true"></span><b>App del chófer</b></span><span class="win-ctl"><button type="button" data-wc="min" aria-label="Minimizar"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M3.5 8h9"/></svg></button><button type="button" data-wc="max" aria-label="Ampliar o restaurar"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="10" height="10" rx="1.6"/></svg></button></span></div><div class="win-body drv-body"><div class="phone-fit"><div class="phone" id="drvPhone"></div></div></div></section>
         <section class="win" id="winAdm" aria-label="Panel de tráfico"><div class="win-bar"><span class="win-dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="win-ttl"><span data-ic="monitor" aria-hidden="true"></span><b>Panel de tráfico</b> <small>conductores.grupotrimodos.com/admin</small></span><span class="win-ctl"><button type="button" data-wc="min" aria-label="Minimizar"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M3.5 8h9"/></svg></button><button type="button" data-wc="max" aria-label="Ampliar o restaurar"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="10" height="10" rx="1.6"/></svg></button></span></div><div class="win-body adm-body"><div id="admHost"></div></div></section>
         <section class="win" id="winGuia" aria-label="Un día de prueba" hidden><div class="win-bar"><span class="win-dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="win-ttl"><span data-ic="check" aria-hidden="true"></span><b>Un día de prueba</b></span><span class="win-ctl"><button type="button" data-wc="min" aria-label="Minimizar"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M3.5 8h9"/></svg></button></span></div><div class="win-body guia-body">
-          <div class="g-prog"><b id="gCount">0 de 14</b><div class="g-bar"><i id="gBar"></i></div></div>
+          <div class="g-prog"><b id="gCount">0 de 23</b><div class="g-bar"><i id="gBar"></i></div></div>
           <div data-g="en el móvil"><h5>En el móvil</h5><div class="ck">
             <div class="ck-i" id="ck-login"><span class="bx" data-ic="check"></span><div><b>Inicia sesión</b><small>Pulsa cuatro cifras cualquiera en el teclado.</small></div></div>
             <div class="ck-i" id="ck-plate"><span class="bx" data-ic="check"></span><div><b>Confirma el camión</b><small>Lo detecta tu tarjeta del tacógrafo. Prueba también «No es mi camión» para elegirlo a mano.</small></div></div>
+            <div class="ck-i" id="ck-frontal"><span class="bx" data-ic="check"></span><div><b>Haz la foto del frontal</b><small>Al confirmar el camión, la app pide una foto del frente: lee la matrícula y la compara.</small></div></div>
             <div class="ck-i" id="ck-change"><span class="bx" data-ic="check"></span><div><b>Cambia de camión</b><small>Simula que pasas la tarjeta a otro camión: el tramo anterior se cierra solo.</small></div></div>
             <div class="ck-i" id="ck-fuel"><span class="bx" data-ic="check"></span><div><b>Pide una gasolinera</b><small>Pulsa «Repostar», indica los km que te quedan y mira la recomendación. Activa «Carga ADR» para ver cómo cambia.</small></div></div>
             <div class="ck-i" id="ck-parte"><span class="bx" data-ic="check"></span><div><b>Apunta tu día</b><small>En «Parte del día», suma un servicio y haz la foto de un ticket.</small></div></div>
             <div class="ck-i" id="ck-deca"><span class="bx" data-ic="check"></span><div><b>Corrige una orden de transporte</b><small>Cambia bultos, palets o peso y descarga la orden nueva.</small></div></div>
+            <div class="ck-i" id="ck-tarea"><span class="bx" data-ic="check"></span><div><b>Avanza una tarea</b><small>Pulsa la tarea en curso, marca la siguiente etapa o registra un problema.</small></div></div>
             <div class="ck-i" id="ck-coins"><span class="bx" data-ic="check"></span><div><b>Canjea un premio</b><small>En «Mis monedas», mira tu racha y canjea algo del catálogo.</small></div></div>
             <div class="ck-i" id="ck-docs"><span class="bx" data-ic="check"></span><div><b>Revisa tus documentos</b><small>Cuándo caducan tu carné ADR, tu revisión médica y la ITV de tu camión.</small></div></div>
             <div class="ck-i" id="ck-msg"><span class="bx" data-ic="check"></span><div><b>Escribe a la oficina</b><small>En «Mensajes», manda un mensaje a tráfico o usa una respuesta rápida.</small></div></div>
             <div class="ck-i" id="ck-nota"><span class="bx" data-ic="check"></span><div><b>Apunta una nota</b><small>En «Mis notas», escribe algo o pulsa «Ejemplo» y guárdala.</small></div></div>
+            <div class="ck-i" id="ck-vac"><span class="bx" data-ic="check"></span><div><b>Pide vacaciones</b><small>En «Vacaciones», elige los días en el calendario: la app te dice cuántos te quedan.</small></div></div>
             <div class="ck-i" id="ck-finish"><span class="bx" data-ic="check"></span><div><b>Cierra la jornada</b><small>Confirma servicios, lugar y remolque: tu fila del parte mensual queda hecha.</small></div></div>
           </div></div>
-          <div data-g="en el panel"><h5>En el panel</h5><div class="ck"><div class="ck-i" id="ck-a-mreply"><span class="bx" data-ic="check"></span><div><b>Contesta a un chófer</b><small>En «Mensajes», abre la conversación de Javier y contéstale: lo verá en su móvil.</small></div></div><div class="ck-i" id="ck-a-anexo"><span class="bx" data-ic="check"></span><div><b>Mira el Anexo II del mes</b><small>En «Partes mensuales», pulsa «Ver Anexo II»: la hoja sale sola.</small></div></div><div class="ck-i" id="ck-a-prog"><span class="bx" data-ic="check"></span><div><b>Programa un aviso</b><small>En «Documentación», pulsa «Programar aviso», rellena la frase y guárdalo.</small></div></div><div class="ck-i" id="ck-a-cj"><span class="bx" data-ic="check"></span><div><b>Aprueba un canje</b><small>En «Recompensas», aprueba uno de los premios que piden los chóferes.</small></div></div><div class="ck-i" id="ck-a-msg"><span class="bx" data-ic="check"></span><div><b>Avisa a un chófer</b><small>En «Repostaje», pulsa «Avisar» en una matrícula y envía el aviso.</small></div></div><div class="ck-i" id="ck-a-adr"><span class="bx" data-ic="check"></span><div><b>Valida una gasolinera ADR</b><small>En «Estaciones ADR», pulsa «Llamar y validar» en una dudosa y confírmala.</small></div></div></div></div>
+          <div data-g="en el panel"><h5>En el panel</h5><div class="ck"><div class="ck-i" id="ck-a-cond"><span class="bx" data-ic="check"></span><div><b>Compara las horas</b><small>En «Conductores», las reales de Movildata frente a las pagadas en Odoo. Pulsa «A revisar» y abre la ficha de Pedro.</small></div></div><div class="ck-i" id="ck-a-vac"><span class="bx" data-ic="check"></span><div><b>Aprueba unas vacaciones</b><small>En «Ausencias», aprueba las de Andrés o las que hayas pedido desde el móvil.</small></div></div><div class="ck-i" id="ck-a-tarea"><span class="bx" data-ic="check"></span><div><b>Manda una tarea</b><small>En «Tareas», pulsa «Nueva tarea» y mándasela a Javier: le llega al móvil.</small></div></div><div class="ck-i" id="ck-a-mreply"><span class="bx" data-ic="check"></span><div><b>Contesta a un chófer</b><small>En «Mensajes», abre la conversación de Javier y contéstale: lo verá en su móvil.</small></div></div><div class="ck-i" id="ck-a-anexo"><span class="bx" data-ic="check"></span><div><b>Mira el Anexo II del mes</b><small>En «Partes mensuales», pulsa «Ver Anexo II»: la hoja sale sola.</small></div></div><div class="ck-i" id="ck-a-prog"><span class="bx" data-ic="check"></span><div><b>Programa un aviso</b><small>En «Documentación», pulsa «Programar aviso», rellena la frase y guárdalo.</small></div></div><div class="ck-i" id="ck-a-cj"><span class="bx" data-ic="check"></span><div><b>Aprueba un canje</b><small>En «Recompensas», aprueba uno de los premios que piden los chóferes.</small></div></div><div class="ck-i" id="ck-a-msg"><span class="bx" data-ic="check"></span><div><b>Avisa a un chófer</b><small>En «Repostaje», pulsa «Avisar» en una matrícula y envía el aviso.</small></div></div><div class="ck-i" id="ck-a-adr"><span class="bx" data-ic="check"></span><div><b>Valida una gasolinera ADR</b><small>En «Estaciones ADR», pulsa «Llamar y validar» en una dudosa y confírmala.</small></div></div></div></div>
         </div></section>
         <section class="win win-modal" id="winMod" aria-label="Ventana" hidden><div class="win-bar"><span class="win-dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="win-ttl"><span data-ic="file" aria-hidden="true"></span><b>Ventana</b></span><span class="win-ctl"><button type="button" data-wc="close" aria-label="Cerrar"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 4l8 8M12 4l-8 8"/></svg></button></span></div><div class="win-body mod-body" id="admModal"></div></section>
       </div>
@@ -1503,7 +1683,7 @@ section.sec.dark{background:var(--ink)}
         <div class="dk-apps">
           <button type="button" class="dk-app" data-dock="drv" aria-pressed="true"><span data-ic="phone" aria-hidden="true"></span>App del chófer</button>
           <button type="button" class="dk-app" data-dock="adm" aria-pressed="true"><span data-ic="monitor" aria-hidden="true"></span>Panel de tráfico</button>
-          <button type="button" class="dk-app" data-dock="guia" aria-pressed="false"><span data-ic="check" aria-hidden="true"></span>Guía<em id="dkCount">0/14</em></button>
+          <button type="button" class="dk-app" data-dock="guia" aria-pressed="false"><span data-ic="check" aria-hidden="true"></span>Guía<em id="dkCount">0/23</em></button>
         </div>
         <div class="dk-next" id="dkNext" aria-live="polite"></div>
         <div class="dk-act">
@@ -1580,6 +1760,7 @@ const I={
  bell:sv('<path d="M6 16v-5a6 6 0 0 1 12 0v5l2 2H4z"/><path d="M10 20a2 2 0 0 0 4 0"/>'),
  idcard:sv('<rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="11" r="2.5"/><path d="M5.5 16.5a3.5 3.5 0 0 1 7 0M15 10h3M15 13h3"/>'),
 };
+I.task=sv('<rect x="5" y="4" width="14" height="17" rx="2"/><path d="M9 4V2.8h6V4"/><path d="m9 11.5 2 2 4-4"/><path d="M9 17h6"/>');I.sun=sv('<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/>');
 document.querySelectorAll('[data-ic]').forEach(e=>{e.innerHTML=I[e.dataset.ic]||'';});
 
 /* ============ DATOS DEMO ============ */
@@ -1716,6 +1897,7 @@ function rDriver(s){
   else if(s.screen==='nota')h+=rNota(s);
   else if(s.screen==='coins')h+=rCoins(s);
   else if(s.screen==='docs')h+=rDocs(s); else if(s.screen==='msgs')h+=rMsgs(s); else if(s.screen==='notas')h+=rNotas(s);
+  else if(s.screen==='frontal')h+=rFrontal(s); else if(s.screen==='vac')h+=rVac(s); else if(s.screen==='tareas')h+=rTareas(s); else if(s.screen==='tarea')h+=rTarea(s); else if(s.screen==='tprob')h+=rTProb(s);
   if(s.toast)h+=`<div class="a-toast">${I.check}<span>${s.toast}</span></div>`;
   return h+'</div>';
 }
@@ -1761,7 +1943,7 @@ function rPlate(s){
 const detP=s=>s.mode==='change'?['7832 MHT','1209 KZP','8814 KYS'].find(p=>p!==curPlate(s)):'4521 LKM';
 function rDetect(s){
   const ch=s.mode==='change',p=detP(s),f=fleet(p),t=ch?s.clock:'06:42';
-  return `<div class="a-top">${ch?`<button class="a-icon" data-act="cancel" data-v="cancel">${I.back}</button>`:`<span class="a-step">Paso 2/2</span>`}
+  return `<div class="a-top">${ch?`<button class="a-icon" data-act="cancel" data-v="cancel">${I.back}</button>`:`<span class="a-step">Paso 2/3</span>`}
       <div class="a-top-t"><b>${ch?'Cambio detectado':'Tu camión de hoy'}</b><small>Según tu tarjeta del tacógrafo</small></div></div>
     <div class="a-body">
       <div class="a-now" data-v="det"><small><i></i>Tarjeta insertada a las ${t}</small>${lp(p)}<div class="a-now-m">${f.m} · ${f.b}</div><svg class="bg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">${I.truck.replace(/<\/?svg[^>]*>/g,'')}</svg></div>
@@ -1870,8 +2052,8 @@ function svcCtl(s,big){const n=s.svc||0;return `<div class="a-cnt"><div class="a
 function rParte(s){const nt=(s.tickets||[]).length;
   return `<div class="a-card" data-v="parte"><div class="hd"><span>Parte del día</span><span>${nt?nt+' ticket'+(nt>1?'s':''):'sin tickets'}</span></div>${svcCtl(s)}
     <div class="a-pbtns"><button class="a-pbtn" data-act="ticket" data-v="ticket">${I.cam}Foto del ticket</button><button class="a-pbtn" data-act="taller" data-v="taller">${I.wrench}${s.taller?'Taller: '+s.taller.m:'Taller / avería'}</button></div></div>
-    <button class="a-deca" data-act="deca" data-v="deca">${I.file}<span><b>Corregir orden de transporte</b><small>DECA · mercancía, bultos, palets y peso</small></span>${I.chev}</button>
-    <div class="a-quick"><button class="a-qb" data-act="coins" data-v="coins">${I.coin}<small>Mis monedas</small><b>${CO.saldo-(s.spent||0)}<i>+${CO.sem} esta sem.</i></b></button><button class="a-qb" data-act="docs" data-v="docs">${I.idcard}<small>Mis documentos</small><b>${MYDOCS.length+TRUCKDOCS.length}<i>documentos</i></b>${(()=>{const n=[...MYDOCS,...TRUCKDOCS].filter(x=>dleft(x.f)<=60).length;return n?`<em>${n} caduca${n>1?'n':''} pronto</em>`:''})()}</button><button class="a-qb" data-act="msgs" data-v="msgs">${I.msg}<small>Mensajes</small><b>${mUnD()||MS.th[JI].length}<i>${mUnD()?'sin leer':'mensajes'}</i></b>${mUnD()?`<em class="new">${mUnD()} nuevo${mUnD()>1?'s':''}</em>`:''}</button><button class="a-qb" data-act="notas" data-v="notas">${I.file}<small>Mis notas</small><b>${NT.length}<i>${NT.length===1?'nota':'notas'}</i></b></button></div>`}
+    ${taNow()}<button class="a-deca" data-act="deca" data-v="deca">${I.file}<span><b>Corregir orden de transporte</b><small>DECA · mercancía, bultos, palets y peso</small></span>${I.chev}</button>
+    <div class="a-quick"><button class="a-qb" data-act="coins" data-v="coins">${I.coin}<small>Mis monedas</small><b>${CO.saldo-(s.spent||0)}<i>+${CO.sem} esta sem.</i></b></button><button class="a-qb" data-act="docs" data-v="docs">${I.idcard}<small>Mis documentos</small><b>${MYDOCS.length+TRUCKDOCS.length}<i>documentos</i></b>${(()=>{const n=[...MYDOCS,...TRUCKDOCS].filter(x=>dleft(x.f)<=60).length;return n?`<em>${n} caduca${n>1?'n':''} pronto</em>`:''})()}</button><button class="a-qb" data-act="msgs" data-v="msgs">${I.msg}<small>Mensajes</small><b>${mUnD()||MS.th[JI].length}<i>${mUnD()?'sin leer':'mensajes'}</i></b>${mUnD()?`<em class="new">${mUnD()} nuevo${mUnD()>1?'s':''}</em>`:''}</button><button class="a-qb" data-act="notas" data-v="notas">${I.file}<small>Mis notas</small><b>${NT.length}<i>${NT.length===1?'nota':'notas'}</i></b></button><button class="a-qb" data-act="tareas" data-v="tareas">${I.task}<small>Mis tareas</small><b>${TAR.filter(t=>t.i===JI&&tNext(t)>=0).length}<i>por hacer</i></b>${TAR.some(t=>t.i===JI&&t.nueva)?'<em class="new">Nueva</em>':''}</button><button class="a-qb" data-act="vac" data-v="vac">${I.sun}<small>Vacaciones</small><b>${fnum(dispo(JI))}<i>días libres</i></b>${vEm()}</button></div>`}
 function tktPaper(){return `<div class="tkt"><b>E.S. LA VILAVELLA</b><span>NULES · CASTELLÓN</span><hr><span>08/10/26 07:52</span><span>SURTIDOR 4</span><span>GASÓLEO A</span><span class="r">312,40 L × 1,925</span><b class="r">TOTAL 601,37 €</b><hr><span>TARJETA ****4417</span></div>`}
 function rTicket(s){
   if(s.tk===1)return `<div class="a-cam"><div class="a-cam-fr">${tktPaper()}<div class="ln"></div></div><span>Leyendo el ticket…</span><small>Litros, precio, importe, fecha y estación</small></div>`;
@@ -1906,7 +2088,7 @@ function rClose(s){
   return `<div class="a-top"><button class="a-icon" data-act="cback" data-v="cback">${I.back}</button><div class="a-top-t"><b>Cierre de jornada</b><small>Revisa tu día y rellena tu fila del parte</small></div></div>
   <div class="a-body">
     <div class="a-sec" style="margin-top:2px">Lo pone la app</div>
-    <div class="a-fic a-sum" data-v="csum">${row('Horario',hm(t0)+' – '+s.clock)}${row('Conducción',hd(drive))}${row('Km',km+' km'+(n>1?' en 2 camiones':' · '+th(KM0)+' → '+th(KM0+km)))}${row('Camiones',s.segs.map(g=>g[2]).join(' · '))}${row('Tickets',nt?nt+' · 312,40 L · cuadra':'Ninguno hoy',nt?'ok':'')}</div>
+    <div class="a-fic a-sum" data-v="csum">${row('Entrada y salida',hm(t0)+' – '+s.clock)}${row('Conducción',hd(drive))}${row('Km',km+' km'+(n>1?' en 2 camiones':' · '+th(KM0)+' → '+th(KM0+km)))}${row('Camiones',s.segs.map(g=>g[2]).join(' · '))}${row('Tickets',nt?nt+' · 312,40 L · cuadra':'Ninguno hoy',nt?'ok':'')}</div>
     <div class="a-sec">Lo confirmas tú</div>
     <div class="a-card" style="margin-top:0">${svcCtl(s,1)}</div>
     <div class="a-sec">Lugar</div>
@@ -1915,6 +2097,7 @@ function rClose(s){
     <div class="a-chips a-tchips">${TR.map(x=>`<button class="a-chip ${s.trl===x?'sel':''}" data-act="trl" data-k="${x}" data-v="trl-${x}">${x}</button>`).join('')}<button class="a-chip" data-act="qrtrl" data-v="qrtrl">${I.qr}QR</button></div>
     <div class="a-sec">Taller o avería</div>
     ${s.taller?`<div class="a-okline">${I.wrench}<span><b>${s.taller.m}</b> · OT-2611${s.taller.out?' · fuera de servicio':''}</span></div>`:`<button class="a-photo" data-act="taller" data-v="taller2">${I.wrench}<span><b>Sin taller ni avería hoy</b><small>Pulsa si el camión ha ido a taller</small></span></button>`}
+    <div class="a-info">${I.clock}<span>La entrada y la salida son tu <b>registro horario</b>: se guardan en Asistencias de Odoo.</span></div>
   </div>
   <div class="a-foot"><button class="a-btn" data-act="closeok" data-v="closeok">${I.check}Confirmar y cerrar jornada</button></div>`;
 }
@@ -1922,7 +2105,7 @@ function rDeca(s){
   const row=(k,a,b)=>a===b?`<div class="a-dk"><span>${k}</span><em>${a}</em><span></span><b class="eq">sin cambios</b></div>`:`<div class="a-dk ch"><span>${k}</span><em>${a}</em>${I.arrow}<b>${b}</b></div>`;
   return `<div class="a-top"><button class="a-icon" data-act="dkback" data-v="dkback">${I.back}</button><div class="a-top-t"><b>Orden de transporte</b><small>Al cargar, si algo ha cambiado</small></div></div>
   <div class="a-body">
-    <div class="a-now"><small><i></i>QR leído · TRANSARGI</small><b style="font:500 21px/1 Mulish,sans-serif;letter-spacing:.04em">S2630118</b><div class="a-now-m">Carga en Vila-real · descarga en Puerto de Valencia</div></div>
+    ${(()=>{const t=s.dko&&TAR.find(x=>x.id===s.dko);return `<div class="a-now"><small><i></i>${t?'Desde la tarea':'QR leído'} · ${t?t.emp:'TRANSARGI'}</small><b style="font:500 21px/1 Mulish,sans-serif;letter-spacing:.04em">${t?t.id:'S2630118'}</b><div class="a-now-m">${t?'Carga en '+sitio(t.r[0])+' · descarga en '+sitio(t.r[1]):'Carga en Vila-real · descarga en Puerto de Valencia'}</div></div>`})()}
     <div class="a-sec">Resumen · antes → ahora</div>
     <div class="a-card" style="margin-top:0" data-v="dksum">${row('Mercancía','AZULEJO','AZULEJO')}${row('Elementos','22','24')}${row('Euro palets','22','24')}${row('Peso','24.800 kg','25.300 kg')}</div>
     <div class="a-info">${I.info}<span>Se guarda en Odoo con una nota interna y se descarga la <b>nueva orden en PDF</b>. Solo se puede cambiar si la orden está en «Nuevo» o «En desarrollo».</span></div>
@@ -1998,9 +2181,9 @@ const gw=(a,b)=>((b-a)/(G1-G0)*100).toFixed(2)+'%';
 const stc=st=>({'Conduciendo':'ok','Pausa':'pause','Descanso':'rest','Sin tarjeta':'bad'}[st]);
 function rAdmin(s){
   const alr=s.alr||ALR,open=alr.filter(a=>!a.ack).length;
-  const nav=[['resumen','Resumen',I.grid],['asign','Asignaciones',I.cal],['partes','Partes mensuales',I.file],['docum','Documentación',I.idcard],['alertas','Alertas',I.alert],['msgs','Mensajes',I.msg],['repost','Repostaje',I.fuel],['recomp','Recompensas',I.coin],['adr','Estaciones ADR',I.shield],['perfiles','Perfiles',I.users]];
-  const act=s.tab==='conductor'?'resumen':s.tab;
-  const side=`<div class="ad-side">${wm(true)}<div class="ad-sec">Panel</div>${nav.map(n=>`<button class="ad-nav ${act===n[0]?'on':''}" data-act="tab" data-t="${n[0]}" data-v="nav-${n[0]}">${n[2]}${n[1]}${n[0]==='alertas'&&open?`<em>${open}</em>`:''}${n[0]==='msgs'&&mUnAll()?`<em>${mUnAll()}</em>`:''}${n[0]==='docum'?`<em>${DOCS.filter(d=>dleft(d.f)<=60).length}</em>`:''}</button>`).join('')}
+  const nav=[['resumen','Resumen',I.grid],['cond','Conductores',I.users],['asign','Asignaciones',I.cal],['tareas','Tareas',I.task],['aus','Ausencias',I.sun],['partes','Partes mensuales',I.file],['docum','Documentación',I.idcard],['alertas','Alertas',I.alert],['msgs','Mensajes',I.msg],['repost','Repostaje',I.fuel],['recomp','Recompensas',I.coin],['adr','Estaciones ADR',I.shield],['perfiles','Perfiles',I.key]];
+  const act=s.tab==='conductor'?(s.from||'resumen'):s.tab;
+  const side=`<div class="ad-side">${wm(true)}<div class="ad-sec">Panel</div>${nav.map(n=>`<button class="ad-nav ${act===n[0]?'on':''}" data-act="tab" data-t="${n[0]}" data-v="nav-${n[0]}">${n[2]}${n[1]}${n[0]==='alertas'&&open?`<em>${open}</em>`:''}${n[0]==='msgs'&&mUnAll()?`<em>${mUnAll()}</em>`:''}${n[0]==='docum'?`<em>${DOCS.filter(d=>dleft(d.f)<=60).length}</em>`:''}${n[0]==='aus'&&VAC.some(v=>v.st==='pend')?`<em>${VAC.filter(v=>v.st==='pend').length}</em>`:''}${n[0]==='tareas'&&TAR.some(tOpen)?`<em>${TAR.reduce((a,t)=>a+tOpen(t),0)}</em>`:''}</button>`).join('')}
     <div class="ad-user"><span class="av">TC</span><div>Tráfico Castellón<small>Administrador</small></div></div></div>`;
   let main='';
   if(s.tab==='resumen')main=aResumen(s,alr);
@@ -2012,8 +2195,9 @@ function rAdmin(s){
   else if(s.tab==='perfiles')main=aPerfiles();
   else if(s.tab==='repost')main=aRepost(s);
   else if(s.tab==='adr')main=aADR(s); else if(s.tab==='msgs')main=aMsgs(s);
-  else if(s.tab==='conductor')main=aConductor(DRV[s.i]);
-  return `<div class="browser"><div class="br-top"><i></i><i></i><i></i><div class="br-url">${I.lock}conductores.grupotrimodos.com/admin</div></div><div class="ad">${side}<div class="ad-main">${main}</div></div>${aModal(s)}${s.toast?`<div class="ad-toast">${I.check}${s.toast}</div>`:''}</div>`;
+  else if(s.tab==='cond')main=aCond(s); else if(s.tab==='aus')main=aAus(s); else if(s.tab==='tareas')main=aTareas(s);
+  else if(s.tab==='conductor')main=aConductor(DRV[s.i],s);
+  return `<div class="browser"><div class="br-top"><i></i><i></i><i></i><div class="br-url">${I.lock}conductores.grupotrimodos.com/admin</div></div><div class="ad">${side}<div class="ad-main">${main}</div></div>${aModal(s)}${aTkModal(s)}${s.toast?`<div class="ad-toast">${I.check}${s.toast}</div>`:''}</div>`;
 }
 function adHead(t,sub){return `<div class="ad-h"><div><h4>${t}</h4><div class="s">${sub}</div></div><span class="sync"><i></i>Movildata sincronizado hace 2 min</span></div>`}
 function aResumen(s,alr){
@@ -2290,14 +2474,304 @@ function aModal(s){
   }
   return '';
 }
-function aConductor(d){
+/* ============ PERSONAL DESDE ODOO: HORAS, VACACIONES Y TAREAS · FOTO DEL FRONTAL ============ */
+const adHeadO=(t,sub,btn)=>`<div class="ad-h"><div><h4>${t}</h4><div class="s">${sub}</div></div><div class="ad-hr">${btn||''}<span class="sync"><i></i>Odoo y Movildata · hace 1 min</span></div></div>`;
+const hs=x=>x?hd(x):'—';
+const fnum=x=>String(x).replace('.',',');
+/* Horas pagadas (Asistencias de Odoo): entrada de hoy (e), salida si ya ha terminado (s), horas de lunes a miércoles (wk) y del 1 y 2 de octubre (m0).
+   Horas reales (Movildata): lo que ve la tarjeta del tacógrafo cada día, como diferencia con Odoo (dv: 1, 2, 5, 6, 7 y 8 de octubre; 'x' = sin tarjeta). */
+const CDR=[
+ {e:6.7,wk:[10.1,10.8,9.2],m0:[9.5,8.8],dv:[-.05,.1,-.1,.05,0,.03],cam:[['4521 LKM',71],['7832 MHT',29]],km:2140,svc:17,g:23,vd:0,alta:'2019-03-04'},
+ {e:6.2,wk:[10.6,10.2,10.9],m0:[10.2,9.6],dv:[0,-.1,.05,-.05,.1,0],cam:[['1209 KZP',100]],km:2610,svc:21,g:23,vd:14,alta:'2016-09-12'},
+ {e:12,wk:[9.4,9.8,8.1],m0:[8.9,9.1],dv:[.1,0,-.1,0,.05,0],cam:[['5567 LRB',84],['8814 KYS',16]],km:1730,svc:14,g:23,vd:0,alta:'2021-02-01'},
+ {e:5.45,s:12.1,wk:[10.8,10.4,10.6],m0:[10.1,10.4],dv:[-.1,0,.1,-.05,0,.05],cam:[['5567 LRB',100]],km:2380,svc:19,g:23,vd:11,alta:'2014-05-19'},
+ {e:6.95,wk:[9.9,9.6,10.1],m0:[9.2,8.7],dv:[0,.05,-.1,.1,-.05,0],cam:[['8814 KYS',100]],km:2050,svc:18,g:23,vd:12,alta:'2018-11-05'},
+ {e:7.45,wk:[10.5,11.2,12.1],m0:[10.8,10.3],dv:[0,-.1,0,0,-2.17,.05],cam:[['6045 LTD',58],['3390 MBX',42]],km:2470,svc:16,g:23,vd:8,alta:'2017-06-26',por:'La salida de Odoo es más tarde de lo que el camión siguió trabajando.'},
+ {e:7.97,wk:[9,9.6,9.3],m0:[8.6,9],dv:[-3.1,0,-3.25,0,.1,'x'],cam:[['1209 KZP',55],['6045 LTD',45]],km:1590,svc:12,g:23,vd:3,alta:'2022-01-10',por:'Dos días metió la tarjeta tarde y hoy no la ha metido.'},
+ {e:11.7,wk:[9.7,9.1,9.8],m0:[9.4,8.9],dv:[.6,.55,.5,.7,.65,.6],cam:[['4521 LKM',100]],km:1880,svc:15,g:14.5,vd:3,alta:'2026-04-13',por:'Empieza a cargar unos 35 minutos antes de fichar.'}
+];
+/* Un chófer que hoy está de vacaciones: no sale en el resto del panel porque no ha abierto sesión */
+const AUS={n:'Raúl Molina',c:'1027',st:'Vacaciones',p:null,h:0,km:0,eco:null,segs:[],wk:[0,0,0]};
+const CDRA={e:null,wk:[0,0,0],m0:[0,0],dv:[0,0,0,0,0,0],cam:[['3390 MBX',100]],km:0,svc:0,g:23,vd:9,alta:'2015-03-02'};
+const GENTE=()=>[...DRV.map((d,i)=>({d,r:CDR[i],i})),{d:AUS,r:CDRA,i:8}];
+const hoyH=r=>r.e==null?0:Math.max(0,(r.s??NOW)-r.e);
+const extH=r=>diasOd(r).reduce((a,x)=>a+Math.max(0,x-8),0);
+const DIAS=['el jueves 1','el viernes 2','el lunes 5','el martes 6','el miércoles 7','hoy'];
+const PER={hoy:[5,6],sem:[2,6],mes:[0,6]},TOL=.25;
+const diasOd=r=>[...r.m0,...r.wk,hoyH(r)];
+const diasMv=r=>diasOd(r).map((h,k)=>r.dv[k]==='x'?0:Math.max(0,h+r.dv[k]));
+const suma=(xs,p)=>xs.slice(...PER[p]).reduce((a,b)=>a+b,0);
+const dif=(r,p)=>suma(diasOd(r),p)-suma(diasMv(r),p);
+const cuadra=(r,p)=>Math.abs(dif(r,p))<=TOL*Math.max(1,diasOd(r).slice(...PER[p]).filter(x=>x>0).length);
+const hmin=x=>{const m=Math.round(Math.abs(x)*60);return m<60?m+' min':hd(Math.abs(x))};
+const difCel=(r,p)=>{const d=dif(r,p),od=suma(diasOd(r),p);if(!od&&!suma(diasMv(r),p))return '—';
+  return cuadra(r,p)?`<span class="st ok">Cuadra</span>${Math.round(Math.abs(d)*60)?`<small>${d>0?'+':'−'}${hmin(d)}</small>`:''}`:`<span class="st wa">${d>0?'+':'−'}${hmin(d)}</span><small>${d>0?'Odoo paga más':'Odoo paga menos'}</small>`};
+/* Vacaciones y permisos (Ausencias de Odoo) */
+const MESES=['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
+const DD=s=>{const[y,m,d]=s.split('-').map(Number);return new Date(y,m-1,d)};
+const ISO=d=>d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate());
+const ndias=(a,b)=>Math.round((DD(b)-DD(a))/864e5)+1;
+const fdia=s=>{const d=DD(s);return d.getDate()+' '+MESES[d.getMonth()].slice(0,3)};
+const frng=(a,b)=>{if(a===b)return fdia(a);const A=DD(a),B=DD(b);return A.getMonth()===B.getMonth()?A.getDate()+'–'+fdia(b):fdia(a)+' – '+fdia(b)};
+const HOYS='2026-10-08',MAXF=2;
+const FEST={'2026-10-09':'Día de la Comunitat Valenciana','2026-10-12':'Fiesta Nacional','2026-11-01':'Todos los Santos','2026-12-08':'Inmaculada Concepción','2026-12-25':'Navidad'};
+const VAC0=()=>[
+ {i:0,t:'vac',d0:'2026-08-03',d1:'2026-08-11',st:'ok'},
+ {i:8,t:'vac',d0:'2026-10-01',d1:'2026-10-12',st:'ok'},
+ {i:6,t:'vac',d0:'2026-10-26',d1:'2026-10-30',st:'ok'},
+ {i:3,t:'vac',d0:'2026-11-16',d1:'2026-11-20',st:'ok'},
+ {i:5,t:'vac',d0:'2026-11-16',d1:'2026-11-22',st:'ok'},
+ {i:2,t:'vac',d0:'2026-12-21',d1:'2026-12-31',st:'ok'},
+ {i:1,t:'vac',d0:'2026-11-02',d1:'2026-11-06',st:'pend',pedida:'ayer 19:12'},
+ {i:4,t:'perm',mot:'Médico',d0:'2026-10-15',d1:'2026-10-15',st:'pend',pedida:'hoy 08:30'}
+];
+let VAC=VAC0();
+const pers=i=>i===8?AUS:DRV[i];
+const ficha=i=>i===8?CDRA:CDR[i];
+const nom1=i=>pers(i).n.split(' ')[0];
+const sumV=(i,st)=>VAC.filter(v=>v.i===i&&v.t==='vac'&&v.st===st).reduce((a,v)=>a+ndias(v.d0,v.d1),0);
+const usados=i=>ficha(i).vd+sumV(i,'ok');
+const pedidos=i=>sumV(i,'pend');
+const dispo=i=>ficha(i).g-usados(i)-pedidos(i);
+const finAnio=i=>{const a=ficha(i).alta;return a<'2026-01-01'?30:Math.round(30*ndias(a,'2026-12-31')/365*2)/2};
+const fueraDia=(s,ex)=>VAC.filter(v=>v.i!==ex&&v.st!=='ko'&&v.d0<=s&&s<=v.d1);
+const vEm=()=>{const v=VAC.find(x=>x.i===JI&&x.aviso);if(v)return `<em class="new">${v.st==='ok'?'Aprobadas':'Respondida'}</em>`;return VAC.some(x=>x.i===JI&&x.st==='pend')?'<em>Pedidas</em>':''};
+/* Tareas (Proyecto de Odoo) */
+const ET=['Salida hacia carga','En carga','Cargado','En descarga','Descargado'];
+const TAR0=(h=Math.max(1.5,nowH()))=>[
+ {id:'S2630112',i:0,emp:'TRANSARGI',r:["L'Alcora · Cerámica Saloni",'Puerto de Valencia · Terminal APM'],c:['07:30','10:30'],nota:'Muelle 4: entrar por la puerta de atrás y preguntar por Paco.',et:[6.9,7.6,8.3,10.3,10.8],pr:[]},
+ {id:'S2630118',i:0,emp:'TRANSARGI',r:['Vila-real · Azulejos Plana','Puerto de Valencia · Terminal APM'],c:['13:00','16:30'],nota:'Son 22 palets. Si al cargar cambia algo, corrige la orden desde aquí.',et:[h-1.2,h-.45,null,null,null],pr:[]},
+ {id:'S2630109',i:1,emp:'STINSA',r:['Almassora · Keraben','Puerto de Sagunto'],c:['06:30','09:00'],nota:'',et:[6.3,6.6,7.5,8.6,9.2],pr:[]},
+ {id:'S2630121',i:4,emp:'STINSA',r:['Onda · Pamesa','Valencia · Mercavalencia'],c:['08:00','12:00'],nota:'',et:[7.1,7.8,null,null,null],pr:[{t:'Retraso',x:'La carga no estará lista hasta las 12:30.',h:9.2,f:false,ok:false}]},
+ {id:'S2630115',i:5,emp:'TRANSARGI',r:['Puerto de Sevilla','Dos Hermanas · Plataforma'],c:['08:00','11:30'],nota:'',et:[7.6,8.1,9,10.4,null],pr:[{t:'Mercancía',x:'Dos palets con el film roto. Foto hecha antes de descargar.',h:10.5,f:true,ok:false}]},
+ {id:'S2630127',i:7,emp:'STINSA',r:['Castellón · Base','Nules · Grespania'],c:['12:30','14:00'],nota:'',et:[11.8,null,null,null,null],pr:[]}
+];
+let TAR=TAR0();
+const PED=[
+ {id:'S2630131',emp:'STINSA',r:['Onda · Pamesa','Puerto de Castellón'],c:['15:00','17:30'],nota:'18 palets. Lleva el EIR del contenedor.'},
+ {id:'S2630133',emp:'TRANSARGI',r:['Vila-real · Azulejos Plana','Puerto de Sagunto'],c:['15:30','18:00'],nota:'Cliente nuevo: avisa al llegar. El contacto está en la orden.'},
+ {id:'S2630136',emp:'STINSA',r:['Castellón · Base','Almassora · Keraben'],c:['16:00','17:00'],nota:'Recoger los palets vacíos.'}
+];
+const TPT=['Retraso','Avería','Mercancía','Cliente','Accidente','Documentación','Otro'];
+const tNext=t=>t.et.findIndex(x=>x==null);
+const tEstado=t=>{const n=tNext(t);return n<0?['ok','Terminada']:n===0?['rest','Sin empezar']:['pause',ET[n-1]]};
+const tOpen=t=>t.pr.filter(p=>!p.ok).length;
+const sitio=s=>s.split(' · ')[0];
+const ruta=t=>sitio(t.r[0])+' → '+sitio(t.r[1]);
+const tDots=t=>{const n=tNext(t);return `<span class="tq-dots">${t.et.map((x,k)=>`<i class="${x!=null?'d':k===n?'n':''}" title="${ET[k]}${x!=null?' · '+hm(x):''}"></i>`).join('')}</span>`};
+const libreP=()=>PED.findIndex(p=>!TAR.some(t=>t.id===p.id));
+
+/* Frontal del camión, dibujado con su color y su matrícula */
+function frente(p){const c=(PC[p]||['#3a4048'])[0];
+  return `<svg class="fr-svg" viewBox="0 0 160 128" aria-hidden="true"><rect width="160" height="128" fill="#2b2f36"/><rect y="98" width="160" height="30" fill="#3b4048"/><rect x="15" y="26" width="9" height="19" rx="2" fill="#15171b"/><rect x="136" y="26" width="9" height="19" rx="2" fill="#15171b"/><rect x="26" y="9" width="108" height="95" rx="10" fill="${c}"/><rect x="34" y="16" width="92" height="35" rx="5" fill="#9fb2c4"/><path d="M40 48 63 19h11L51 48z" fill="#d3dee8" opacity=".55"/><rect x="47" y="58" width="66" height="25" rx="3" fill="#16181c"/><path d="M51 64h58M51 70h58M51 76h58" stroke="#3d424a" stroke-width="2"/><rect x="31" y="61" width="13" height="8" rx="2" fill="#f4f1e2"/><rect x="116" y="61" width="13" height="8" rx="2" fill="#f4f1e2"/><rect x="24" y="86" width="112" height="14" rx="3" fill="#23262c"/><rect x="54" y="88.4" width="52" height="9.6" rx="1.2" fill="#fff" stroke="#111" stroke-width=".8"/><rect x="54" y="88.4" width="5.2" height="9.6" fill="#0b3fa8"/><text x="82.6" y="95.9" text-anchor="middle" font-family="Mulish,sans-serif" font-weight="800" font-size="6.7" letter-spacing=".3" fill="#111">${p}</text><rect x="30" y="100" width="15" height="20" rx="2" fill="#0d0e10"/><rect x="115" y="100" width="15" height="20" rx="2" fill="#0d0e10"/></svg>`;
+}
+
+/* ---------- Móvil del chófer ---------- */
+function rFrontal(s){const f=s.fr||{p:curPlate(s)||'4521 LKM',st:0},ch=s.mode==='change',step=ch?'':`<span class="a-step">Paso 3/3</span>`;
+  if(f.st<2)return `<div class="a-top">${step}<div class="a-top-t"><b>Foto del frontal</b><small>${f.p} · que se vea la matrícula</small></div></div>
+  <div class="a-cam fr-cam"><div class="a-cam-fr">${frente(f.p)}${f.st===1?'<div class="ln"></div>':''}</div><span>${f.st===1?'Leyendo la matrícula…':'Encuadra el frente del camión'}</span><small>${f.st===1?'Se compara con el camión que has confirmado':'Con la matrícula dentro del recuadro'}</small>
+    <button class="fr-shot" data-act="frshot" data-v="frshot" aria-label="Hacer la foto" ${f.st===1?'disabled':''}><i></i></button>${f.st===0?'<button class="fr-skip" data-act="frskip" data-v="frskip">Ahora no puedo</button>':''}</div>`;
+  return `<div class="a-top">${step}<div class="a-top-t"><b>Foto guardada</b><small>${f.p} · ${s.clock}</small></div></div>
+  <div class="a-body"><div class="fr-ph">${frente(f.p)}</div>
+    <div class="a-okline" data-v="frcheck">${I.check}<span>Matrícula leída: <b>${f.p}</b>. Coincide con tu camión.</span></div>
+    <div class="a-info">${I.shield}<span>La foto queda en tu tramo con este camión: dice qué camión cogiste y cómo estaba (golpes, luces, cristales).</span></div>
+    ${ch?'':`<div class="a-info">${I.clock}<span>Al empezar se apunta tu hora de entrada. Es tu <b>registro horario</b> y se guarda en Odoo.</span></div>`}</div>
+  <div class="a-foot"><button class="a-btn" data-act="frok" data-v="frok">${I.check}${ch?'Seguir con '+f.p:'Empezar la jornada'}</button><button class="a-btn ghost" data-act="frretry" data-v="frretry">Repetir la foto</button></div>`;
+}
+function rVac(s){const i=JI,m=s.vm??9,t=s.vt||'vac',v0=s.v0,v1=s.v1||s.v0;
+  const g=ficha(i).g,us=usados(i),pe=pedidos(i),dp=dispo(i),mine=VAC.filter(v=>v.i===i&&v.st!=='ko');
+  const nd=new Date(2026,m+1,0).getDate(),off=(new Date(2026,m,1).getDay()+6)%7;
+  let cells='LMXJVSD'.split('').map(x=>`<small>${x}</small>`).join('')+'<span></span>'.repeat(off);
+  for(let d=1;d<=nd;d++){const dt=new Date(2026,m,d),iso=ISO(dt),past=iso<=HOYS,fe=FEST[iso],own=mine.find(v=>v.d0<=iso&&iso<=v.d1),full=!own&&!past&&fueraDia(iso,i).filter(v=>v.st==='ok').length>=MAXF,sel=v0&&iso>=v0&&iso<=v1;
+    cells+=`<button class="vc-d${past?' past':''}${dt.getDay()%6===0?' fds':''}${fe?' fe':''}${own?(own.st==='ok'?' ok':' pd'):''}${full?' full':''}${sel?' sel':''}${iso===v0?' s0':''}${iso===v1?' s1':''}" data-act="vday" data-d="${iso}" data-v="vday-${iso}" ${past||own?'disabled':''} title="${fe||(full?'Ya hay '+MAXF+' compañeros fuera':'')}">${d}</button>`}
+  let sum='',ok=false;
+  if(v0){const n=ndias(v0,v1),clash=mine.some(v=>v.d0<=v1&&v0<=v.d1),queda=dp-(t==='vac'?n:0);let llenos=0;
+    for(let d=DD(v0);ISO(d)<=v1;d.setDate(d.getDate()+1))if(fueraDia(ISO(d),i).filter(v=>v.st==='ok').length>=MAXF)llenos++;
+    sum=`<div class="vc-sum" data-v="vsum"><b>${frng(v0,v1)}</b><span>${n} ${n>1?'días naturales':'día'}${t==='vac'?' · te quedarán '+fnum(queda):' · no descuenta vacaciones'}</span></div>`;
+    if(clash)sum+=`<div class="a-warn" style="margin-top:8px">${I.alert}<span>Ya tienes pedidos o aprobados algunos de esos días.</span></div>`;
+    else if(queda<0)sum+=`<div class="a-warn" style="margin-top:8px">${I.alert}<span>Solo te quedan ${fnum(dp)} días. Elige menos.</span></div>`;
+    else{ok=true;if(llenos)sum+=`<div class="a-warn" style="margin-top:8px">${I.alert}<span>${llenos>1?'En '+llenos+' de esos días':'Ese día'} ya hay ${MAXF} compañeros fuera: tráfico puede proponerte otras fechas.</span></div>`}}
+  const req=[...mine].sort((a,b)=>b.d0<a.d0?-1:1).map(v=>{const n=ndias(v.d0,v.d1);return `<div class="vc-req"><div><b>${frng(v.d0,v.d1)}</b><small>${v.t==='vac'?'Vacaciones':'Permiso · '+v.mot} · ${n} ${n>1?'días':'día'}</small></div><span class="st ${v.st==='ok'?'ok':'wa'}">${v.st==='ok'?'Aprobada':'Pendiente'}</span></div>`}).join('')+VAC.filter(v=>v.i===i&&v.st==='ko').map(v=>`<div class="vc-req"><div><b>${frng(v.d0,v.d1)}</b><small>Tráfico te escribirá para buscar otras fechas</small></div><span class="st bad">No aprobada</span></div>`).join('');
+  return `<div class="a-top"><button class="a-icon" data-act="vback" data-v="vback" aria-label="Volver">${I.back}</button><div class="a-top-t"><b>Mis vacaciones</b><small>Según tu tiempo trabajado · datos de Odoo</small></div></div>
+  <div class="a-body">
+    <div class="vc-saldo" data-v="vsaldo"><small>Vacaciones 2026</small><div class="vc-big"><b>${fnum(dp)}</b><span>${dp===1?'día te queda':'días te quedan'}</span></div>
+      <div class="vc-bar"><i class="u" style="width:${us/g*100}%"></i><i class="p" style="width:${pe/g*100}%"></i><i class="d" style="width:${Math.max(dp,0)/g*100}%"></i></div>
+      <div class="vc-leg"><span><i class="u"></i>Usados o aprobados ${us}</span><span><i class="p"></i>Pedidos ${pe}</span><span><i class="d"></i>Libres ${fnum(dp)}</span></div>
+      <p>Cada mes trabajado suma 2,5 días. Llevas <b>${fnum(g)}</b> este año y a 31 de diciembre serán <b>${fnum(finAnio(i))}</b>.</p></div>
+    <div class="a-chips a-tchips" style="margin-top:12px">${[['vac','Vacaciones'],['perm','Permiso']].map(x=>`<button class="a-chip ${t===x[0]?'sel':''}" data-act="vtipo" data-k="${x[0]}" data-v="vtipo-${x[0]}">${x[1]}</button>`).join('')}</div>
+    ${t==='perm'?`<div class="a-chips a-tchips" style="margin-top:6px">${['Médico','Boda','Mudanza','Familiar','Otro'].map(x=>`<button class="a-chip ${(s.vmot||'Médico')===x?'sel':''}" data-act="vmot" data-k="${x}">${x}</button>`).join('')}</div>`:''}
+    <div class="vc-cal"><div class="vc-mh"><button data-act="vmes" data-k="-1" data-v="vmes-prev" aria-label="Mes anterior" ${m<=9?'disabled':''}>${I.back}</button><b>${MESES[m]} 2026</b><button data-act="vmes" data-k="1" data-v="vmes-next" aria-label="Mes siguiente" ${m>=11?'disabled':''}>${I.chev}</button></div>
+      <div class="vc-g">${cells}</div>
+      <div class="vc-lg"><span><i style="background:var(--ink)"></i>Elegidos</span><span><i style="background:#f6c46b"></i>Pedidos</span><span><i style="background:#209C8F"></i>Aprobados</span><span><i style="background:#e8930c;height:3px;vertical-align:2px"></i>Ya hay ${MAXF} fuera</span><span style="color:#c0262c">Festivo</span></div></div>
+    ${sum||`<div class="a-info">${I.info}<span>Pulsa el primer día y el último. Para un solo día, púlsalo una vez.</span></div>`}
+    ${req?`<div class="a-sec">Mis solicitudes</div>${req}`:''}
+  </div>
+  <div class="a-foot"><button class="a-btn" data-act="vpedir" data-v="vpedir" ${ok?'':'disabled'}>${ok?I.check+(t==='vac'?'Pedir '+ndias(v0,v1)+(ndias(v0,v1)>1?' días':' día'):'Pedir el permiso'):'Elige los días en el calendario'}</button></div>`;
+}
+const taNow=()=>{const t=TAR.find(x=>x.i===JI&&tNext(x)>=0);if(!t)return '';const n=tNext(t);
+  return `<button class="ta-now" data-act="tarea" data-k="${t.id}" data-v="tarea-now"><span class="ta-ic">${I.task}</span><span class="ta-tx"><small>${n?'Tarea en curso':'Siguiente tarea'} · ${t.id}</small><b>${ruta(t)}</b>${tDots(t)}<small>Siguiente: <b style="display:inline;font-size:10.5px">${ET[n]}</b></small></span>${I.chev}</button>`};
+function rTareas(s){const L=TAR.filter(t=>t.i===JI);
+  return `<div class="a-top"><button class="a-icon" data-act="tadash" data-v="tadash" aria-label="Volver">${I.back}</button><div class="a-top-t"><b>Mis tareas</b><small>Las manda tráfico · hoy, jueves 8</small></div></div>
+  <div class="a-body">${L.map(t=>{const[c,e]=tEstado(t);return `<button class="ta-card${tNext(t)<0?' done':''}" data-act="tarea" data-k="${t.id}" data-v="tarea-${t.id}"><span class="ta-h"><b>${t.id}</b>${t.nueva?'<em>Nueva</em>':''}<span class="st ${c}">${e}</span></span><span class="ta-r"><i>Carga</i>${sitio(t.r[0])} · ${t.c[0]}</span><span class="ta-r"><i>Descarga</i>${sitio(t.r[1])} · ${t.c[1]}</span>${tDots(t)}${tOpen(t)?`<span class="ta-pr">${I.alert}${tOpen(t)} problema sin resolver</span>`:''}</button>`}).join('')}
+    <div class="a-info">${I.info}<span>Vienen de Odoo. Lo que marcas aquí lo ve tráfico al momento y queda en la tarea.</span></div></div>`;
+}
+function rTarea(s){const t=TAR.find(x=>x.id===s.ta)||TAR.find(x=>x.i===JI),n=tNext(t);
+  const st=t.et.map((x,k)=>`<div class="ta-st ${x!=null?'d':k===n?'n':''}"><span class="ta-c">${x!=null?I.check:k+1}</span><b>${ET[k]}</b><small>${x!=null?hm(x):k===n?'Siguiente':''}</small></div>`).join('');
+  return `<div class="a-top"><button class="a-icon" data-act="tareas" data-v="talist" aria-label="Volver">${I.back}</button><div class="a-top-t"><b>${t.id}</b><small>${t.emp} · ${ruta(t)}</small></div></div>
+  <div class="a-body">
+    <div class="a-card" style="margin-top:0"><div class="ta-lg"><span><i>Carga</i><b>${t.r[0]}</b><small>Cita a las ${t.c[0]}</small></span><span><i>Descarga</i><b>${t.r[1]}</b><small>Cita a las ${t.c[1]}</small></span></div></div>
+    ${t.nota?`<div class="a-fuel"><div class="fh">${I.msg}<b>Nota de tráfico</b></div><p>${mEsc(t.nota)}</p></div>`:''}
+    <div class="a-sec">Etapas</div><div class="a-card" style="margin-top:0" data-v="tsteps">${st}</div>
+    ${n>=0?`<button class="a-deca" data-act="deca" data-v="tdeca">${I.file}<span><b>¿Ha cambiado la carga?</b><small>Corrige la orden ${t.id} con DECA</small></span>${I.chev}</button>`:''}
+    ${t.pr.length?`<div class="a-sec">Problemas</div>${t.pr.map(p=>`<div class="ta-pb ${p.ok?'ok':''}"><b>${p.t}</b><span>${mEsc(p.x)}</span><small>${hm(p.h)}${p.f?' · con foto':''} · ${p.ok?'Resuelto por tráfico':'Enviado a tráfico'}</small></div>`).join('')}`:''}
+  </div>
+  <div class="a-foot">${n>=0?`<button class="a-btn" data-act="tstage" data-v="tstage">${I.check}Marcar: ${ET[n]}</button>`:`<div class="a-okline">${I.check}<span>Tarea terminada a las ${hm(t.et[4])}</span></div>`}<button class="a-btn ghost" data-act="tprob" data-v="tprob">Registrar un problema</button></div>`;
+}
+function rTProb(s){const p=s.tp||{},t=TAR.find(x=>x.id===s.ta)||TAR[0];
+  return `<div class="a-top"><button class="a-icon" data-act="tarea" data-k="${t.id}" data-v="tpback" aria-label="Volver">${I.back}</button><div class="a-top-t"><b>Un problema</b><small>${t.id} · llega a tráfico al momento</small></div></div>
+  <div class="a-body"><div class="a-q">¿Qué ha pasado?</div>
+    <div class="a-chips a-tchips">${TPT.map(x=>`<button class="a-chip ${p.t===x?'sel':''}" data-act="tptipo" data-k="${x}" data-v="tptipo-${x}">${x}</button>`).join('')}</div>
+    <div class="a-sec">Cuéntalo</div>
+    <div class="n-new"><textarea data-tdraft rows="3" placeholder="Por ejemplo: la carga no estará lista hasta las 15:00" aria-label="Qué ha pasado">${mEsc(p.x||'')}</textarea><div class="n-act"><button data-act="tpex">Ejemplo</button></div></div>
+    <button class="a-photo ${p.f?'on':''}" data-act="tpfoto" data-v="tpfoto">${p.f?I.check+'<span><b>problema.jpg</b><small>Foto añadida</small></span>':I.cam+'<span><b>Hacer una foto</b><small>Opcional · ayuda a tráfico a entenderlo</small></span>'}</button>
+    <div class="a-info">${I.info}<span>Queda en la tarea de Odoo con tu nombre, la hora y dónde estabas.</span></div></div>
+  <div class="a-foot"><button class="a-btn" data-act="tpsend" data-v="tpsend" ${p.t?'':'disabled'}>${p.t?I.check+'Enviar a tráfico':'Elige qué ha pasado'}</button></div>`;
+}
+const noAviso=()=>['login','detect','plate','frontal'].includes(D.screen);
+function dAct2(a,b){
+  if(a==='frshot'){D.fr.st=1;dRender();setTimeout(()=>{if(D.screen==='frontal'&&D.fr.st===1){D.fr.st=2;dRender()}},1500);return 2}
+  if(a==='frretry'){D.fr.st=0;return 1}
+  if(a==='frok'||a==='frskip'){const p=D.fr.p,t=D.segs[D.segs.length-1][0],ok=a==='frok';D.screen='dash';if(ok)done.frontal=1;
+    dToast(D.mode==='start'?(ok?'Jornada iniciada a las '+hm(t)+' · entrada guardada en Odoo':'Jornada iniciada con '+p+' · falta la foto del frontal'):(ok?'Cambio a '+p+' registrado a las '+hm(t):'Cambio registrado · falta la foto del frontal'));return 1}
+  if(a==='vac'){D.screen='vac';VAC.forEach(v=>{if(v.i===JI)v.aviso=0});return 1}
+  if(a==='vback'||a==='tadash'){D.screen='dash';return 1}
+  if(a==='vmes'){D.vm=Math.max(9,Math.min(11,(D.vm??9)+Number(b.dataset.k)));return 1}
+  if(a==='vtipo'){D.vt=b.dataset.k;return 1}
+  if(a==='vmot'){D.vmot=b.dataset.k;return 1}
+  if(a==='vday'){const d=b.dataset.d;if(!D.v0||D.v1){D.v0=d;D.v1=null}else if(d===D.v0)D.v0=null;else if(d<D.v0){D.v1=D.v0;D.v0=d}else D.v1=d;return 1}
+  if(a==='vpedir'){const d0=D.v0,d1=D.v1||D.v0,perm=D.vt==='perm';VAC.push({i:JI,t:perm?'perm':'vac',mot:perm?(D.vmot||'Médico'):null,d0,d1,st:'pend',pedida:'hoy '+hm(nowH())});D.v0=D.v1=null;done.vac=1;dToast('Solicitud enviada a tráfico · '+frng(d0,d1));aRender();return 1}
+  if(a==='tareas'){D.screen='tareas';return 1}
+  if(a==='tarea'){D.screen='tarea';D.ta=b.dataset.k;const t=TAR.find(x=>x.id===D.ta);if(t&&t.nueva){t.nueva=0;aRender()}return 1}
+  if(a==='tstage'){const t=TAR.find(x=>x.id===D.ta),n=tNext(t);t.et[n]=nowH();done.tarea=1;dToast(n===4?'Tarea '+t.id+' terminada · tráfico ya lo ve':ET[n]+' a las '+hm(t.et[n])+' · lo ve tráfico');aRender();return 1}
+  if(a==='tprob'){D.screen='tprob';D.tp={t:null,x:'',f:false};return 1}
+  if(a==='tptipo'){D.tp.t=b.dataset.k;return 1}
+  if(a==='tpex'){D.tp.x='La carga no estará lista hasta las 15:00. Espero en el aparcamiento.';if(!D.tp.t)D.tp.t='Retraso';return 1}
+  if(a==='tpfoto'){D.tp.f=!D.tp.f;return 1}
+  if(a==='tpsend'){const t=TAR.find(x=>x.id===D.ta);t.pr.push({t:D.tp.t,x:D.tp.x.trim()||D.tp.t,h:nowH(),f:D.tp.f,ok:false});D.screen='tarea';done.tarea=1;dToast('Problema enviado a tráfico');aRender();return 1}
+  return 0;
+}
+
+/* ---------- Panel: Conductores ---------- */
+function aCond(s){const f=s.cf||'all',p=s.cp||'mes';
+  const P=GENTE().map(o=>({...o,mv:suma(diasMv(o.r),p),od:suma(diasOd(o.r),p),ok:cuadra(o.r,p),fuera:VAC.find(v=>v.i===o.i&&v.st==='ok'&&v.d0<=HOYS&&HOYS<=v.d1)}));
+  const L=P.filter(o=>f==='all'||(!o.ok&&o.od+o.mv>0));
+  const tMv=P.reduce((a,o)=>a+suma(diasMv(o.r),'mes'),0),tOd=P.reduce((a,o)=>a+suma(diasOd(o.r),'mes'),0),tD=tOd-tMv;
+  const malM=P.filter(o=>!cuadra(o.r,'mes'));
+  const rows=L.map(o=>{const d=o.d,r=o.r,cls=o.fuera?'vac':stc(d.st),est=o.fuera?'Vacaciones hasta el '+fdia(o.fuera.d1):d.st+(d.p?' · '+d.p:''),vp=pedidos(o.i);
+    const cam=r.cam.length?lp(r.cam[0][0])+(r.cam.length>1?`<span class="cd-more" title="${r.cam.map(c=>c[0]+': '+c[1]+' %').join(' · ')}">+${r.cam.length-1}</span>`:''):'—';
+    return `<tr class="click" data-act="cdrv" data-i="${o.i}" data-v="cdrv-${o.i}"><td><span class="who"><span class="av lt">${ini(d.n)}</span><span class="cd-n">${d.n}<small><i class="cd-dot ${cls}"></i>${est}</small></span></span></td><td><b>${hs(o.mv)}</b></td><td>${hs(o.od)}</td><td>${difCel(r,p)}</td><td>${cam}</td><td>${r.km?th(r.km):'—'}</td><td>${r.svc||'—'}</td><td><b>${fnum(dispo(o.i))}</b> días${vp?`<small>${vp} pedidos</small>`:''}</td></tr>`}).join('')||'<tr><td colspan="8" class="cd-empty">Todas las horas cuadran.</td></tr>';
+  const mx=Math.max(...P.map(o=>Math.max(suma(diasMv(o.r),'mes'),suma(diasOd(o.r),'mes'))));
+  const bars=P.filter(o=>suma(diasOd(o.r),'mes')).map(o=>{const a=suma(diasMv(o.r),'mes'),b=suma(diasOd(o.r),'mes');return `<div class="cd-bar cd-bar2"><span>${o.d.n.split(' ')[0]}</span><div><i class="mv" style="width:${a/mx*100}%"></i><i class="od" style="width:${b/mx*100}%"></i></div><b class="${cuadra(o.r,'mes')?'':'cd-warn'}">${Math.round(Math.abs(b-a)*60)?(b>=a?'+':'−')+hmin(b-a):'Igual'}</b></div>`}).join('');
+  const peor=r=>{const a=diasOd(r),b=diasMv(r);let k=0;a.forEach((x,j)=>{if(Math.abs(x-b[j])>Math.abs(a[k]-b[k]))k=j});return [k,a[k]-b[k]]};
+  const rev=malM.map(o=>{const d=dif(o.r,'mes'),[k,dk]=peor(o.r);return [I.clock,`<b>${o.d.n}</b>: ${d>0?'Odoo paga '+hmin(d)+' más de lo que ve Movildata':'Movildata ve '+hmin(d)+' más de lo que se paga en Odoo'} este mes. El día con más diferencia, ${DIAS[k]}: ${hmin(dk)}. ${o.r.por||''}`]});
+  const conA=DRV[1].wk.reduce((a,b)=>a+b,0)+DRV[1].h,top=[...P].sort((a,b)=>extH(b.r)-extH(a.r))[0];
+  rev.push([I.truck,`<b>Andrés Gil</b>: ${hd(conA)} conduciendo esta semana; le quedan ${hd(56-conA)} hasta el límite de 56 h.`],[I.coin,`<b>${top.d.n}</b>: ${hd(extH(top.r))} pagadas por encima de 8 h al día este mes.`]);
+  return adHeadO('Conductores','Horas reales de Movildata frente a las que se pagan en Odoo · jueves 8 de octubre · 13:20',`<button class="sbtn" data-act="toast" data-msg="Comparación de octubre exportada en Excel: día a día, Movildata y Odoo">${I.down}Exportar</button>`)+
+  `<div class="kpis">
+    <div class="kpi"><small>Horas reales del mes</small><b>${Math.round(tMv)} h</b><span>Movildata · tarjeta del tacógrafo</span></div>
+    <div class="kpi"><small>Horas pagadas del mes</small><b>${Math.round(tOd)} h</b><span>Asistencias de Odoo</span></div>
+    <div class="kpi"><small>Diferencia</small><b>${tD>=0?'+':'−'}${Math.round(Math.abs(tD))} h</b><span>${tD>=0?'Odoo paga más de lo que ve Movildata':'Odoo paga menos de lo que ve Movildata'}</span></div>
+    <button class="kpi ${malM.length?'w':''}" data-act="cf" data-f="rev" data-v="kpi-rev"><small>Chóferes a revisar</small><b>${malM.length}</b><span>Más de 15 min de diferencia por día</span></button>
+  </div>
+  <div class="ad-card" style="margin-top:10px"><h5>Por chófer <span class="cd-segs"><span class="seg" style="margin:0">${[['hoy','Hoy'],['sem','Semana'],['mes','Mes']].map(x=>`<button class="${p===x[0]?'on':''}" data-act="cp" data-p="${x[0]}" data-v="cp-${x[0]}">${x[1]}</button>`).join('')}</span><span class="seg" style="margin:0">${[['all','Todos'],['rev','A revisar']].map(x=>`<button class="${f===x[0]?'on':''}" data-act="cf" data-f="${x[0]}" data-v="cf-${x[0]}">${x[1]}</button>`).join('')}</span></span></h5>
+    <table class="tb cd"><thead><tr><th>Chófer</th><th>Reales<small>Movildata</small></th><th>Pagadas<small>Odoo</small></th><th>Diferencia</th><th>Camiones</th><th>Km mes</th><th>Servicios</th><th>Vacaciones</th></tr></thead><tbody>${rows}</tbody></table>
+    <p class="cd-foot">Reales: lo que ve la tarjeta del tacógrafo en Movildata (conducción, otros trabajos y disponibilidad; los descansos no cuentan). Pagadas: Asistencias de Odoo. Cuadra si se separan 15 min o menos por día trabajado. Pulsa un chófer para ver su ficha día a día.</p></div>
+  <div class="cd-g2"><div class="ad-card"><h5>Reales frente a pagadas <span>Del 1 al 8 de octubre</span></h5><div class="cd-bars">${bars}</div><div class="cd-leg"><span><i style="background:#3d434b"></i>Reales (Movildata)</span><span><i style="background:#5b8fd0"></i>Pagadas (Odoo)</span></div></div>
+    <div class="ad-card"><h5>Para revisar</h5><div class="cd-rev">${rev.map(x=>`<div>${x[0]}<span>${x[1]}</span></div>`).join('')}</div></div></div>`;
+}
+function aConductor(d,s){
+  const i=DRV.indexOf(d),r=CDR[i],from=s&&s.from==='cond';
   const tl=d.segs.map(g=>{const f=fleet(g[2]);return `<tr><td>${lp(g[2])}</td><td>${f.m}</td><td>${hm(g[0])}</td><td>${g[1]==null?'<span class="st ok">En curso</span>':hm(g[1])}</td><td>${hd((g[1]??NOW)-g[0])}</td></tr>`}).join('')||'<tr><td colspan="5" style="color:#c0262c;font-weight:600">Sin asignaciones hoy</td></tr>';
   const wk=[...d.wk,d.h,0],tot=wk.reduce((a,b)=>a+b,0);
-  return `<button class="ad-back" data-act="back">${I.back}Volver al resumen</button>
-  <div class="dt-head"><span class="av xl">${ini(d.n)}</span><div><h4>${d.n}</h4><small>Código ${d.c} · <span class="st ${stc(d.st)}">${d.st}</span></small></div><button class="sbtn" data-act="toast" data-msg="Informe del conductor exportado (demo)">${I.down}Exportar</button></div>
-  <div class="kpis"><div class="kpi"><small>Conducción hoy</small><b>${hd(d.h)}</b><span>de 9 h máximo</span></div><div class="kpi"><small>Km hoy</small><b>${d.km}</b><span>Atribuidos por franja</span></div><div class="kpi"><small>Nota de conducción</small><b>${d.eco==null?'—':(d.eco/10).toFixed(1).replace('.',',')}</b><span>De 0 a 10 · semana actual</span></div><div class="kpi"><small>Horas semana</small><b>${tot.toFixed(1).replace('.',',')} h</b><span>Límite semanal 56 h</span></div></div>
+  const od=diasOd(r),mv=diasMv(r),ent=[r.e-.05,r.e+.1,r.e-.1,r.e],reg=['Lun 5','Mar 6','Mié 7','Jue 8'].map((n,k)=>{const j=k+2,sal=k<3||r.s!=null?ent[k]+od[j]:null,dd=od[j]-mv[j],ok=Math.abs(dd)<=TOL;
+    return `<tr><td>${n}</td><td>${hm(ent[k])} – ${sal==null?'ahora':hm(sal)}</td><td>${hd(od[j])}</td><td>${r.dv[j]==='x'?'<span class="cd-warn">Sin tarjeta</span>':hd(mv[j])}</td><td>${ok?'<span class="cd-okt">Cuadra</span>':`<span class="cd-warn">${dd>0?'+':'−'}${hmin(dd)}</span>`}</td></tr>`}).join('');
+  const kp=(t,p)=>{const a=suma(mv,p),b=suma(od,p);return `<div class="kpi"><small>${t} · reales</small><b>${hs(a)}</b><span>Odoo: ${hs(b)} · ${cuadra(r,p)?'cuadra':(b>a?'+':'−')+hmin(b-a)}</span></div>`};
+  const cams=r.cam.map(c=>`<div class="cd-bar"><span>${lp(c[0])}</span><div><i class="o" style="width:${c[1]}%"></i></div><b>${c[1]} %</b></div>`).join('');
+  const fotos=d.segs.map(g=>`<div class="cd-ph">${frente(g[2])}<div><b>${g[2]}</b><small>Foto a las ${hm(g[0]-.02)}</small><small class="cd-ok">Matrícula leída: coincide</small></div></div>`).join('')||`<p class="cd-empty">Hoy no ha cogido camión: no hay foto.</p>`;
+  const tars=TAR.filter(t=>t.i===i).map(t=>{const[c,e]=tEstado(t);return `<div class="cd-ph"><div style="flex:1"><b>${t.id} · ${ruta(t)}</b>${tDots(t)}<small>${e}${tOpen(t)?' · <span class="cd-warn">problema sin resolver</span>':''}</small></div></div>`}).join('')||'<p class="cd-empty">Sin tareas hoy.</p>';
+  const vs=VAC.filter(v=>v.i===i&&v.st!=='ko'&&v.d1>=HOYS).map(v=>`<div class="cd-ph"><div><b>${frng(v.d0,v.d1)}</b><small>${v.t==='vac'?'Vacaciones':'Permiso · '+v.mot} · ${v.st==='ok'?'aprobada':'por aprobar'}</small></div></div>`).join('');
+  return `<button class="ad-back" data-act="back">${I.back}${from?'Volver a conductores':'Volver al resumen'}</button>
+  <div class="dt-head"><span class="av xl">${ini(d.n)}</span><div><h4>${d.n}</h4><small>Código ${d.c} · <span class="st ${stc(d.st)}">${d.st}</span> · en la empresa desde ${fdate(r.alta)}</small></div><button class="sbtn" data-act="toast" data-msg="Informe del conductor exportado (demo)">${I.down}Exportar</button></div>
+  <div class="kpis"><div class="kpi"><small>Conducción hoy</small><b>${hd(d.h)}</b><span>Semana: ${fnum(tot.toFixed(1))} de 56 h</span></div>${kp('Hoy','hoy')}${kp('Semana','sem')}${kp('Mes','mes')}</div>
   <div class="ad-row"><div class="ad-card"><h5>Tramos de hoy</h5><table class="tb"><thead><tr><th>Matrícula</th><th>Vehículo</th><th>Inicio</th><th>Fin</th><th>Duración</th></tr></thead><tbody>${tl}</tbody></table></div>
-  <div class="ad-card"><h5>Semana</h5><div class="wk">${wk.map((v,i)=>`<div class="${i===3?'on':''}" style="height:${Math.max(v/10*100,3)}%">${v?`<em>${v.toFixed(1).replace('.',',')}</em>`:''}<span>${'LMXJV'[i]}</span></div>`).join('')}</div></div></div>`;
+  <div class="ad-card"><h5>Conducción de la semana</h5><div class="wk">${wk.map((v,k)=>`<div class="${k===3?'on':''}" style="height:${Math.max(v/10*100,3)}%">${v?`<em>${v.toFixed(1).replace('.',',')}</em>`:''}<span>${'LMXJV'[k]}</span></div>`).join('')}</div></div></div>
+  <div class="cd-g2"><div class="ad-card"><h5>Horas de la semana <span>Odoo frente a Movildata</span></h5><table class="tb cd"><thead><tr><th>Día</th><th>Fichaje en Odoo</th><th>Pagadas</th><th>Reales</th><th></th></tr></thead><tbody>${reg}</tbody></table>${r.por&&!cuadra(r,'mes')?`<p class="cd-foot cd-warn">${r.por}</p>`:''}</div>
+    <div class="ad-card"><h5>Este mes <span>Del 1 al 8 de octubre</span></h5><div class="cd-mini"><div><small>Km</small><b>${th(r.km)}</b></div><div><small>Servicios</small><b>${r.svc}</b></div><div><small>Nota</small><b>${d.eco==null?'—':(d.eco/10).toFixed(1).replace('.',',')}</b></div><div><small>Extra pagadas</small><b>${extH(r)?Math.round(extH(r))+' h':'—'}</b></div></div><div class="cd-bars">${cams}</div><p class="cd-foot">Reparto del tiempo por camión, según su tarjeta del tacógrafo.</p></div></div>
+  <div class="cd-g3"><div class="ad-card"><h5>Foto del frontal <span>Hoy</span></h5>${fotos}</div><div class="ad-card"><h5>Tareas <span>Hoy</span></h5>${tars}</div><div class="ad-card"><h5>Vacaciones <span>${fnum(dispo(i))} libres de ${fnum(r.g)}</span></h5>${vs||'<p class="cd-empty">Nada pedido ni aprobado de aquí a final de año.</p>'}</div></div>`;
+}
+
+/* ---------- Panel: Ausencias ---------- */
+function aAus(s){const m=s.am??9,nd=new Date(2026,m+1,0).getDate(),P=GENTE(),pend=VAC.map((v,k)=>({v,k})).filter(x=>x.v.st==='pend');
+  const outHoy=VAC.filter(v=>v.st==='ok'&&v.d0<=HOYS&&HOYS<=v.d1),sinPedir=P.reduce((a,o)=>a+Math.max(0,dispo(o.i)),0);
+  const prow=pend.map(({v,k})=>{const n=ndias(v.d0,v.d1),coin=[...new Set(VAC.filter(x=>x!==v&&x.st!=='ko'&&x.d0<=v.d1&&v.d0<=x.d1).map(x=>x.i))];let mx=0;
+    for(let d=DD(v.d0);ISO(d)<=v.d1;d.setDate(d.getDate()+1))mx=Math.max(mx,fueraDia(ISO(d),v.i).filter(x=>x.st==='ok').length);
+    const warn=mx+1>MAXF;
+    return `<tr><td><span class="who"><span class="av lt">${ini(pers(v.i).n)}</span>${pers(v.i).n}</span></td><td>${v.t==='vac'?'Vacaciones':'Permiso · '+v.mot}<small>Pedida ${v.pedida||''}</small></td><td><b>${frng(v.d0,v.d1)}</b><small>${n} ${n>1?'días':'día'}</small></td><td>${v.t==='vac'?fnum(dispo(v.i))+' días<small>libres después</small>':'—<small>No descuenta</small>'}</td><td>${coin.length?`<span class="${warn?'cd-warn':''}">${joinY(coin.map(nom1))}${warn?' · pasaría de '+MAXF+' fuera':''}</span>`:'<span class="cd-okt">Nadie más fuera</span>'}</td><td style="text-align:right;white-space:nowrap"><button class="sbtn rd" data-act="vacko" data-k="${k}">Rechazar</button> <button class="sbtn y" data-act="vacok" data-k="${k}" data-v="vacok-${k}">${I.check}Aprobar</button></td></tr>`}).join('')||'<tr><td colspan="6" class="cd-empty">No hay solicitudes pendientes.</td></tr>';
+  const D31=[...Array(31)].map((_,k)=>k+1);
+  const hdr=`<div class="au-n"></div>`+D31.map(d=>{if(d>nd)return '<i></i>';const dt=new Date(2026,m,d),iso=ISO(dt);return `<i class="h${dt.getDay()%6===0?' we':''}${FEST[iso]?' fe':''}${iso===HOYS?' hoy':''}" title="${FEST[iso]||''}">${'DLMXJVS'[dt.getDay()]}<b>${d}</b></i>`}).join('');
+  const filas=P.map(o=>`<div class="au-n"><span class="av lt">${ini(o.d.n)}</span>${o.d.n.split(' ')[0]}</div>`+D31.map(d=>{if(d>nd)return '<i></i>';const dt=new Date(2026,m,d),iso=ISO(dt),v=VAC.find(x=>x.i===o.i&&x.st!=='ko'&&x.d0<=iso&&iso<=x.d1);return `<i class="${dt.getDay()%6===0?'we':''}${v?' '+(v.st==='pend'?'pd':v.t==='vac'?'va':'pe')+(v.d0===iso?' a':'')+(v.d1===iso?' z':''):''}" title="${v?(v.t==='vac'?'Vacaciones':'Permiso')+(v.st==='pend'?' · por aprobar':''):''}"></i>`}).join('')).join('');
+  const tot=`<div class="au-n au-tot">Disponibles</div>`+D31.map(d=>{if(d>nd)return '<i></i>';const o=fueraDia(ISO(new Date(2026,m,d)),-1).length;return `<i class="au-c${o>MAXF?' bad':o===MAXF?' warn':''}">${P.length-o}</i>`}).join('');
+  const srows=P.map(o=>{const g=ficha(o.i).g,u=usados(o.i),p=pedidos(o.i),dl=dispo(o.i);return `<tr><td><span class="who"><span class="av lt">${ini(o.d.n)}</span>${o.d.n}</span></td><td>${fdate(o.r.alta)}</td><td>${fnum(g)}<small>${fnum(finAnio(o.i))} a 31/12</small></td><td>${u}</td><td>${p||'—'}</td><td><span class="cd-vbar"><i class="u" style="width:${u/g*100}%"></i><i class="p" style="width:${p/g*100}%"></i></span><b>${fnum(dl)}</b></td></tr>`}).join('');
+  return adHeadO('Ausencias','Vacaciones y permisos de cada chófer · las solicitudes llegan desde la app',`<button class="sbtn" data-act="toast" data-msg="Ausencia añadida a mano (demo) · también se guarda en Odoo">${I.plus}Añadir ausencia</button>`)+
+  `<div class="kpis"><div class="kpi"><small>Fuera hoy</small><b>${outHoy.length}</b><span>${outHoy.map(v=>pers(v.i).n).join(', ')||'Nadie'}</span></div>
+    <div class="kpi ${pend.length?'w':''}"><small>Por aprobar</small><b>${pend.length}</b><span>${pend.length?'Abajo, con quién más falta esos días':'Todo al día'}</span></div>
+    <div class="kpi"><small>Disponibles hoy</small><b>${P.length-outHoy.length} / ${P.length}</b><span>Aviso si faltan más de ${MAXF} a la vez</span></div>
+    <div class="kpi"><small>Vacaciones sin pedir</small><b>${fnum(sinPedir)} días</b><span>Entre ${P.length} chóferes · quedan 12 semanas de año</span></div></div>
+  <div class="ad-card" style="margin-top:10px"><h5>Por aprobar <span>Al aprobar o rechazar se guarda en Ausencias de Odoo y se avisa al chófer</span></h5><table class="tb"><thead><tr><th>Chófer</th><th>Qué</th><th>Días</th><th>Saldo</th><th>Esos días falta</th><th></th></tr></thead><tbody>${prow}</tbody></table></div>
+  <div class="ad-card" style="margin-top:10px"><h5>Calendario <span><span class="seg" style="margin:0">${[[9,'Octubre'],[10,'Noviembre'],[11,'Diciembre']].map(x=>`<button class="${m===x[0]?'on':''}" data-act="am" data-m="${x[0]}" data-v="am-${x[0]}">${x[1]}</button>`).join('')}</span></span></h5>
+    <div class="au-cal">${hdr}${filas}${tot}</div>
+    <div class="au-leg"><span><i style="background:#209C8F"></i>Vacaciones</span><span><i style="background:#056DB2"></i>Permiso</span><span><i style="background:repeating-linear-gradient(135deg,#f6c46b 0 3px,#fde7bd 3px 6px)"></i>Por aprobar</span><span><i style="background:#fff1dc"></i>${MAXF} fuera</span><span style="color:#c0262c">Festivo</span></div></div>
+  <div class="ad-card" style="margin-top:10px"><h5>Saldo de vacaciones <span>2026 · lo calcula Odoo</span></h5><table class="tb"><thead><tr><th>Chófer</th><th>En la empresa desde</th><th>Generados</th><th>Usados</th><th>Pedidos</th><th>Libres</th></tr></thead><tbody>${srows}</tbody></table>
+    <p class="cd-foot">Odoo genera 2,5 días por mes trabajado (30 al año, según convenio): quien entró a mitad de año tiene la parte que le toca. La app solo los enseña y manda las solicitudes.</p></div>`;
+}
+
+/* ---------- Panel: Tareas ---------- */
+function aTareas(s){const n=TAR.length,cur=TAR.filter(t=>tNext(t)>0).length,fin=TAR.filter(t=>tNext(t)<0).length,pr=TAR.reduce((a,t)=>a+tOpen(t),0);
+  const rows=TAR.map(t=>{const d=DRV[t.i],[c,e]=tEstado(t),k=tNext(t),last=k<0?4:k-1;return `<tr><td><span class="who"><span class="av lt">${ini(d.n)}</span>${d.n}</span></td><td><b>${t.id}</b><small>${t.emp}</small></td><td>${ruta(t)}<small>Carga ${t.c[0]} · descarga ${t.c[1]}</small></td><td>${tDots(t)}<small>${last>=0?ET[last]+' · '+hm(t.et[last]):'Sin empezar'}</small></td><td><span class="st ${c}">${e}</span>${tOpen(t)?' <span class="st bad">Problema</span>':''}${t.nueva?' <span class="st wa">Sin abrir</span>':''}</td></tr>`}).join('');
+  const probs=TAR.flatMap(t=>t.pr.map((p,k)=>({t,p,k}))).sort((a,b)=>(a.p.ok?1:0)-(b.p.ok?1:0)||b.p.h-a.p.h);
+  const plist=probs.map(({t,p,k})=>`<div class="tq-pb ${p.ok?'ok':''}"><span class="tq-pi">${p.f?I.cam:I.alert}</span><div><b>${p.t} · ${t.id}</b><span>${mEsc(p.x)}</span><small>${DRV[t.i].n} · ${hm(p.h)}${p.f?' · con foto':''}</small></div>${p.ok?'<span class="st ok">Resuelto</span>':`<div class="tq-pa"><button class="sbtn" data-act="tkmsg" data-t="${t.id}" data-p="${k}">${I.msg}Escribir</button><button class="sbtn y" data-act="tkok" data-t="${t.id}" data-p="${k}" data-v="tkok-${t.id}-${k}">${I.check}Resuelto</button></div>`}</div>`).join('')||'<p class="cd-empty">Sin problemas registrados hoy.</p>';
+  return adHeadO('Tareas','Lo que tiene que hacer cada chófer, etapa a etapa · vienen de Odoo o se crean aquí',`<button class="sbtn dk" data-act="tknew" data-v="tknew">${I.plus}Nueva tarea</button>`)+
+  `<div class="kpis"><div class="kpi"><small>Tareas de hoy</small><b>${n}</b><span>Para ${new Set(TAR.map(t=>t.i)).size} chóferes</span></div><div class="kpi"><small>En curso</small><b>${cur}</b><span>Con alguna etapa marcada</span></div><div class="kpi g"><small>Terminadas</small><b>${fin}</b><span>Con «Descargado» marcado</span></div><div class="kpi ${pr?'al':''}"><small>Problemas sin resolver</small><b>${pr}</b><span>${pr?'Abajo, con su foto':'Ninguno'}</span></div></div>
+  <div class="ad-card" style="margin-top:10px"><h5>Tareas <span>${ET.join(' → ')}</span></h5><table class="tb"><thead><tr><th>Chófer</th><th>Orden</th><th>Ruta</th><th>Etapas</th><th>Estado</th></tr></thead><tbody>${rows}</tbody></table></div>
+  <div class="ad-card" style="margin-top:10px"><h5>Problemas <span>Los registra el chófer desde la app, con hora y foto</span></h5>${plist}</div>
+  <p class="cd-foot">Lo que marca el chófer vuelve a la tarea de Odoo. Si al cargar cambia algo, corrige la orden desde la propia tarea con DECA.</p>`;
+}
+function aTkModal(s){if(!s.tkn)return '';const f=s.tkf||{i:0,o:0},L=PED.map((p,k)=>({p,k})).filter(x=>!TAR.some(t=>t.id===x.p.id));
+  if(!L.length)return `<div class="ad-modal"><div class="mbox"><h4>Nueva tarea</h4><div class="s">Ya se han mandado todas las órdenes de hoy que hay en Odoo.</div><div class="mfoot"><button class="sbtn" data-act="tkclose">Cerrar</button></div></div></div>`;
+  const o=L.some(x=>x.k===f.o)?f.o:L[0].k,p=PED[o];
+  return `<div class="ad-modal"><div class="mbox"><h4>Nueva tarea</h4><div class="s">Se crea en Odoo (Proyecto) y le llega al chófer al momento.</div>
+    <div class="tq-f"><label>Orden de transporte · de Odoo</label>${L.map(x=>`<button class="tq-op ${x.k===o?'on':''}" data-act="tkf" data-k="o" data-x="${x.k}" data-v="tkf-o-${x.k}"><b>${x.p.id}</b><span>${sitio(x.p.r[0])} → ${sitio(x.p.r[1])}</span><small>${x.p.emp} · carga a las ${x.p.c[0]}</small></button>`).join('')}</div>
+    <div class="tq-f"><label>Chófer</label><div class="tq-ch">${DRV.map((d,k)=>`<button class="tq-c ${k===f.i?'on':''}" data-act="tkf" data-k="i" data-x="${k}" data-v="tkf-i-${k}"><span class="av lt">${ini(d.n)}</span>${d.n.split(' ')[0]}</button>`).join('')}</div></div>
+    <div class="tq-f"><label>Etapas que marcará</label><div class="tq-et">${ET.map((e,k)=>`<span><i>${k+1}</i>${e}</span>`).join('')}</div></div>
+    <div class="tq-f"><label>Nota para el chófer</label><div class="msgbox">${mEsc(p.nota)}</div></div>
+    <div class="mfoot"><button class="sbtn" data-act="tkclose">Cancelar</button><button class="sbtn dk" data-act="tksend" data-v="tksend">${I.check}Mandar a ${DRV[f.i].n.split(' ')[0]}</button></div></div></div>`;
+}
+function aAct2(a,b){
+  if(a==='cf'){A.cf=b.dataset.f;return 1}
+  if(a==='cp'){A.cp=b.dataset.p;return 1}
+  if(a==='cdrv'){const i=+b.dataset.i;if(i===8){aToast(AUS.n+' está de vacaciones hasta el 12 de octubre');return 1}A.tab='conductor';A.i=i;A.from='cond';return 1}
+  if(a==='am'){A.am=+b.dataset.m;return 1}
+  if(a==='vacok'||a==='vacko'){const v=VAC[+b.dataset.k],ok=a==='vacok';v.st=ok?'ok':'ko';v.aviso=1;aToast((ok?'Aprobada':'Rechazada')+' · se guarda en Ausencias de Odoo y se avisa a '+nom1(v.i));
+    if(v.i===JI){if(!noAviso())dToast(ok?'Tráfico ha aprobado tu solicitud del '+frng(v.d0,v.d1):'Tráfico no puede darte el '+frng(v.d0,v.d1)+': te escribirá');dRender()}return 1}
+  if(a==='tknew'){A.tkn=1;A.tkf={i:0,o:Math.max(0,libreP())};return 1}
+  if(a==='tkf'){A.tkf[b.dataset.k]=+b.dataset.x;return 1}
+  if(a==='tkclose'){A.tkn=0;return 1}
+  if(a==='tksend'){const k=PED[A.tkf.o]&&!TAR.some(t=>t.id===PED[A.tkf.o].id)?A.tkf.o:libreP();if(k<0){A.tkn=0;return 1}const p=PED[k],i=A.tkf.i;
+    TAR.push({id:p.id,i,emp:p.emp,r:p.r,c:p.c,nota:p.nota,et:[null,null,null,null,null],pr:[],nueva:1});A.tkn=0;aToast('Tarea '+p.id+' enviada a '+nom1(i)+' · también queda en Odoo');
+    if(i===JI){if(!noAviso())dToast('Nueva tarea de tráfico: '+p.id);dRender()}return 1}
+  if(a==='tkok'){const t=TAR.find(x=>x.id===b.dataset.t);t.pr[+b.dataset.p].ok=true;aToast('Problema resuelto · queda anotado en la tarea de Odoo');if(t.i===JI)dRender();return 1}
+  if(a==='tkmsg'){const t=TAR.find(x=>x.id===b.dataset.t),p=t.pr[+b.dataset.p],i=t.i,x='Problema en '+t.id+' ('+p.t.toLowerCase()+'): '+p.x;if(!MS.th[i])MS.th[i]=[];if(!MS.th[i].some(m=>m.x===x))MS.th[i].push({f:'d',t:hm(p.h),x,r:1});MS.open=i;MS.draftA='';A.tab='msgs';return 1}
+  return 0;
 }
 
 /* ============ HERO ============ */
@@ -2334,20 +2808,21 @@ if($('.meters'))mo.observe($('.meters'));
 /* ============ DEMO CONDUCTOR (interactiva) ============ */
 const clockNow=()=>{const d=new Date();return pad(d.getHours())+':'+pad(d.getMinutes())};
 const D0=()=>({spent:0,canje:[],screen:'login',code:'1014',pin:'',sel:null,q:'',mode:'start',segs:[],clock:clockNow(),toast:'',scan:false,fkm:20,plan:null,adr:false,svc:0,tickets:[],full:null,tk:1,lug:'Castellón',trl:null,taller:null,tm:null,tf:false,to:false,back:'dash'});
-let D=D0();const done={login:0,plate:0,change:0,fuel:0,parte:0,deca:0,coins:0,docs:0,finish:0};
+let D=D0();const done={login:0,plate:0,change:0,fuel:0,parte:0,deca:0,coins:0,docs:0,finish:0,frontal:0,tarea:0,vac:0};
 const dHost=$('#drvPhone');let tT;
 function dRender(){D.clock=clockNow();dHost.innerHTML=rDriver(D);['login','plate','change','fuel','parte','deca','coins','docs','finish'].forEach(k=>$('#ck-'+k).classList.toggle('done',!!done[k]))}
 function dToast(m){D.toast=m;clearTimeout(tT);tT=setTimeout(()=>{D.toast='';dRender()},2400)}
 dHost.addEventListener('click',e=>{
   const b=e.target.closest('[data-act]');if(!b||b.disabled||b.tagName==='INPUT')return;const a=b.dataset.act;
+  const r2=dAct2(a,b);if(r2){if(r2===1)dRender();return}
   if(a==='key'){const k=b.dataset.k;if(k==='⌫')D.pin=D.pin.slice(0,-1);else if(D.pin.length<4)D.pin+=k;
     if(D.pin.length===4){dRender();setTimeout(()=>{Object.assign(D,{screen:'detect',mode:'start',sel:null,q:''});done.login=1;dRender()},320);return}}
   else if(a==='pick'){D.sel=b.dataset.p}
   else if(a==='qr'){D.scan=true;dRender();setTimeout(()=>{D.scan=false;D.sel='6045 LTD';D.q='';dRender()},1500);return}
   else if(a==='confirm'||a==='dconfirm'){const t=nowH();if(a==='dconfirm')D.sel=b.dataset.p;
-    if(D.mode==='start'){D.segs=[[t,null,D.sel]];dToast('Jornada iniciada con '+D.sel);done.plate=1}
-    else{D.segs[D.segs.length-1][1]=t;D.segs.push([t,null,D.sel]);dToast('Cambio registrado a las '+hm(t));done.change=1}
-    Object.assign(D,{screen:'dash',sel:null,q:''})}
+    if(D.mode==='start'){D.segs=[[t,null,D.sel]];done.plate=1}
+    else{D.segs[D.segs.length-1][1]=t;D.segs.push([t,null,D.sel]);done.change=1}
+    D.fr={p:D.sel,st:0};Object.assign(D,{screen:'frontal',sel:null,q:''})}
   else if(a==='cancel'){D.screen='dash';D.sel=null;D.q=''}
   else if(a==='manual'){Object.assign(D,{screen:'plate',sel:null,q:''})}
   else if(a==='pback'){Object.assign(D,{screen:'detect',sel:null,q:''})}
@@ -2370,7 +2845,7 @@ dHost.addEventListener('click',e=>{
   else if(a==='lug'){D.lug=b.dataset.k}
   else if(a==='trl'){D.trl=b.dataset.k}
   else if(a==='qrtrl'){D.trl='R-4410';dToast('QR del remolque leído · R-4410')}
-  else if(a==='deca'){D.screen='deca'}
+  else if(a==='deca'){const ft=D.screen==='tarea';D.dkb=ft?'tarea':'dash';D.dko=ft?D.ta:null;D.screen='deca'}
   else if(a==='nota'){D.screen='nota'}
   else if(a==='coins'){D.screen='coins'}
   else if(a==='coinsback'||a==='docsback'){D.screen='dash'}
@@ -2378,8 +2853,8 @@ dHost.addEventListener('click',e=>{
   else if(a==='docs'){D.screen='docs';done.docs=1}
   else if(a==='docup'){dToast('Foto enviada a tráfico para validar')}
   else if(a==='notaback'){D.screen='dash'}
-  else if(a==='dkback'){D.screen='dash'}
-  else if(a==='dksave'){D.screen='dash';done.deca=1;dToast('Orden S2630118 guardada en Odoo · PDF listo')}
+  else if(a==='dkback'){D.screen=D.dkb||'dash'}
+  else if(a==='dksave'){D.screen=D.dkb||'dash';done.deca=1;dToast('Orden '+(D.dko||'S2630118')+' guardada en Odoo · PDF listo')}
   else if(a==='fuel'){D.screen='fuel'}
   else if(a==='fkm'){D.fkm=+b.dataset.k}
   else if(a==='fminus'){D.fkm=Math.max(5,D.fkm-5)}
@@ -2393,17 +2868,19 @@ dHost.addEventListener('click',e=>{
   dRender();
 });
 dHost.addEventListener('input',e=>{if(e.target.matches('[data-act="search"]')){D.q=e.target.value;$('.a-plist',dHost).innerHTML=plateInner(D)}});
+dHost.addEventListener('input',e=>{if(e.target.matches('[data-tdraft]')&&D.tp)D.tp.x=e.target.value});
 $('#drvReset').addEventListener('click',()=>{D=D0();Object.keys(done).forEach(k=>done[k]=0);dRender()});
 dRender();
 
 /* ============ DEMO ADMIN (interactiva) ============ */
-let A={tab:'resumen',i:0,alr:ALR.map(a=>({...a})),toast:'',imp:0,msg:null,sent:{},agent:0,call:null,val:{},flt:'all',anx:0,pfix:{},prog:0,pf:null,als:ALS.map(x=>({...x})),aoff:{},dflt:'all',cj:{}};let aT;
+let A={tab:'resumen',i:0,alr:ALR.map(a=>({...a})),toast:'',imp:0,msg:null,sent:{},agent:0,call:null,val:{},flt:'all',anx:0,pfix:{},prog:0,pf:null,als:ALS.map(x=>({...x})),aoff:{},dflt:'all',cj:{},cf:'all',am:9,tkn:0,tkf:{i:0,o:0}};let aT;
 const aHost=$('#admHost');
 function aRender(){aHost.innerHTML=rAdmin(A)}
 function aToast(m){A.toast=m;clearTimeout(aT);aT=setTimeout(()=>{A.toast='';aRender()},2200)}
 const aClick=e=>{
   const b=e.target.closest('[data-act]');if(!b)return;const a=b.dataset.act;
-  if(a==='tab'){A.tab=b.dataset.t;A.imp=0;A.msg=null;A.agent=0;A.call=null;A.pm=null;A.anx=0;A.prog=0} else if(a==='mconv'){MS.open=+b.dataset.i;MS.draftA=''} else if(a==='mq2'||a==='msend'){const x=(a==='mq2'?b.dataset.x:MS.draftA).trim();if(x){MS.th[MS.open].push({f:'o',t:hm(nowH()),x});MS.draftA='';markRead(MS.open);aToast('Mensaje enviado a '+DRV[MS.open].n.split(' ')[0]);if(MS.open===JI)mPingD()}else aToast('Escribe un mensaje o elige una respuesta rápida')} else if(a==='mall'){Object.keys(MS.th).forEach(i=>MS.th[i].push({f:'o',t:hm(nowH()),x:'A toda la flota: mañana el lavadero de la base cierra por mantenimiento.'}));aToast('Mensaje enviado a toda la flota');mPingD()}
+  if(aAct2(a,b)){aRender();if(a==='cdrv'||a==='tkmsg'){const m=$('.ad-main',aHost);if(m)m.scrollTop=0}return}
+  if(a==='tab'){A.tab=b.dataset.t;A.imp=0;A.msg=null;A.agent=0;A.call=null;A.pm=null;A.anx=0;A.prog=0;A.tkn=0} else if(a==='mconv'){MS.open=+b.dataset.i;MS.draftA=''} else if(a==='mq2'||a==='msend'){const x=(a==='mq2'?b.dataset.x:MS.draftA).trim();if(x){MS.th[MS.open].push({f:'o',t:hm(nowH()),x});MS.draftA='';markRead(MS.open);aToast('Mensaje enviado a '+DRV[MS.open].n.split(' ')[0]);if(MS.open===JI)mPingD()}else aToast('Escribe un mensaje o elige una respuesta rápida')} else if(a==='mall'){Object.keys(MS.th).forEach(i=>MS.th[i].push({f:'o',t:hm(nowH()),x:'A toda la flota: mañana el lavadero de la base cierra por mantenimiento.'}));aToast('Mensaje enviado a toda la flota');mPingD()}
   else if(a==='progav'){const i=b.dataset.i;A.pf=JSON.parse(JSON.stringify(PF0));if(i!=null){const d=DOCS[+i];A.pf.doc=d.doc;A.pf.who=d.who;A.pf.to=d.t==='c'?['Tráfico','Chófer']:['Tráfico','Taller']}A.prog=1}
   else if(a==='pf'){const k=b.dataset.k,x=b.dataset.x;if(Array.isArray(A.pf[k])){A.pf[k]=A.pf[k].includes(x)?A.pf[k].filter(y=>y!==x):[...A.pf[k],x]}else A.pf[k]=x;if(k==='doc')A.pf.who=''}
   else if(a==='progclose')A.prog=0;
@@ -2428,8 +2905,8 @@ const aClick=e=>{
   else if(a==='msg')A.msg=+b.dataset.i;
   else if(a==='msgclose')A.msg=null;
   else if(a==='msgsend'){const n=DRV[FR[A.msg].i].n;A.sent[A.msg]=1;A.msg=null;aToast('Aviso enviado a '+n)}
-  else if(a==='drv'){A.tab='conductor';A.i=+b.dataset.i}
-  else if(a==='back')A.tab='resumen';
+  else if(a==='drv'){A.tab='conductor';A.i=+b.dataset.i;A.from='resumen'}
+  else if(a==='back')A.tab=A.from||'resumen';
   else if(a==='ack'){A.alr[+b.dataset.i].ack=true;aToast('Alerta marcada como revisada')}
   else if(a==='toast')aToast(b.dataset.msg);
   else if(a==='agent')A.agent=1;
@@ -2506,14 +2983,14 @@ aRender();
     W.mod.classList.toggle('wide',!!(first&&first.classList.contains('anx')));
     if(was){W.mod.hidden=false;modBody.scrollTop=0;if(desk())centerMod();focus(W.mod);$('[data-wc="close"]',W.mod).focus({preventScroll:true})}
   }
-  function closeMod(){Object.assign(A,{prog:0,anx:0,agent:0,call:null,imp:0,msg:null,pm:null});aRender()}
+  function closeMod(){Object.assign(A,{prog:0,anx:0,agent:0,call:null,imp:0,msg:null,pm:null,tkn:0});aRender()}
   modBody.addEventListener('click',aClick);
   /* Guía: pasos del móvil y del panel */
-  const AST={anexo:'a-anexo',progsave:'a-prog',cj:'a-cj',pmsend:'a-msg',msgsend:'a-msg',setadr:'a-adr',msend:'a-mreply',mq2:'a-mreply'},adone={};
+  const AST={anexo:'a-anexo',progsave:'a-prog',cj:'a-cj',pmsend:'a-msg',msgsend:'a-msg',setadr:'a-adr',msend:'a-mreply',mq2:'a-mreply',cdrv:'a-cond',vacok:'a-vac',tksend:'a-tarea'},adone={};
   const track=e=>{const b=e.target.closest('[data-act]');if(!b)return;const k=AST[b.dataset.act];if(k&&!(b.dataset.act==='cj'&&b.dataset.s!=='ok')){adone[k]=1;queueMicrotask(updGuide)}};
   aHost.addEventListener('click',track,true);modBody.addEventListener('click',track,true);
   function updGuide(){
-    Object.values(AST).forEach(k=>$('#ck-'+k).classList.toggle('done',!!adone[k]));['msg','nota'].forEach(k=>$('#ck-'+k).classList.toggle('done',!!done[k]));
+    Object.values(AST).forEach(k=>$('#ck-'+k).classList.toggle('done',!!adone[k]));['msg','nota','frontal','tarea','vac'].forEach(k=>$('#ck-'+k).classList.toggle('done',!!done[k]));
     const items=[...W.guia.querySelectorAll('.ck-i')],n=items.filter(i=>i.classList.contains('done')).length,t=items.length;
     $('#gCount').textContent=n+' de '+t;$('#dkCount').textContent=n+'/'+t;$('#gBar').style.width=n/t*100+'%';
     items.forEach(i=>i.classList.remove('next'));
@@ -2527,7 +3004,7 @@ aRender();
   aHost.addEventListener('input',e=>{if(e.target.matches('[data-mdraft]'))MS.draftA=e.target.value});
   aHost.addEventListener('keydown',e=>{if(e.key==='Enter'&&e.target.matches('[data-mdraft]')){e.preventDefault();$('[data-act="msend"]',aHost).click()}});
   const A0=JSON.stringify(A);
-  $('#drvReset').addEventListener('click',()=>{Object.keys(adone).forEach(k=>delete adone[k]);MS=MS0();NT=NT0();NTd='';NTf=false;A=JSON.parse(A0);aRender();dRender()});
+  $('#drvReset').addEventListener('click',()=>{Object.keys(adone).forEach(k=>delete adone[k]);MS=MS0();NT=NT0();NTd='';NTf=false;VAC=VAC0();TAR=TAR0();A=JSON.parse(A0);aRender();dRender()});
   /* Controles: barra de título, doble clic, arrastrar y barra de abajo */
   ws.addEventListener('click',e=>{
     const c=e.target.closest('[data-wc]');

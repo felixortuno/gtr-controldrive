@@ -2,8 +2,10 @@
 -- DATOS DE EJEMPLO · solo para el entorno local
 -- ---------------------------------------------------------------------
 -- Todo es inventado (personas, matrículas, tarjetas). Se carga después de
--- las nueve fases y deja un día de trabajo completo: dos chóferes, dos
+-- las once fases y deja un día de trabajo completo: dos chóferes, dos
 -- camiones, un cambio de camión, repostajes, tickets, parte y monedas.
+-- También una semana de registro horario, vacaciones (una aprobada y una
+-- pedida), fotos del frontal y una tarea a medias con un problema abierto.
 -- Las horas son de hoy, en hora de Madrid. A propósito deja dos avisos en
 -- calculo.incidencias_tickets (un ticket sin su repostaje de Solred y un
 -- repostaje a más de 5 km del camión), para ver el cruce funcionando.
@@ -166,3 +168,137 @@ JOIN nucleo.usuarios u ON u.id = c.usuario_id OR u.email = 'trafico@ejemplo.test
 INSERT INTO nucleo.mensajes (conversacion_id, autor_id, texto)
 SELECT cv.id, c.usuario_id, 'Llego a la descarga en 20 minutos.'
 FROM nucleo.conversaciones cv JOIN nucleo.conductores c ON c.id = cv.conductor_id;
+
+
+-- Enlace con Odoo y registro horario: Javier lleva seis días de 07:00 a
+-- 16:30 y hoy sigue trabajando; a Lucía tráfico le corrigió la entrada de ayer
+INSERT INTO nucleo.empleados_odoo (conductor_id, odoo_empleado_id, fecha_antiguedad)
+SELECT c.id, x.empleado, DATE '2024-03-01'
+FROM nucleo.conductores c
+JOIN (VALUES ('E000000000000001', 1501), ('E000000000000002', 1502)) AS x(tarjeta, empleado) ON x.tarjeta = c.tarjeta_tacografo;
+
+INSERT INTO nucleo.jornadas (conductor_id, entrada, salida, origen_entrada, origen_salida, odoo_asistencia_id, copiada_odoo_en)
+SELECT c.id,
+       (current_date - d + time '07:00') AT TIME ZONE 'Europe/Madrid',
+       (current_date - d + time '16:30') AT TIME ZONE 'Europe/Madrid',
+       'app', 'app', 9000 + d, now()
+FROM nucleo.conductores c
+CROSS JOIN generate_series(1, 6) AS d
+WHERE c.tarjeta_tacografo = 'E000000000000001';
+
+INSERT INTO nucleo.jornadas (conductor_id, entrada, origen_entrada)
+SELECT c.id, (current_date + time '07:00') AT TIME ZONE 'Europe/Madrid', 'app'
+FROM nucleo.conductores c WHERE c.tarjeta_tacografo = 'E000000000000001';
+
+INSERT INTO nucleo.jornadas (conductor_id, entrada, salida, origen_entrada, origen_salida, corregida_por, motivo_correccion)
+SELECT c.id,
+       (current_date - 1 + time '08:00') AT TIME ZONE 'Europe/Madrid',
+       (current_date - 1 + time '15:00') AT TIME ZONE 'Europe/Madrid',
+       'admin', 'app', (SELECT id FROM nucleo.usuarios WHERE email = 'trafico@ejemplo.test'), 'Olvidó empezar la jornada en la app'
+FROM nucleo.conductores c WHERE c.tarjeta_tacografo = 'E000000000000002';
+
+INSERT INTO nucleo.jornadas (conductor_id, entrada, origen_entrada)
+SELECT c.id, (current_date + time '10:30') AT TIME ZONE 'Europe/Madrid', 'app'
+FROM nucleo.conductores c WHERE c.tarjeta_tacografo = 'E000000000000002';
+
+-- Asistencias de Odoo (las que se pagan): copia de las jornadas, salvo la de
+-- ayer de Javier, que RRHH cambió en Odoo (salida a las 18:30, no a las 16:30)
+INSERT INTO nucleo.asistencias_odoo (odoo_asistencia_id, conductor_id, entrada, salida, jornada_id, cambiada_en_odoo)
+SELECT coalesce(j.odoo_asistencia_id, 9100 + row_number() OVER (ORDER BY j.id))::int,
+       j.conductor_id,
+       j.entrada,
+       CASE WHEN j.odoo_asistencia_id = 9001 THEN j.salida + interval '2 hours' ELSE j.salida END,
+       j.id,
+       CASE WHEN j.odoo_asistencia_id = 9001 THEN now() - interval '3 hours' END
+FROM nucleo.jornadas j;
+
+-- Lo que vio la tarjeta de Javier anteayer (cuadra con Odoo: 5 min) y ayer
+-- (9,5 h reales frente a las 11,5 h que ahora tiene Odoo)
+INSERT INTO nucleo.actividad_tacografo (tarjeta_tacografo, conductor_id, vehiculo_id, actividad, inicio, fin)
+SELECT 'E000000000000001', c.id, v.id, a.actividad,
+       (current_date - a.dia + a.desde) AT TIME ZONE 'Europe/Madrid',
+       (current_date - a.dia + a.hasta) AT TIME ZONE 'Europe/Madrid'
+FROM nucleo.conductores c, nucleo.vehiculos v,
+     (VALUES (2, 'conduccion',     time '07:00', time '11:00'),
+             (2, 'disponibilidad', time '11:00', time '11:45'),
+             (2, 'otro_trabajo',   time '11:45', time '12:30'),
+             (2, 'conduccion',     time '12:30', time '16:25'),
+             (1, 'conduccion',     time '07:00', time '11:30'),
+             (1, 'otro_trabajo',   time '11:30', time '12:00'),
+             (1, 'conduccion',     time '12:00', time '16:30')) AS a(dia, actividad, desde, hasta)
+WHERE c.tarjeta_tacografo = 'E000000000000001' AND v.matricula = '1111BBB';
+
+-- Vacaciones: saldos copiados de Odoo, unas aprobadas de Javier en verano,
+-- otras que acaba de pedir y las de Lucía, ya aprobadas, que se cruzan
+INSERT INTO nucleo.saldos_vacaciones (conductor_id, anio, generados_dias, disfrutados_dias, al_final_del_anio_dias)
+SELECT c.id, extract(year FROM current_date)::smallint, 25, x.disfrutados, 30
+FROM nucleo.conductores c
+JOIN (VALUES ('E000000000000001', 9), ('E000000000000002', 20)) AS x(tarjeta, disfrutados) ON x.tarjeta = c.tarjeta_tacografo;
+
+INSERT INTO nucleo.ausencias (conductor_id, tipo, desde, hasta, dias, estado, origen, pedida_en, resuelta_en, odoo_ausencia_id)
+SELECT c.id, 'vacaciones', current_date - 90, current_date - 82, 9, 'aprobada', 'odoo', now() - interval '120 days', now() - interval '118 days', 7001
+FROM nucleo.conductores c WHERE c.tarjeta_tacografo = 'E000000000000001';
+
+INSERT INTO nucleo.ausencias (conductor_id, tipo, desde, hasta, dias, estado, origen)
+SELECT c.id, 'vacaciones', current_date + 20, current_date + 24, 5, 'pedida', 'app'
+FROM nucleo.conductores c WHERE c.tarjeta_tacografo = 'E000000000000001';
+
+INSERT INTO nucleo.ausencias (conductor_id, tipo, desde, hasta, dias, estado, origen, pedida_en, resuelta_por, resuelta_en)
+SELECT c.id, 'vacaciones', current_date + 22, current_date + 26, 5, 'aprobada', 'app', now() - interval '5 days',
+       (SELECT id FROM nucleo.usuarios WHERE email = 'trafico@ejemplo.test'), now() - interval '4 days'
+FROM nucleo.conductores c WHERE c.tarjeta_tacografo = 'E000000000000002';
+
+-- Fotos del frontal al coger cada camión
+INSERT INTO nucleo.archivos (ruta, tipo_mime, bytes, sha256) VALUES
+  ('frontal/ejemplo/1.jpg', 'image/jpeg', 240000, 'ejemplo-sha-frontal-1'),
+  ('frontal/ejemplo/2.jpg', 'image/jpeg', 236000, 'ejemplo-sha-frontal-2');
+
+INSERT INTO nucleo.fotos_frontal (conductor_id, vehiculo_id, asignacion_id, archivo_id, tomada_en, matricula_leida, coincide)
+SELECT a.conductor_id, a.vehiculo_id, a.id, ar.id, a.inicio + interval '1 minute', v.matricula, true
+FROM nucleo.asignaciones a
+JOIN nucleo.vehiculos v ON v.id = a.vehiculo_id
+JOIN nucleo.conductores c ON c.id = a.conductor_id
+JOIN nucleo.archivos ar ON ar.ruta = CASE c.tarjeta_tacografo WHEN 'E000000000000001' THEN 'frontal/ejemplo/1.jpg' ELSE 'frontal/ejemplo/2.jpg' END
+WHERE a.fin IS NULL;
+
+-- Tareas: Javier va por «Cargado» y avisa de un retraso; corrigió la orden
+-- con DECA desde la tarea. Lucía tiene una pendiente que creó tráfico
+INSERT INTO nucleo.tareas (odoo_tarea_id, tipo, conductor_id, vehiculo_id, empresa, titulo, pedido, lugar_carga, lugar_descarga, cita_carga, cita_descarga, notas, estado, origen)
+SELECT 5501, 'carga_descarga', c.id, v.id, 'transargi', 'Vila-real → Puerto de Valencia', 'S2630118',
+       'Azulejos de ejemplo (Vila-real)', 'Puerto de Valencia, terminal de ejemplo',
+       (current_date + time '10:30') AT TIME ZONE 'Europe/Madrid', (current_date + time '14:00') AT TIME ZONE 'Europe/Madrid',
+       'Muelle 4. Preguntar por el jefe de almacén.', 'en_curso', 'odoo'
+FROM nucleo.conductores c, nucleo.vehiculos v
+WHERE c.tarjeta_tacografo = 'E000000000000001' AND v.matricula = '2222CCC';
+
+INSERT INTO nucleo.tareas (tipo, conductor_id, vehiculo_id, titulo, lugar_carga, lugar_descarga, cita_carga, estado, origen, creada_por)
+SELECT 'carga_descarga', c.id, v.id, 'Almassora → Castellón', 'Almassora', 'Castellón',
+       (current_date + time '15:00') AT TIME ZONE 'Europe/Madrid', 'pendiente', 'panel',
+       (SELECT id FROM nucleo.usuarios WHERE email = 'trafico@ejemplo.test')
+FROM nucleo.conductores c, nucleo.vehiculos v
+WHERE c.tarjeta_tacografo = 'E000000000000002' AND v.matricula = '1111BBB';
+
+INSERT INTO nucleo.tareas_etapas (tarea_id, n, nombre, hecha_en, origen)
+SELECT t.id, e.n, e.nombre,
+       CASE WHEN t.odoo_tarea_id = 5501 AND e.n <= 3
+            THEN (current_date + (ARRAY[time '10:05', time '10:40', time '11:20'])[e.n]) AT TIME ZONE 'Europe/Madrid' END,
+       CASE WHEN t.odoo_tarea_id = 5501 AND e.n <= 3 THEN 'app' END
+FROM nucleo.tareas t
+JOIN nucleo.tipos_tarea tt ON tt.codigo = t.tipo
+CROSS JOIN LATERAL unnest(tt.etapas) WITH ORDINALITY AS e(nombre, n);
+
+INSERT INTO nucleo.tareas_problemas (tarea_id, conductor_id, tipo, texto, ocurrido_en)
+SELECT t.id, t.conductor_id, 'retraso', 'Cola de unos 40 minutos para entrar a la terminal.', (current_date + time '12:10') AT TIME ZONE 'Europe/Madrid'
+FROM nucleo.tareas t WHERE t.odoo_tarea_id = 5501;
+
+INSERT INTO sistema.notificaciones (usuario_id, canal, titulo, cuerpo, origen, origen_id, clave_unica)
+SELECT u.id, 'app', 'Retraso en S2630118', p.texto, 'tarea', p.id, 'problema:' || p.id || '|u' || u.id || '|app'
+FROM nucleo.tareas_problemas p, nucleo.usuarios u
+WHERE u.email = 'trafico@ejemplo.test';
+
+INSERT INTO nucleo.deca_correcciones (conductor_id, empresa, pedido, tarea_odoo_id, antes, despues, resultado)
+SELECT c.id, 'transargi', 'S2630118', 5501,
+       '{"mercancia": "AZULEJO", "bultos": 22, "euro_palets": 22, "peso_kg": 24800}',
+       '{"mercancia": "AZULEJO", "bultos": 24, "euro_palets": 24, "peso_kg": 25300}',
+       'guardada'
+FROM nucleo.conductores c WHERE c.tarjeta_tacografo = 'E000000000000001';

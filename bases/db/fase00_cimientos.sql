@@ -180,7 +180,7 @@ INSERT INTO sistema.parametros (clave, valor, unidad, vigente_desde, descripcion
 CREATE TABLE sistema.funciones (
   codigo          text PRIMARY KEY,
   nombre          text NOT NULL,
-  fase            smallint NOT NULL CHECK (fase BETWEEN 0 AND 8),
+  fase            smallint NOT NULL CHECK (fase BETWEEN 0 AND 10),
   estado          text NOT NULL DEFAULT 'apagada' CHECK (estado IN ('apagada', 'piloto', 'todos')),
   descripcion     text,
   actualizado_en  timestamptz NOT NULL DEFAULT now()
